@@ -6,8 +6,9 @@ require('dotenv').config();
 const SERVER = process.env.SERVER;
 const USER = process.env.USER;
 const PASSWORD = process.env.PASSWORD;
-const DB_PORT = process.env.DB_PORT;
 const PORT = process.env.PORT;
+
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -25,5 +26,7 @@ try {
 } catch (err) {
   console.log(err);
 }
+
+app.use('/user', userRouter);
 
 app.listen(PORT);
