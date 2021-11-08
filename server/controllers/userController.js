@@ -1,19 +1,24 @@
 const sql = require('mssql');
+const sqlcon = require('../dbconnection');
 
 exports.getUsers = async (req, res) => {
+  console.log('welcome to getUsers controller');
   try {
-    const users = await sql.query('select * from UsersTBL');
-    res.send(users.recorset);
+    const conn = await sqlcon.getConnection();
+    const users = await conn.query('select * from UsersTBL');
+    res.send(users.recordset);
   } catch (err) {
     res.status(500).json({ msg: err.message });
   }
 };
 
 exports.addUser = async (req, res) => {
+  console.log('welcom to addUser controller');
   try {
+    const conn = await sqlcon.getConnection();
     const { userID, username, email, password } = req.body;
-    const request = new sql.Request();
-    await request
+    console.log(username);
+    await conn
       .request()
       .input('user_id', userID)
       .input('user_name', username)
