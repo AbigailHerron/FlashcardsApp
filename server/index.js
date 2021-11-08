@@ -9,7 +9,7 @@ const PASSWORD = process.env.PASSWORD;
 const PORT = process.env.PORT;
 
 const userRouter = require('./routes/userRoutes');
-
+console.log('signedcommits?');
 const app = express();
 
 // Connect to database
