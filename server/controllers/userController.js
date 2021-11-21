@@ -35,7 +35,12 @@ class userController {
         .input('user_email', email)
         .input('user_password', passwordHash)
         .execute('addUser');
-      res.send('Created a new User');
+      // Send User Data
+      const user = await conn
+        .request()
+        .input('user_email', email)
+        .execute('login');
+      res.send(user.recordset[0]);
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
