@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { routingComponents } from 'src/app/app-routing.module';
 
 import { Login } from 'src/app/interfaces/login';
-import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-login',
@@ -31,12 +33,22 @@ export class LoginComponent implements OnInit {
       error: (mess) => (this.message = mess),
     });
     */
+
+    //CHECK TO SEE IF USER IS LOGGED IN, IF SO REDIRECT #####
+
+    // if (localStorage.getItem("loggedIn") == "true")
+    // {
+    //     this.router.navigate(['/dashboard']);
+    // }
+
   }
   onSubmit(): void {
+
     this.http
       .post('http://localhost:3000/user/login', this.loginForm.value)
       .subscribe(
-        (response) => localStorage.setItem('userDetails', JSON.stringify(response)),
+        // (response) => localStorage.setItem('userDetails', JSON.stringify(response)),
+        (response) => localStorage.setItem('loggedIn', JSON.stringify(response)),
         (error) => (this.err = error.error.msg)
       );
   }
