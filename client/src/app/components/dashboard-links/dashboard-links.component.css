@@ -1,0 +1,15 @@
+.card-body{
+    text-align: center;
+}
+
+.card-text{
+    color: black;
+}
+
+.dashboard-card-clickable:hover{
+    text-decoration: none;
+}
+
+a{
+    text-decoration: none;
+}

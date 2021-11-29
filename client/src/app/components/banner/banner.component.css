@@ -1,0 +1,15 @@
+#banner{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+
+}
+
+#banner-container{
+    display: flex;
+    background-color: black;
+}
+
+#logo-text{
+    color: white;
+}
