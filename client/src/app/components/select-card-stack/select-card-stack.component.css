@@ -1,0 +1,18 @@
+@media (max-width: 720px) {
+    .card-rows{
+        margin: 0 auto;
+    }
+
+    .card-main{
+        min-width: 28rem;
+    }
+}
+
+.add-stack-btn:hover{
+    text-decoration: none;
+    background-color: white;
+}
+
+.description{
+    height: 85px;
+}
