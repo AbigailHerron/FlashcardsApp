@@ -28,7 +28,38 @@ class deckController {
         .request()
         .input('user_idFK', userID)
         .execute('getDecks');
-      res.send(decks);
+      res.json(decks.recordset);
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+
+  async updateDeck(req, res) {
+    console.log('welcome to updateDeck controller');
+    try {
+      const conn = await sqlcon.getConnection();
+      const { deckname, about } = req.body;
+      await conn
+        .request()
+        .input('deck_id', req.params.id)
+        .input('deck_name', deckname)
+        .input('about', about)
+        .execute('updateDeck');
+      res.send('Updated Deck');
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+
+  async deleteDeck(req, res) {
+    console.log('welcome to deleteDeck controller');
+    try {
+      const conn = await sqlcon.getConnection();
+      await conn
+        .request()
+        .input('deck_id', req.params.id)
+        .execute('deleteDeck');
+      res.send('Deleted Deck');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

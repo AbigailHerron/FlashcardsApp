@@ -26,7 +26,7 @@ class cardController {
         .request()
         .input('deckID', req.params.id)
         .execute('getCards');
-      res.send(cards);
+      res.json(cards.recordset);
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
