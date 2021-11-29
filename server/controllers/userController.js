@@ -62,17 +62,13 @@ class userController {
         password,
         existingUser.recordset[0].UserPass
       );
-      if (!isMatch) return res.status(400).json({ msg: 'Invalid details!' });
+      if (!isMatch) return res.status(400).json({ msg: 'Wrong password!' });
       // Send User Data
-
       const user = await conn
         .request()
         .input('user_email', email)
         .execute('login');
-
-        //Send back user details
-      res.send(user.recordset[0]);  
-
+      res.send(user.recordset[0]);
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
