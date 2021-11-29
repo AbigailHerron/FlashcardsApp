@@ -11,7 +11,11 @@ app.use(express.urlencoded({ extended: false })); //Parse URL-encoded bodies
 app.use(cors());
 
 const userRouter = require('./routes/userRoutes');
+const deckRouter = require('./routes/deckRoutes');
+const cardRouter = require('./routes/cardRoutes');
 app.use('/user', userRouter);
+app.use('/user/decks', deckRouter);
+app.use('/user/decks', cardRouter);
 
 app.listen(PORT);
 console.log('server connected');

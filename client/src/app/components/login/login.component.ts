@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
     this.http
       .post('http://localhost:3000/user/login', this.loginForm.value)
       .subscribe(
+
         // (response) => localStorage.setItem('userDetails', JSON.stringify(response)),
         (response) => localStorage.setItem('loggedIn', JSON.stringify(response)),
         (error) => (this.err = error.error.msg)
