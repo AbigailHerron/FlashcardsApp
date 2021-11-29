@@ -45,6 +45,7 @@ class userController {
       res.status(500).json({ msg: err.message });
     }
   }
+
   async login(req, res) {
     console.log('welcome to login controller');
     try {
