@@ -70,10 +70,8 @@ class userController {
         .execute('login');
 
         //Send back user details
-      //res.send(user.recordset[0]);  
+      res.send(user.recordset[0]);  
 
-       //Send back user details
-       res.send(true);  
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

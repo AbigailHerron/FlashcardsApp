@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-stack',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateStackComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+  }
+
+  addCardToStack(): void {
+
+    // this.http
+    //   .post('http://localhost:3000/user/' ,a )
+    //   .subscribe(
+
+    //   );
   }
 
 }

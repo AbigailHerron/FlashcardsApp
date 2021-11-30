@@ -4,10 +4,10 @@
         <div style="width: auto;" *ngFor="let stack of Stack" class="col-xs-4 mb-3 card-rows">
             <div class="card mx-auto card-main" style="width: 20rem;">
                 <div class="card-body" style="height: 16rem;">
-                  <h5 class="card-title">{{stack.title}}</h5>
-                  <div class="overflow-auto description">{{stack.description}}</div>
+                  <h5 class="card-title">{{stack.deck_name}}</h5>
+                  <div class="overflow-auto description">{{stack.about}}</div>
                   <h6>Creator</h6>
-                  <p>{{stack.creator}}</p>
+                  <p>{{stack.user_name}}</p>
 
                   <div class="btn-group">
                     <button type="button" class="btn btn-primary">Go!</button>

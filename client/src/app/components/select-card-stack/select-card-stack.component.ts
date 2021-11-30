@@ -10,11 +10,15 @@ import { IcardStack } from 'src/app/interfaces/icard-stack';
 export class SelectCardStackComponent implements OnInit {
 
   public Stack: IcardStack[] = [];
+  message: string = "";
 
   constructor(private srvCardStacks: CardStackServiceService) { }
 
-  ngOnInit(): void {
-    this.Stack = this.srvCardStacks.getCardStacks();
+  ngOnInit():  void {
+    this.srvCardStacks.getCardStacks().subscribe({
+      next: (value: IcardStack[])=> this.Stack = value,
+      complete: () => console.log('get card stack service finished'),
+      error: (mess) => this.message = mess
+    })
   }
-
 }

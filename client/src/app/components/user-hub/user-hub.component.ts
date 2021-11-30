@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
+import { Observable, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-user-hub',
@@ -9,12 +10,9 @@ import { IcardStack } from 'src/app/interfaces/icard-stack';
 })
 export class UserHubComponent implements OnInit {
 
-  public Stack: IcardStack[] = [];
-
-  constructor(private srvCardStacks: CardStackServiceService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.Stack = this.srvCardStacks.getCardStacks();
   }
 
 }

@@ -1,76 +1,108 @@
-<div style="display: flex; justify-content: center; width: 100vw;">
-    <button class="btn btn-primary mx-1 my-1" style="width: 98vw;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings">
-        Stack Details
-    </button>
-</div>
+<div class="container-fluid" style="display: flex; justify-content: center; padding-top: 20px;">
+    <!--------------------------- OFFCANVAS END ---------------------------->
 
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettingsLabel" style="border-right: 1px solid black;">
+    <!-- 
+        ID (PK)
+        Front
+        Back
+        Img Link
+        Deck ID (FK)
+    -->
 
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Stack Details</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
+    
+    <div class="card" style="width: 80vw;">
+        <div style="height: 30px; border-bottom: 1px solid #cecece; display: flex; padding-left: 10px; font-size: 1.2em; color: white; background-color: #000000;"> Card 1 </div>
+        <div class="card-body">
+          <form>
+                <div class="form-row align-items-center" style="display: flex; justify-content: center;">
 
-    <!--------------------------- OFFCANVAS START ---------------------------->
-    <div class="offcanvas-body">
+                  <div class="col-auto">
+                    <input type="text" class="form-control mb-2" id="inputFrontText" placeholder="Front Text" style="width: 30vw;">
+                  </div>
 
-        <!-- Name
-        Description
-        Image
-        public/private status-->
+                  <div class="col-auto">
+                    <input type="text" class="form-control mb-2" id="inputBackText" placeholder="Back Text" style="width: 30vw;">
+                  </div>
 
-        <form>
-            <div class="form-group">
-              <label for="inputTitle">Stack title</label>
-              <input type="text" class="form-control" id="inputTitle" placeholder="A descriptive title">
-              <small class="form-text text-muted">This is how you (and everyone else) will see your stack!</small>
-            </div>
-
-            <br>
+                  <div class="col-auto">
+                    <input type="text" class="form-control mb-2" id="inputImgLink" placeholder="Image Link" style="width: 10vw;">
+                  </div>
             
-            <div class="form-group">
-              <label for="inputDescription">Description</label>
-              <input type="text" class="form-control" id="inputDescription" placeholder="A really good description of this stack.">
-            </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-            <br>
+<div class="container" style="display: flex; justify-content: center; padding-bottom: 20px;">
+    <div style="text-align: center;">
 
-            <label for="inputPrivacy">Privacy setting</label>
+    <form action="" method="post">
+        <input type="submit" name="addcard" value="+ New Card" class="btn mx-1 my-1" style="width: 80vw; vertical-align: middle; background-color: #b8b8b8;">
+    </form>
 
-            <br>
-
-            <select id="inputPrivacy" class="custom-select" style="width: 25vw;">
-                <option selected>Private</option>
-                <option value="1">Public</option>
-            </select>
-
-            <div style="min-height: 25px;"></div>
-
-            <div class="row">
-                <button style="float: left;" type="submit" class="btn btn-primary">Save my deck!</button>
-            </div>
-          </form>
+        <!-- <button class="btn mx-1 my-1" style="width: 80vw; vertical-align: middle; background-color: #b8b8b8;" name="" value=type="submit">
+            <h5 style="color: rgb(255, 255, 255);">+ New Card</h5>
+        </button> -->
 
     </div>
 </div>
-<!--------------------------- OFFCANVAS END ---------------------------->
 
-<div class="container py-2">
-    <h2 class="font-weight-light">Bootstrap 4 Horizontal Scrolling Cards with Flexbox</h2>
-    <div class="d-flex flex-row flex-nowrap">
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
-        <div class="card card-body">Card</div>
+<div class="container" style="display: flex; justify-content: center;">
+
+    <div style="text-align: center;">
+        <button class="btn btn-primary mx-1 my-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings">
+            Save My Stack!
+        </button>
+    </div>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettingsLabel" style="border-right: 1px solid black;">
+
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Stack Details</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" onclick="addCardToStack()" aria-label="Close"></button>
+        </div>
+
+        <!--------------------------- OFFCANVAS START ---------------------------->
+        <div class="offcanvas-body">
+
+            <!-- Name
+            Description
+            Image
+            public/private status-->
+
+            <form>
+                <div class="form-group">
+                <label for="inputTitle">Stack title</label>
+                <input type="text" class="form-control" id="inputTitle" placeholder="A descriptive title">
+                <small class="form-text text-muted">This is how you (and everyone else) will see your stack!</small>
+                </div>
+
+                <br>
+                
+                <div class="form-group">
+                <label for="inputDescription">Description</label>
+                <input type="text" class="form-control" id="inputDescription" placeholder="A really good description of this stack.">
+                </div>
+
+                <br>
+
+                <label for="inputPrivacy">Privacy setting</label>
+
+                <br>
+
+                <select id="inputPrivacy" class="custom-select" style="width: 25vw;">
+                    <option selected>Private</option>
+                    <option value="1">Public</option>
+                </select>
+
+                <div style="min-height: 25px;"></div>
+
+                <div class="row">
+                    <button type="submit" style="text-align: center;" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+        </div>
     </div>
 </div>
