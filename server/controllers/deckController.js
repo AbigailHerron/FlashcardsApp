@@ -5,13 +5,14 @@ class deckController {
     console.log('welcome to addDeck controller');
     try {
       const conn = await sqlcon.getConnection();
+
       const { deckname, about, userID } = req.body;
 
       await conn
         .request()
         .input('deck_name', deckname)
         .input('about', about)
-        .input('user_idFK', userID)
+        .input('user_idFK', 25)
         .execute('addDeck');
       res.send('You created a Deck');
     } catch (err) {
@@ -23,11 +24,14 @@ class deckController {
     console.log('welcome to getDecks controller');
     try {
       const conn = await sqlcon.getConnection();
-      const { userID } = req.body;
+      
+      const { userID } = req.body; // USER ID REQUIRED
+      
       const decks = await conn
         .request()
-        .input('user_idFK', userID)
+        .input('user_idFK', 25) // ACCEPT USER ID
         .execute('getDecks');
+      
       res.json(decks.recordset);
     } catch (err) {
       res.status(500).json({ msg: err.message });

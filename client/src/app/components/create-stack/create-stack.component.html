@@ -1,66 +1,39 @@
+
 <div class="container-fluid" style="display: flex; justify-content: center; padding-top: 20px;">
     <!--------------------------- OFFCANVAS END ---------------------------->
 
-    <!-- 
-        ID (PK)
-        Front
-        Back
-        Img Link
-        Deck ID (FK)
-    -->
-
-    
-    <div class="card" style="width: 80vw;">
-        <div style="height: 30px; border-bottom: 1px solid #cecece; display: flex; padding-left: 10px; font-size: 1.2em; color: white; background-color: #000000;"> Card 1 </div>
-        <div class="card-body">
-          <form>
-                <div class="form-row align-items-center" style="display: flex; justify-content: center;">
-
-                  <div class="col-auto">
-                    <input type="text" class="form-control mb-2" id="inputFrontText" placeholder="Front Text" style="width: 30vw;">
-                  </div>
-
-                  <div class="col-auto">
-                    <input type="text" class="form-control mb-2" id="inputBackText" placeholder="Back Text" style="width: 30vw;">
-                  </div>
-
-                  <div class="col-auto">
-                    <input type="text" class="form-control mb-2" id="inputImgLink" placeholder="Image Link" style="width: 10vw;">
-                  </div>
-            
-                </div>
-            </form>
-        </div>
+    <!-- CARDS GO HERE -->
+    <div class="row">
+        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index"></app-create-card-item> <!--  -->
     </div>
+    <!------------------->
 </div>
 
+<!-------------------- Add card Button -------------------->
 <div class="container" style="display: flex; justify-content: center; padding-bottom: 20px;">
     <div style="text-align: center;">
-
-    <form action="" method="post">
-        <input type="submit" name="addcard" value="+ New Card" class="btn mx-1 my-1" style="width: 80vw; vertical-align: middle; background-color: #b8b8b8;">
-    </form>
-
-        <!-- <button class="btn mx-1 my-1" style="width: 80vw; vertical-align: middle; background-color: #b8b8b8;" name="" value=type="submit">
+        <button (click)="addCard(1)" class="btn mx-1 my-1" style="width: 80vw; vertical-align: middle; background-color: #b8b8b8;" type="button">
             <h5 style="color: rgb(255, 255, 255);">+ New Card</h5>
-        </button> -->
-
+        </button>
     </div>
 </div>
+<!--------------------------------------------------------->
 
 <div class="container" style="display: flex; justify-content: center;">
 
+    <!----------------- Save Stack Button ----------------->
     <div style="text-align: center;">
         <button class="btn btn-primary mx-1 my-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings">
             Save My Stack!
         </button>
     </div>
+    <!----------------------------------------------------->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettingsLabel" style="border-right: 1px solid black;">
 
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Stack Details</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" onclick="addCardToStack()" aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
         <!--------------------------- OFFCANVAS START ---------------------------->
@@ -71,18 +44,19 @@
             Image
             public/private status-->
 
-            <form>
+            <form [formGroup]="stackDetailsForm" (ngSubmit)="onSubmit()">
+
                 <div class="form-group">
-                <label for="inputTitle">Stack title</label>
-                <input type="text" class="form-control" id="inputTitle" placeholder="A descriptive title">
+                <label for="deckName">Stack title</label>
+                <input type="text" class="form-control" id="deckName" formControlName="deckname" placeholder="A descriptive title">
                 <small class="form-text text-muted">This is how you (and everyone else) will see your stack!</small>
                 </div>
 
                 <br>
                 
                 <div class="form-group">
-                <label for="inputDescription">Description</label>
-                <input type="text" class="form-control" id="inputDescription" placeholder="A really good description of this stack.">
+                <label for="about">Description</label>
+                <input type="text" class="form-control" id="about" formControlName="about" placeholder="A really good description of this stack.">
                 </div>
 
                 <br>
@@ -91,10 +65,10 @@
 
                 <br>
 
-                <select id="inputPrivacy" class="custom-select" style="width: 25vw;">
+                <!-- <select id="inputPrivacy" class="custom-select" style="width: 25vw;">
                     <option selected>Private</option>
                     <option value="1">Public</option>
-                </select>
+                </select> -->
 
                 <div style="min-height: 25px;"></div>
 

@@ -17,7 +17,7 @@ export class SelectCardStackComponent implements OnInit {
   ngOnInit():  void {
     this.srvCardStacks.getCardStacks().subscribe({
       next: (value: IcardStack[])=> this.Stack = value,
-      complete: () => console.log('get card stack service finished'),
+      complete: () => console.log(),
       error: (mess) => this.message = mess
     })
   }

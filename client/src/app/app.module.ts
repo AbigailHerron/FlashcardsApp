@@ -14,6 +14,7 @@ import { CreateStackComponent } from './components/create-stack/create-stack.com
 import { UserHubComponent } from './components/user-hub/user-hub.component';
 import { SelectCardStackComponent } from './components/select-card-stack/select-card-stack.component';
 import { TokenInterceptor } from './token.interceptor';
+import { CreateCardItemComponent } from './components/create-card-item/create-card-item.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { TokenInterceptor } from './token.interceptor';
     CreateStackComponent,
     UserHubComponent,
     SelectCardStackComponent,
+    CreateCardItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,9 +36,11 @@ import { TokenInterceptor } from './token.interceptor';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [{
+  providers: [
+    {
     provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
-  }],
+  }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

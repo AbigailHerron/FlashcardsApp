@@ -49,7 +49,9 @@ class userController {
     console.log('welcome to login controller');
     try {
       const conn = await sqlcon.getConnection();
+
       const { email, password } = req.body;
+      
       // Check if there's existing users in the database
       const existingUser = await conn
         .request()

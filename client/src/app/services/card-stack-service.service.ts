@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-
-
 import { IcardStack } from '../interfaces/icard-stack';
 
-import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpEvent, HttpBackend } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators'
-
-
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +21,15 @@ export class CardStackServiceService {
     .pipe(
       catchError(this.handleError)
     )
-    //console.log('Dummy getCardStackData called');
-    //return this.cardStackData; 
+  }
 
+  addCardToStack(cardStack : IcardStack): Observable<IcardStack>{
+    console.log("Post cardStack service called");
+
+    return this.http.post<IcardStack>(this.dataUri, cardStack)
+    .pipe(
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -45,6 +47,4 @@ export class CardStackServiceService {
     return throwError(
       'Something bad happened; please try again later.');
   }
-
-
 }
