@@ -1,22 +1,29 @@
 import { Injectable } from '@angular/core';
-
 import { Login } from '../interfaces/login';
 
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { User } from '../interfaces/user';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root'})
 export class BackendService {
-  private dataUri = 'http://localhost:3000/user';
 
-  constructor(private http: HttpClient) {}
+  private dataUri = 'http://localhost:3000/user';
+  private userSubject: BehaviorSubject<User|null>;
+  public user: Observable<User|null>;
+
+  constructor(private http: HttpClient) {
+    this.userSubject = new BehaviorSubject<User|null>
+    (JSON.parse(localStorage.getItem('currentUser') || '{}')) ;
+    this.user = this.userSubject.asObservable();
+  }
+
+  public get userValue(): User|null {
+    return this.userSubject.value;
+  }
+
+  // GET ALL USERS
 
   getUsers(): Observable<Login[]> {
     console.log('Get user called');
@@ -25,6 +32,26 @@ export class BackendService {
       .get<Login[]>(`${this.dataUri}`)
       .pipe(catchError(this.handleError));
   }
+
+  // REGISTER (POST) A USER
+
+
+
+  // LOGIN (GET) A USER
+  public login(user: Login): Observable<any> {
+
+    return this.http.post<any>('http://localhost:3000/user/login', user)
+    .pipe(map(user => {
+      localStorage.setItem('currentUser', JSON.stringify(user))
+      this.userSubject.next(user);
+
+      return user;
+    }
+    ))
+  }
+
+
+  // ERROR HANDLING
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

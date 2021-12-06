@@ -23,10 +23,12 @@ export class CardStackServiceService {
     )
   }
 
-  addCardToStack(cardStack : IcardStack): Observable<IcardStack>{
+  //____________________ addCardToStackMethod post http://localhost:3000/user/decks req.body
+
+  addCardToStack(cardStackDetails : IcardStack): Observable<IcardStack>{
     console.log("Post cardStack service called");
 
-    return this.http.post<IcardStack>(this.dataUri, cardStack)
+    return this.http.post<IcardStack>(this.dataUri, JSON.stringify(cardStackDetails))
     .pipe(
       catchError(this.handleError)
     )

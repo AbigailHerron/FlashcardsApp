@@ -24,14 +24,15 @@ export class CreateStackComponent implements OnInit {
       about: new FormControl('', [Validators.required, Validators.minLength(3)])
     })
   }
-
   addCard(number: number) {
     this.cardsArray.push(number);
   }
 
+  //____________________ Calling addCardtoStack method from CardStackServiceServices
+
   onSubmit() {
     // console.log('forms submitted with ');
-    // console.table(this.stackDetailsForm?.value);
+     console.table(this.stackDetailsForm?.value);
 
     this.srvCardStacks.addCardToStack({ ...this.stackDetailsForm?.value }).subscribe({
       next: details => {

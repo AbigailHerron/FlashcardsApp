@@ -8,11 +8,13 @@ class deckController {
 
       const { deckname, about, userID } = req.body;
 
+      console.log(req.body);
+
       await conn
         .request()
         .input('deck_name', deckname)
         .input('about', about)
-        .input('user_idFK', 25)
+        .input('user_idFK', userID)
         .execute('addDeck');
       res.send('You created a Deck');
     } catch (err) {

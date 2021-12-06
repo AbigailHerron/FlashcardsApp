@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { routingComponents } from 'src/app/app-routing.module';
 
 import { Login } from 'src/app/interfaces/login';
+import { BackendService } from 'src/app/services/backend.service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,6 +16,7 @@ import { Login } from 'src/app/interfaces/login';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+
   loginForm = new FormGroup({
     email: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
@@ -23,7 +26,7 @@ export class LoginComponent implements OnInit {
   message: string = '';
   err: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private service: BackendService, private router: Router) { }
 
   ngOnInit(): void {
     /*
@@ -42,14 +45,18 @@ export class LoginComponent implements OnInit {
     // }
 
   }
-  onSubmit(): void {
-    this.http
-      .post('http://localhost:3000/user/login', this.loginForm.value)
+  onSubmit() {
+    
+    this.service.login(this.loginForm.value)
       .subscribe(
-        // (response) => localStorage.setItem('userDetails', JSON.stringify(response)),
-        (response) => sessionStorage.setItem('userID', JSON.stringify(response)),
+        (response) => console.log(response),
         (error) => (this.err = error.error.msg)
       );
+
+      if (localStorage.getItem('UserID') != null)
+      {
+        this.router.navigate(['/dashboard'])
+      }
   }
 }
 

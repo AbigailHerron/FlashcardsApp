@@ -1,5 +1,8 @@
 const sqlcon = require('../dbconnection');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+
+const secret = process.env.ACCESS_TOKEN_SECRET;
 
 class userController {
   // For Testing Only
@@ -35,16 +38,22 @@ class userController {
         .input('user_email', email)
         .input('user_password', passwordHash)
         .execute('addUser');
+
       // Send User Data
       const user = await conn
         .request()
         .input('user_email', email)
         .execute('login');
+
       res.send(user.recordset[0]);
+
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
   }
+
+//################################################## LOGIN
+
   async login(req, res) {
     console.log('welcome to login controller');
     try {
@@ -64,15 +73,29 @@ class userController {
         password,
         existingUser.recordset[0].UserPass
       );
-      if (!isMatch) return res.status(400).json({ msg: 'Wrong password!' });
+      if (!isMatch) return res.status(400).json({ msg: 'Invalid Details' });
+
       // Send User Data
       const user = await conn
         .request()
         .input('user_email', email)
         .execute('login');
 
-        //Send back user details
-      res.send(user.recordset[0]);  
+      //Send back user details
+      //res.send(user.recordset[0]);  
+
+      // set the payload for the jwt.
+      let payload = {};
+      payload.UserID = user.recordset[0].UserID;
+      payload.UserEmail = user.recordset[0].UserEmail;
+
+      // sign the jwt and return it in the body of the request.       
+      let token = jwt.sign(payload, secret, { expiresIn: 60 });
+      res.status(201).json({ 
+      accessToken: token,
+      UserID: user.recordset[0].UserID,
+      UserEmail: user.recordset[0].UserEmail });
+      console.log('login success');
 
     } catch (err) {
       res.status(500).json({ msg: err.message });

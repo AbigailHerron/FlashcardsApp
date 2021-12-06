@@ -37,9 +37,9 @@ import { CreateCardItemComponent } from './components/create-card-item/create-ca
     HttpClientModule
   ],
   providers: [
-    {
-    provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
-  }
+  //   {
+  //   provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
+  // }
 ],
   bootstrap: [AppComponent]
 })
