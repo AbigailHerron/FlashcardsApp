@@ -27,13 +27,12 @@ class deckController {
     try {
       const conn = await sqlcon.getConnection();
       
-      const { UserID } = req.params; // USER ID REQUIRED
-
-      console.log(UserID);
+      //const { userID } = req.query.UserID;
       
+      // USER ID REQUIRED
       const decks = await conn
         .request()
-        .input('user_idFK', UserID) // ACCEPT USER ID
+        .input('user_idFK', req.query.UserID) // ACCEPT USER ID
         .execute('getDecks');
       
       res.json(decks.recordset);

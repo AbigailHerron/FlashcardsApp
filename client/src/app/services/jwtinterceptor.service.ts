@@ -28,15 +28,10 @@ export class JwtinterceptorService implements HttpInterceptor{
      if (accessToken && isApiUrl) {
       request = request.clone({
         setHeaders: { Authorization: `Bearer ${accessToken}` },
-        params: request.params.set('UserID', `${userID}`)
+        params: request.params.set("UserID", `${userID}`)
       });        
      }
-
-    // if (userID && isApiUrl) {
-    //   request = request.clone({
-    //       body: { body: `${userID}` }
-    //   });        
-    //
+     
     return next.handle(request);
   }
 }
