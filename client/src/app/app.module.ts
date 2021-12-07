@@ -13,8 +13,10 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { CreateStackComponent } from './components/create-stack/create-stack.component';
 import { UserHubComponent } from './components/user-hub/user-hub.component';
 import { SelectCardStackComponent } from './components/select-card-stack/select-card-stack.component';
-import { TokenInterceptor } from './token.interceptor';
+
 import { CreateCardItemComponent } from './components/create-card-item/create-card-item.component';
+
+import { JwtinterceptorService } from './services/jwtinterceptor.service';
 
 
 @NgModule({
@@ -37,9 +39,9 @@ import { CreateCardItemComponent } from './components/create-card-item/create-ca
     HttpClientModule
   ],
   providers: [
-  //   {
-  //   provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true
-  // }
+    {
+    provide: HTTP_INTERCEPTORS, useClass: JwtinterceptorService, multi: true
+    }
 ],
   bootstrap: [AppComponent]
 })

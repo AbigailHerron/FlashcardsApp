@@ -31,6 +31,8 @@ class userController {
         return res.status(400).json({ msg: 'This user already exists' });
       // Hash the Password
       const passwordHash = await bcrypt.hash(password, 10);
+
+      console.log(passwordHash);
       // Save to database
       await conn
         .request()
@@ -68,11 +70,21 @@ class userController {
         .execute('getUser');
       if (existingUser.rowsAffected[0] == 0)
         return res.status(400).json({ msg: 'User does not exist' });
+
+      console.log(existingUser.recordset[0].UserPass);
+
+      console.log(password);
+
+      let passwordHash = await bcrypt.hash(password, 10);
+
+      console.log(passwordHash);
+
       // validate Password
       const isMatch = await bcrypt.compare(
         password,
         existingUser.recordset[0].UserPass
       );
+      
       if (!isMatch) return res.status(400).json({ msg: 'Invalid Details' });
 
       // Send User Data
