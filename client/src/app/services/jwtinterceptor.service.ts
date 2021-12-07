@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } 
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } 
 from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -15,20 +15,22 @@ export class JwtinterceptorService implements HttpInterceptor{
     const user = this.backEndService.userValue;
 
     const accessToken = user?.accessToken;
-
-    //const userID = user?.UserID;
+    const userID = user?.UserID;
 
     const isApiUrl = request.url.startsWith(environment.apiUrl);
+
+    console.log(user?.UserID);
 
     console.log(isApiUrl);
 
     console.log(accessToken);
 
-    // if (accessToken && isApiUrl) {
+     if (accessToken && isApiUrl) {
       request = request.clone({
-          setHeaders: { Authorization: `Bearer ${accessToken}` }
+        setHeaders: { Authorization: `Bearer ${accessToken}` },
+        params: request.params.set('UserID', `${userID}`)
       });        
-    // }
+     }
 
     // if (userID && isApiUrl) {
     //   request = request.clone({

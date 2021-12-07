@@ -16,8 +16,8 @@ export class CardStackServiceService {
 
   private dataUri = 'http://localhost:3000/user/decks'
 
-
   getCardStacks(): Observable<IcardStack[]>{
+
     console.log("Get card service called");
 
     return this.http.get<IcardStack[]>(this.dataUri)
