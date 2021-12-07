@@ -28,5 +28,4 @@ function validJWTNeeded (req, res, next) {
         return res.status(401).send();
     }
 };
-
-module.exports = { validJWTNeeded, }
+module.exports = { validJWTNeeded }

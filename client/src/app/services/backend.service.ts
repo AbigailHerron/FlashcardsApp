@@ -50,7 +50,6 @@ export class BackendService {
     ))
   }
 
-
   // ERROR HANDLING
 
   private handleError(error: HttpErrorResponse) {
