@@ -17,7 +17,9 @@ export class CardStackServiceService {
   ) {}
 
   // Example userID, normally we would get this once the user logs in
-  userID = 25;
+    private userID = sessionStorage.getItem("UserID");
+
+
   // Example use of request parameters
   private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
 
@@ -31,13 +33,13 @@ export class CardStackServiceService {
     this.cardStackSource.next(stack)
   }
 
-  private dataUri = 'http://localhost:3000/user/decks'
+  // private dataUri = 'http://localhost:3000/user/decks'
 
   getCardStacks(): Observable<IcardStack[]>{
 
     console.log("Get card service called");
 
-    return this.http.get<IcardStack[]>(this.dataUri)
+    return this.http.get<IcardStack[]>(this.deckUri)
     .pipe(
       catchError(this.handleError)
     )

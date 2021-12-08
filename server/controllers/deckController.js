@@ -32,10 +32,10 @@ class deckController {
     console.log('welcome to getDecks controller');
     try {
       const conn = await sqlcon.getConnection();
-      console.log(req.params);
+
       const decks = await conn
         .request()
-        .input('user_idFK', req.params.userID)
+        .input('user_idFK', req.query.UserID)
         .execute('getDecks');
       res.json(decks.recordset);
     } catch (err) {
