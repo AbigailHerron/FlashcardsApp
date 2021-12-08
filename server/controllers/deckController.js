@@ -14,16 +14,15 @@ class deckController {
 
       //  console.log(req.body.DeckName);
       //  console.log(req.body.About);
-      //  console.log(req.query.UserID);
 
-      await conn
+        await conn
         .request()
         .input('deck_name', req.body.DeckName)
         .input('about', req.body.About)
-        .input('user_idFK', req.query.userID)
+        .input('user_idFK', req.query.UserID)
         .execute('addDeck');
 
-      // res.console.log(result);
+     res.json("Card stack created");
 
     } catch (err) {
       res.status(500).json({ msg: err.message });

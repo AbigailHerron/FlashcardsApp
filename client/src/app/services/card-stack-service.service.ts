@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IcardStack } from '../interfaces/icard-stack';
 
 import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpEvent, HttpBackend } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators'
 import { BackendService } from './backend.service';
 import { User } from '../interfaces/user';
@@ -14,10 +14,17 @@ export class CardStackServiceService {
 
   constructor(private http: HttpClient, private backEndService : BackendService) { }
 
-  
+  currentCardStack!: IcardStack;
+
+  private cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack)
+
+  stackSelected = this.cardStackSource.asObservable();
+
+  changeStack(stack: IcardStack) {
+    this.cardStackSource.next(stack)
+  }
 
   private dataUri = 'http://localhost:3000/user/decks'
-
 
   getCardStacks(): Observable<IcardStack[]>{
 
@@ -38,6 +45,11 @@ export class CardStackServiceService {
     .pipe(
       catchError(this.handleError)
     )
+  }
+
+  deleteCardStack(cardStackDetails: IcardStack)
+  {
+
   }
 
   private handleError(error: HttpErrorResponse) {
