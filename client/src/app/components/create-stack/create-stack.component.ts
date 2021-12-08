@@ -34,12 +34,12 @@ export class CreateStackComponent implements OnInit {
     // console.log('forms submitted with ');
      console.table(this.stackDetailsForm?.value);
 
-    this.srvCardStacks.addCardToStack({ ...this.stackDetailsForm?.value }).subscribe({
-      next: details => {
-        console.log(JSON.stringify(details) + ' has been added');
-        this.message = "new stack has been added";
-      },
-      error: (err) => this.message = err
-    });
+    // this.srvCardStacks.addCardToStack({ ...this.stackDetailsForm?.value }).subscribe({
+    //   next: details => {
+    //     console.log(JSON.stringify(details) + ' has been added');
+    //     this.message = "new stack has been added";
+    //   },
+    //   error: (err) => this.message = err
+    // });
   }
 }

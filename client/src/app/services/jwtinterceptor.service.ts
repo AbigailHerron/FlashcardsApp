@@ -19,15 +19,15 @@ export class JwtinterceptorService implements HttpInterceptor{
 
     const isApiUrl = request.url.startsWith(environment.apiUrl);
 
-    console.log(user?.UserID);
+    // console.log(user?.UserID);
 
-    console.log(isApiUrl);
+    // console.log(isApiUrl);
 
-    console.log(accessToken);
+    // console.log(accessToken);
 
      if (accessToken && isApiUrl) {
       request = request.clone({
-        setHeaders: { Authorization: `Bearer ${accessToken}` },
+        setHeaders: { Authorization: `Bearer ${accessToken}`, 'Content-Type': "application/json" },
         params: request.params.set("UserID", `${userID}`)
       });        
      }

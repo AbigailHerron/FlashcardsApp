@@ -49,14 +49,13 @@ export class LoginComponent implements OnInit {
     
     this.service.login(this.loginForm.value)
       .subscribe(
-        (response) => console.log(response),
+        (response) => {
+          console.log(response);
+          this.router.navigate(['/dashboard']);
+        }
+        ,
         (error) => (this.err = error.error.msg)
       );
-
-      if (localStorage.getItem('UserID') != null)
-      {
-        this.router.navigate(['/dashboard'])
-      }
   }
 }
 

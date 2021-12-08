@@ -2,21 +2,29 @@ const sqlcon = require('../dbconnection');
 
 class deckController {
   async addDeck(req, res) {
+
     console.log('welcome to addDeck controller');
+    
     try {
       const conn = await sqlcon.getConnection();
 
-      const { deckname, about, userID } = req.body;
+      console.log("Creating new card stack")
 
-      console.log(req.body);
+      // const { DeckName, About } = req.body;
+
+      //  console.log(req.body.DeckName);
+      //  console.log(req.body.About);
+      //  console.log(req.query.UserID);
 
       await conn
         .request()
-        .input('deck_name', deckname)
-        .input('about', about)
-        .input('user_idFK', userID)
+        .input('deck_name', req.body.DeckName)
+        .input('about', req.body.About)
+        .input('user_idFK', req.query.userID)
         .execute('addDeck');
-      res.send('You created a Deck');
+
+      // res.console.log(result);
+
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
