@@ -8,13 +8,13 @@ router.get('/info', userController.getUsers);
 router.post('/signup', userController.register);
 router.post('/login', userController.login);
 // Decks
-router.get('/:id/decks', deckController.getDecks);
-router.post('/:id/decks', deckController.addDeck);
-router.patch('/:id/deck/:deckid', deckController.updateDeck);
-router.delete('/:id/deck/:deckid', deckController.deleteDeck);
+router.get('/:userID/decks', deckController.getDecks);
+router.post('/:userID/decks', deckController.addDeck);
+router.patch('/:userID/deck/:deckID', deckController.updateDeck);
+router.delete('/:userID/deck/:deckID', deckController.deleteDeck);
 // Cards
-router.get('/:id', cardController.getCards);
-router.post('/:id', cardController.addCard);
-router.patch('/:deckid/:id', cardController.updateCard);
-router.delete('/:deckid/:id', cardController.deleteCard);
+router.get('/:userID/deck/:deckID/cards', cardController.getCards);
+router.post('/:userID/deck/:deckID/cards', cardController.addCard);
+router.patch('/:userID/deck/:deckID/card/:cardID', cardController.updateCard);
+router.delete('/:userID/deck/:deckID/card/:cardID', cardController.deleteCard);
 module.exports = router;

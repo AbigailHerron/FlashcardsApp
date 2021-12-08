@@ -13,7 +13,7 @@ class deckController {
         .request()
         .input('deck_name', deckname)
         .input('about', about)
-        .input('user_idFK', req.params.id)
+        .input('user_idFK', req.params.userID)
         .execute('addDeck');
 
       res.send('Succesully Created Deck');
@@ -29,7 +29,7 @@ class deckController {
       console.log(req.params);
       const decks = await conn
         .request()
-        .input('user_idFK', req.params.id)
+        .input('user_idFK', req.params.userID)
         .execute('getDecks');
       res.json(decks.recordset);
     } catch (err) {
@@ -46,8 +46,8 @@ class deckController {
       console.log(req.params);
       await conn
         .request()
-        .input('deck_id', req.params.deckid)
-        .input('user_id', req.params.id)
+        .input('deck_id', req.params.deckID)
+        .input('user_id', req.params.userID)
         .input('deck_name', deckname)
         .input('about', about)
         .execute('updateDeck');
@@ -64,8 +64,8 @@ class deckController {
       const conn = await sqlcon.getConnection();
       await conn
         .request()
-        .input('deck_id', req.params.deckid)
-        .input('user_id', req.params.id)
+        .input('deck_id', req.params.deckID)
+        .input('user_id', req.params.userID)
         .execute('deleteDeck');
       res.send('Deleted Deck');
     } catch (err) {
