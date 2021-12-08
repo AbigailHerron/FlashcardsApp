@@ -56,6 +56,10 @@ export class CardStackServiceService {
   deleteCardStack(cardStackDetails: IcardStack)
   {
 
+
+    return this.http
+      .post<IcardStack>(this.deckUri, JSON.stringify(cardStackDetails))
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

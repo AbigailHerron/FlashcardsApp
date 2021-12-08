@@ -21,23 +21,12 @@ class deckController {
         .input('user_idFK', req.query.UserID)
         .execute('addDeck');
 
-     res.json("Card stack created");
-
-      const { deckname, about } = req.body;
-      console.log(req.body);
-      console.log(req.params);
-      await conn
-        .request()
-        .input('deck_name', deckname)
-        .input('about', about)
-        .input('user_idFK', req.params.userID)
-        .execute('addDeck');
-
       res.send('Succesully Created Deck');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
   }
+
   // Read
   async getDecks(req, res) {
     console.log('welcome to getDecks controller');
@@ -53,6 +42,7 @@ class deckController {
       res.status(500).json({ msg: err.message });
     }
   }
+
   // Update
   async updateDeck(req, res) {
     console.log('welcome to updateDeck controller');
@@ -73,6 +63,7 @@ class deckController {
       res.status(500).json({ msg: err.message });
     }
   }
+
   // Delete
   async deleteDeck(req, res) {
     console.log('welcome to deleteDeck controller');
