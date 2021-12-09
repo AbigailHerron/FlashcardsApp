@@ -39,11 +39,13 @@ export class SelectCardStackComponent implements OnInit {
 
   // Retrieve user details from local storage + send user ID in req.body
   ngOnInit():  void {
+
     this.srvCardStacks.getCardStacks().subscribe({
       next: (value: IcardStack[])=> this.Stack = value,
       complete: () => console.log(),
       error: (mess) => this.message = mess
     })
+    
   }
 
   openDialog(){
@@ -97,5 +99,11 @@ export class SelectCardStackComponent implements OnInit {
 
   deleteCard() {
     this.srvCardStacks.deleteCardStack(this.currentCardStack);
+
+    this.srvCardStacks.getCardStacks().subscribe({
+      next: (value: IcardStack[])=> this.Stack = value,
+      complete: () => console.log(),
+      error: (mess) => this.message = mess
+    })
   }
 }

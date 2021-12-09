@@ -6,11 +6,13 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BackendService } from './backend.service';
 import { User } from '../interfaces/user';
+import { Icard } from '../interfaces/icard';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CardStackServiceService {
+
   constructor(
     private http: HttpClient,
     private backEndService: BackendService
@@ -35,6 +37,10 @@ export class CardStackServiceService {
     this.cardStackSource.next(stack)
   }
 
+  public get deckValue(): User|null {
+    return this..value;
+  }
+
   // private dataUri = 'http://localhost:3000/user/decks'
 
   getCardStacks(): Observable<IcardStack[]>{
@@ -44,6 +50,20 @@ export class CardStackServiceService {
     console.log(this.userID);
 
     return this.http.get<IcardStack[]>(this.deckUri)
+    .pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  getCardsFromStack(): Observable<Icard[]> {
+
+    console.log('Get cardsFromStack called')
+
+    console.log(this.stackSelected._subscribe());
+
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/cards`;
+
+    return this.http.get<Icard[]>(url)
     .pipe(
       catchError(this.handleError)
     )
@@ -61,7 +81,7 @@ export class CardStackServiceService {
 
   // DELETE CARD STACK
 
-  deleteCardStack(cardStackDetails: IcardStack): Observable<unknown>
+  deleteCardStack(cardStackDetails: IcardStack)
   {
   console.log("delete card stack called!");
 
@@ -69,7 +89,7 @@ export class CardStackServiceService {
 
     console.log(url);
 
-    return this.http.delete(url).pipe(catchError(this.handleError));
+    this.http.delete(url).subscribe(() => console.log('deleted'));
   }
 
   private handleError(error: HttpErrorResponse) {

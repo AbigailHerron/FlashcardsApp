@@ -72,6 +72,7 @@ class deckController {
 
     try {
       console.log(req.params.deckID);
+      console.log(req.params.userID);
 
       const conn = await sqlcon.getConnection();
       await conn
