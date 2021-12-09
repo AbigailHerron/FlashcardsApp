@@ -1,5 +1,5 @@
 export interface IcardStack {
-        DeckID: string,
+        DeckID: number,
         About: string,
         DeckName: string,
         UserID: number

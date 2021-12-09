@@ -17,8 +17,10 @@ export class CardStackServiceService {
   ) {}
 
   // Example userID, normally we would get this once the user logs in
-    private userID = sessionStorage.getItem("UserID");
+    //private userID = sessionStorage.getItem("UserID");
 
+    private user = this.backEndService.userValue;
+    private userID = this.user?.UserID;
 
   // Example use of request parameters
   private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
@@ -39,6 +41,8 @@ export class CardStackServiceService {
 
     console.log("Get card service called");
 
+    console.log(this.userID);
+
     return this.http.get<IcardStack[]>(this.deckUri)
     .pipe(
       catchError(this.handleError)
@@ -55,13 +59,17 @@ export class CardStackServiceService {
       .pipe(catchError(this.handleError));
   }
 
-  deleteCardStack(cardStackDetails: IcardStack)
+  // DELETE CARD STACK
+
+  deleteCardStack(cardStackDetails: IcardStack): Observable<unknown>
   {
+  console.log("delete card stack called!");
 
+    const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackDetails.DeckID}`;
 
-    return this.http
-      .post<IcardStack>(this.deckUri, JSON.stringify(cardStackDetails))
-      .pipe(catchError(this.handleError));
+    console.log(url);
+
+    return this.http.delete(url).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

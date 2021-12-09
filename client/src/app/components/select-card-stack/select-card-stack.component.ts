@@ -18,7 +18,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./select-card-stack.component.css']
 })
 export class SelectCardStackComponent implements OnInit {
-  @Input() cardStack!: IcardStack;
+  @Input() cstack!: IcardStack;
 
   cardStackDetails = new FormGroup({
     DeckName: new FormControl('', Validators.required),
@@ -62,11 +62,10 @@ export class SelectCardStackComponent implements OnInit {
       next: details => {
         console.log(JSON.stringify(details) + ' has been added');
         this.message = "new stack has been added";
-
         this.btnClose.nativeElement.click();
-
         this.router.navigate(['/createstack']);
       },
+      complete: () => console.log(),
       error: (err) => this.message = err
     });
 
@@ -79,7 +78,6 @@ export class SelectCardStackComponent implements OnInit {
 
   goToEditCardStack() {
     this.router.navigate(['/createstack']);
-
     //this.router.navigateByUrl('/createstack');
   }
 
@@ -97,7 +95,7 @@ export class SelectCardStackComponent implements OnInit {
     }
   }
 
-  delectCard() {
+  deleteCard() {
     this.srvCardStacks.deleteCardStack(this.currentCardStack);
   }
 }

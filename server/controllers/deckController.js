@@ -4,13 +4,13 @@ class deckController {
   // Create
   async addDeck(req, res) {
     console.log('welcome to addDeck controller');
+
     try {
       const conn = await sqlcon.getConnection();
 
       console.log("Creating new card stack")
 
       // const { DeckName, About } = req.body;
-
       //  console.log(req.body.DeckName);
       //  console.log(req.body.About);
 
@@ -18,10 +18,11 @@ class deckController {
         .request()
         .input('deck_name', req.body.DeckName)
         .input('about', req.body.About)
-        .input('user_idFK', req.query.UserID)
+        .input('user_idFK', req.params.userID)
         .execute('addDeck');
 
-      res.send('Succesully Created Deck');
+      res.json('Succesully Created Deck');
+
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
@@ -35,7 +36,7 @@ class deckController {
 
       const decks = await conn
         .request()
-        .input('user_idFK', req.query.UserID)
+        .input('user_idFK', req.params.userID)
         .execute('getDecks');
       res.json(decks.recordset);
     } catch (err) {
@@ -66,16 +67,21 @@ class deckController {
 
   // Delete
   async deleteDeck(req, res) {
+
     console.log('welcome to deleteDeck controller');
+
     try {
-      console.log(req.params);
+      console.log(req.params.deckID);
+
       const conn = await sqlcon.getConnection();
       await conn
         .request()
         .input('deck_id', req.params.deckID)
         .input('user_id', req.params.userID)
         .execute('deleteDeck');
-      res.send('Deleted Deck');
+
+      res.json('Deleted Deck');
+
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

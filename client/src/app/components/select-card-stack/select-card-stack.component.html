@@ -1,7 +1,7 @@
 <div class="container" style="min-width: 90vw; align-content: center;">
     <div class="row" style="justify-content:space-around; text-align: center;">
         
-        <div style="width: auto;" *ngFor="let stack of Stack" class="col-xs-4 mb-3 card-rows">
+        <div style="width: auto;" *ngFor="let stack of Stack" (click)="clicked(stack)" class="col-xs-4 mb-3 card-rows">
             <div class="card mx-auto card-main" style="width: 20rem;">
                 <div class="card-body" style="height: 16rem;">
                   <h5 class="card-title">{{stack.DeckName}}</h5>
@@ -14,7 +14,7 @@
                     </button>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" (click)="goToEditCardStack()">Edit</a>
-                      <a class="dropdown-item" style="color: tomato;" href="#">Delete</a>
+                      <a class="dropdown-item" style="color: tomato;" (click)="deleteCard()">Delete</a>
                     </div>
                   </div>
                 </div>
