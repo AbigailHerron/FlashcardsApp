@@ -22,32 +22,33 @@ export class CreateStackComponent implements OnInit {
   stackDetailsForm! : FormGroup;
   message : string = '';
 
+
   ngOnInit(): void {
     this.stackDetailsForm = new FormGroup({
       deckname: new FormControl('', [Validators.required, Validators.minLength(3)]),
       about: new FormControl('', [Validators.required, Validators.minLength(3)])
     })
 
+    //GET CARDS FROM STACK
+
     this.srvCardStacks.getCardsFromStack().subscribe({
       next: (value: Icard[])=> this.cardsArray = value,
-      complete: () => console.log(),
+      complete: () => console.log(this.cardsArray),
       error: (mess) => this.message = mess
     })
 
   }
 
-  // getCardsFromStack()
-  // {
-  //   this.srvCardStacks.getCardsFromStack().subscribe({
-  //     next: (value: Icard[])=> this.cardsArray = value,
-  //     complete: () => console.log(),
-  //     error: (mess) => this.message = mess
-  //   })
+  //ADD NEW CARD TO STACKS
 
-  // }
+  addNewCard() {
+    this.srvCardStacks.addBlankCardToStack();
 
-  addCard(number: number) {
-    // this.cardsArray.push(number);
+    // this.srvCardStacks.getCardsFromStack().subscribe({
+    //   next: (value: Icard[])=> this.cardsArray = value,
+    //   complete: () => console.log(this.cardsArray),
+    //   error: (mess) => this.message = mess
+    // })
 
   }
 

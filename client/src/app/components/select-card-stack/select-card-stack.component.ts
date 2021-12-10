@@ -47,6 +47,12 @@ export class SelectCardStackComponent implements OnInit {
     })
     
   }
+  clicked (cardStack: IcardStack): void {
+    this.currentCardStack = cardStack;
+    console.table(this.currentCardStack);
+
+    this.srvCardStacks.deckValue(this.currentCardStack)
+  }
 
   openDialog(){
     this.btnShow.nativeElement.click();
@@ -83,10 +89,6 @@ export class SelectCardStackComponent implements OnInit {
     //this.router.navigateByUrl('/createstack');
   }
 
-  clicked (cardStack: IcardStack): void {
-    this.currentCardStack = cardStack;
-    console.table(this.currentCardStack);
-  }
 
   isSelected(cardStack: IcardStack): boolean {
     if (!cardStack || !this.currentCardStack) {

@@ -3,17 +3,16 @@ const sqlcon = require('../dbconnection');
 class cardController {
   // Create
   async addCard(req, res) {
+
     console.log('welcome to addCard controller');
-    console.log(req.body);
-    console.log(req.params);
+
     try {
       const conn = await sqlcon.getConnection();
-      const { front, back } = req.body;
 
       await conn
         .request()
-        .input('front', front)
-        .input('back', back)
+        .input('front', req.body.Front)
+        .input('back', req.body.Back)
         .input('deckID', req.params.deckID)
         .execute('addCard');
       res.send('You created a Card');
@@ -23,8 +22,8 @@ class cardController {
   }
   // Read
   async getCards(req, res) {
-    console.log('welcome to getCards Controller');
-    console.log(req.params);
+    // console.log('welcome to getCards Controller');
+    // console.log(req.params);
     try {
       const conn = await sqlcon.getConnection();
       const cards = await conn

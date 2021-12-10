@@ -4,7 +4,7 @@
 
     <!-- CARDS GO HERE -->
     <div class="row">
-        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index"></app-create-card-item> <!--  -->
+        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index" [card]="c"></app-create-card-item> <!--  -->
     </div>
     <!------------------->
 </div>
@@ -12,7 +12,7 @@
 <!-------------------- Add card Button -------------------->
 <div class="container" style="display: flex; justify-content: center; padding-bottom: 20px;">
     <div style="text-align: center;">
-        <button (click)="addCard(1)" class="btn mx-1 my-1" style="width: 80vw; vertical-align: middle; background-color: #b8b8b8;" type="button">
+        <button (click)="addNewCard()" class="btn mx-1 my-1" style="width: 80vw; vertical-align: middle; background-color: #b8b8b8;" type="button">
             <h5 style="color: rgb(255, 255, 255);">+ New Card</h5>
         </button>
     </div>
