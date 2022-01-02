@@ -15,7 +15,9 @@ class cardController {
         .input('back', req.body.Back)
         .input('deckID', req.params.deckID)
         .execute('addCard');
-      res.send('You created a Card');
+
+      res.json('You created a Card');
+      
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

@@ -1,22 +1,41 @@
-<div class="card" style="width: 80vw;">
-    <div style="height: 30px; border-bottom: 1px solid #cecece; display: flex; padding-left: 10px; font-size: 1.2em; color: white; background-color: #000000;"></div>
-      <div class="card-body">
-        <form [formGroup]="cardForm">
-          <div class="form-row align-items-center" style="display: flex; justify-content: center;">
+<div class="card" style="width: 80vw; border: 1px solid; margin: 2em;">
+
+    <!-- <div class="row" style="padding: 1em;">
+
+      <div class="col">
+        EMPTY COLUMN
+      </div>
+
+      <div class="col">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z"/></svg>
+      </div>
+
+      <div class="col">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 6v18h18v-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.731 2 1.631 2h5.712z"/></svg>
+      </div>
+
+    </div> -->
+    
+    <form [formGroup]="cardForm" class="row" style="padding: 2em;">
+
+      <div class="col">
+        <input type="text" class="form-control" class="form-control" id="front" formControlName="front" placeholder="Front Text" style="width: 30vw;">
+      </div>
   
-            <div class="col-auto">
-              <input type="text" class="form-control mb-2" class="form-control" id="front" formControlName="front" placeholder="Front Text" style="width: 30vw;">
-            </div>
+      <div class="col">
+        <input type="text" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text" style="width: 30vw;">
+      </div>
+
+      <div class="col">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z"/></svg>
+      </div>
+
+      <div class="col">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="deleteCardFromStack()"><path d="M3 6v18h18v-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.731 2 1.631 2h5.712z"/></svg>
+      </div>
   
-            <div class="col-auto">
-              <input type="text" class="form-control mb-2" class="form-control" id="back" formControlName="back" placeholder="Back Text" style="width: 30vw;">
-            </div>
-  
-            <div class="col-auto">
-              <input type="text" class="form-control mb-2" class="form-control" id="imgUrl" formControlName="imgUrl" placeholder="Image Link" style="width: 10vw;">
-            </div>
-          
-          </div>
-        </form>
-    </div>
+      </form>
+
   </div>
+
+

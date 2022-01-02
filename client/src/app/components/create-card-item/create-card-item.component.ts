@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Icard } from 'src/app/interfaces/icard';
+import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-create-card-item',
@@ -8,11 +10,12 @@ import { Icard } from 'src/app/interfaces/icard';
   styleUrls: ['./create-card-item.component.css']
 })
 export class CreateCardItemComponent implements OnInit {
+@Input() card!: Icard;
+@Output("getCardsFromStack") getCardsFromStack: EventEmitter<any> = new EventEmitter();
 
-@Input() card?: Icard;
 cardForm!: FormGroup;
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private srvCardStacks: CardStackServiceService) { }
 
   ngOnInit(): void {
     this.cardForm = new FormGroup({
@@ -20,7 +23,6 @@ cardForm!: FormGroup;
       back: new FormControl([this.card?.Back]),
       imgUrl: new FormControl([this.card?.ImageURL])
     })
-    
   }
 
   get front() {
@@ -34,4 +36,10 @@ cardForm!: FormGroup;
     return this.cardForm?.get('imgUrl');
   }
 
+  deleteCardFromStack() {
+    this.srvCardStacks.deleteCardFromStack(this.card);
+
+    this.getCardsFromStack.emit();
+    
+  }
 }

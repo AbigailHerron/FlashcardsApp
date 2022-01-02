@@ -31,6 +31,8 @@ export class CardStackServiceService {
   private cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack)
 
   stackID = this.cardStackSource.value;
+
+  // We need to be able to retrieve a specific cards details
   
   changeStack(stack: IcardStack) {
     this.cardStackSource.next(stack)
@@ -40,17 +42,32 @@ export class CardStackServiceService {
     this.cardStackSource.next(cardStack);
   }
 
+  public get deckDetails() {
+    return this.cardStackSource.value;
+  }
+
   // private dataUri = 'http://localhost:3000/user/decks'
 
-  getCardStacks(): Observable<IcardStack[]>{
 
-    console.log("Get card service called");
 
-    return this.http.get<IcardStack[]>(this.deckUri)
-    .pipe(
-      catchError(this.handleError)
-    )
-  }
+  //____________________ addCardToStackMethod post http://localhost:3000/user/decks req.body
+
+  // ADD CARD TO STACK
+
+  // addBlankCardToStack() : Observable<Icard> {
+
+  //   console.log('Post cardStack service called');
+
+  //   const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/cards`;
+
+  //   const data = { Front: 'Front', Back: 'Back'}
+
+  //   console.log(JSON.stringify(data));
+  //   console.log(url);
+
+  //   return this.http.post<Icard>(url, JSON.stringify(data)).pipe(catchError(this.handleError));
+
+  // }
 
   getCardsFromStack(): Observable<Icard[]> {
 
@@ -68,26 +85,37 @@ export class CardStackServiceService {
     )
   }
 
-  //____________________ addCardToStackMethod post http://localhost:3000/user/decks req.body
-
-  // ADD CARD TO STACK
-
-  addBlankCardToStack() : Observable<Icard> {
+  addBlankCardToStack() {
 
     console.log('Post cardStack service called');
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/cards`;
 
-    const data = { Front: 'Front', Back: 'Back'}
+    const data = { Front: '', Back: '' };
 
     console.log(JSON.stringify(data));
     console.log(url);
 
-    return this.http.post<Icard>(url, JSON.stringify(data)).pipe(catchError(this.handleError));
+    this.http
+      .post<Icard>(url, JSON.stringify(data))
+      .subscribe(() => console.log('added'));
+  }
+
+  // DELETE A CARD FROM THE STACK
+
+  deleteCardFromStack(card: Icard) {
+
+    console.log('deleteCardFromStack called');
+
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}`;
+
+    this.http.delete(url).subscribe(() => console.log('Card deleted'));
 
   }
 
-// ADD CARDSTACK
+  //____________________________________________________________________________________________________ CRUD OPERATIONS FOR CARDSTACKS
+  
+  // CREATE CARDSTACK
 
   addCardToStack(cardStackDetails: IcardStack): Observable<IcardStack> {
 
@@ -100,18 +128,43 @@ export class CardStackServiceService {
       .pipe(catchError(this.handleError));
   }
 
+  // READ CARDSTACKS
+
+  getCardStacks(): Observable<IcardStack[]>{
+
+    console.log("Get card service called");
+
+    return this.http.get<IcardStack[]>(this.deckUri)
+    .pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  // UPDATE CARDSTACK
+
+  updateCardStack(cardStackDetails: IcardStack, cardStackID: number): Observable<IcardStack> {
+    
+    const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackID}`;
+
+    console.log("updateCardStack called");
+
+    return this.http.patch<IcardStack>(url, cardStackDetails)
+    .pipe(
+      catchError(this.handleError)
+    )
+  }
+
   // DELETE CARDSTACK
 
   deleteCardStack(cardStackDetails: IcardStack)
   {
-  console.log("delete card stack called!");
+  console.log("deleteCardStack called");
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackDetails.DeckID}`;
 
     console.log(url);
 
     this.http.delete(url).subscribe(() => console.log('deleted'));
-
 
   }
 

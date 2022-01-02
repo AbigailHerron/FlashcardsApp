@@ -12,7 +12,9 @@
   >
     <div class="card-body">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        
         <div class="form-group">
+
           <label for="email">Email</label>
           <div
             *ngIf="
@@ -61,6 +63,7 @@
         >
           Log in
         </button>
+
         <br />
         <a href="/signup">Don't have an account? Create one here</a>
       </form>

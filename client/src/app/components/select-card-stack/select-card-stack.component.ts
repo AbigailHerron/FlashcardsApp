@@ -2,15 +2,12 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 
-import { BackendService } from 'src/app/services/backend.service';
-import { BehaviorSubject } from 'rxjs';
-import { User } from 'src/app/interfaces/user';
-
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-select-card-stack',
@@ -38,6 +35,7 @@ export class SelectCardStackComponent implements OnInit {
   constructor(private srvCardStacks: CardStackServiceService, private router: Router, private modalService: NgbModal) { }
 
   // Retrieve user details from local storage + send user ID in req.body
+
   ngOnInit():  void {
 
     this.srvCardStacks.getCardStacks().subscribe({
@@ -47,6 +45,9 @@ export class SelectCardStackComponent implements OnInit {
     })
     
   }
+
+  // currentCardStack is set when a card stack is clicked/selected
+
   clicked (cardStack: IcardStack): void {
     this.currentCardStack = cardStack;
     console.table(this.currentCardStack);
@@ -54,13 +55,19 @@ export class SelectCardStackComponent implements OnInit {
     this.srvCardStacks.deckValue(this.currentCardStack)
   }
 
+  // Open Modal
+
   openDialog(){
     this.btnShow.nativeElement.click();
   }
 
+  // Close modal
+
   closeDialog(){
     this.btnClose.nativeElement.click();
   }
+
+  // Adding a new stack
 
   addNewStack() {
     console.log("Creating card stack");
@@ -68,27 +75,32 @@ export class SelectCardStackComponent implements OnInit {
       this.srvCardStacks.addCardToStack({ ...this.cardStackDetails?.value }).subscribe(
         {
       next: details => {
-        console.log(JSON.stringify(details) + ' has been added');
-        this.message = "new stack has been added";
-        this.btnClose.nativeElement.click();
-        this.router.navigate(['/createstack']);
+        console.log(JSON.stringify(details) + ' has been added'),
+        //this.message = "new stack has been added";
+        this.btnClose.nativeElement.click(),
+        this.router.navigate(['/createstack']),
+        (value: IcardStack) => this.currentCardStack = value;
       },
-      complete: () => console.log(),
+      complete: () => {
+        this.clicked(this.currentCardStack),
+        this.srvCardStacks.deckValue(this.Stack[this.Stack.length - 1]),
+        console.log(this.srvCardStacks.deckDetails)
+      },
       error: (err) => this.message = err
     });
 
     this.srvCardStacks.getCardStacks().subscribe({
       next: (value: IcardStack[])=> this.Stack = value,
-      complete: () => console.log(),
+      complete: () => console.log(this.srvCardStacks.deckDetails),
       error: (mess) => this.message = mess
     })
   }
 
+  // Editing a card stack (implements the create-stack component interfaces)
+
   goToEditCardStack() {
     this.router.navigate(['/createstack']);
-    //this.router.navigateByUrl('/createstack');
   }
-
 
   isSelected(cardStack: IcardStack): boolean {
     if (!cardStack || !this.currentCardStack) {
@@ -98,6 +110,8 @@ export class SelectCardStackComponent implements OnInit {
       return cardStack.DeckID === this.currentCardStack.DeckID;
     }
   }
+
+  // Deleting a card stack
 
   deleteCard() {
     this.srvCardStacks.deleteCardStack(this.currentCardStack);
