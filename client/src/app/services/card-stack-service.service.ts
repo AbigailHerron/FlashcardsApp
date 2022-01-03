@@ -5,7 +5,6 @@ import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpIntercepto
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { BackendService } from './backend.service';
-import { User } from '../interfaces/user';
 import { Icard } from '../interfaces/icard';
 
 @Injectable({
@@ -13,15 +12,10 @@ import { Icard } from '../interfaces/icard';
 })
 export class CardStackServiceService {
 
-  constructor(
-    private http: HttpClient,
-    private backEndService: BackendService
-  ) {
-  }
-  // Example userID, normally we would get this once the user logs in
-  //private userID = sessionStorage.getItem("UserID");
-    private user = this.backEndService.userValue;
-    private userID = this.user?.UserID;
+  constructor(private http: HttpClient, private backEndService: BackendService) { }
+
+  private user = this.backEndService.userValue;
+  private userID = this.user?.UserID;
 
   // Example use of request parameters
   private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
@@ -31,43 +25,24 @@ export class CardStackServiceService {
   private cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack)
 
   stackID = this.cardStackSource.value;
-
-  // We need to be able to retrieve a specific cards details
   
   changeStack(stack: IcardStack) {
     this.cardStackSource.next(stack)
   }
 
+  // SETTING A CARD STACK AS THE CURRENT CARD STACK
+
   public deckValue(cardStack: IcardStack) {
     this.cardStackSource.next(cardStack);
   }
+
+  // RETRIEVING CURRENT CARD STACK
 
   public get deckDetails() {
     return this.cardStackSource.value;
   }
 
-  // private dataUri = 'http://localhost:3000/user/decks'
-
-
-
-  //____________________ addCardToStackMethod post http://localhost:3000/user/decks req.body
-
-  // ADD CARD TO STACK
-
-  // addBlankCardToStack() : Observable<Icard> {
-
-  //   console.log('Post cardStack service called');
-
-  //   const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/cards`;
-
-  //   const data = { Front: 'Front', Back: 'Back'}
-
-  //   console.log(JSON.stringify(data));
-  //   console.log(url);
-
-  //   return this.http.post<Icard>(url, JSON.stringify(data)).pipe(catchError(this.handleError));
-
-  // }
+  //____________________________________________________________________________________________________ CRUD OPERATIONS FOR CARDS IN A STACK
 
   // CREATE CARDS IN STACK
 
