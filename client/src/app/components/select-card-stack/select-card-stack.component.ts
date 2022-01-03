@@ -38,12 +38,7 @@ export class SelectCardStackComponent implements OnInit {
 
   ngOnInit():  void {
 
-    this.srvCardStacks.getCardStacks().subscribe({
-      next: (value: IcardStack[])=> this.Stack = value,
-      complete: () => console.log(),
-      error: (mess) => this.message = mess
-    })
-    
+    this.getCardStacks();
   }
 
   // currentCardStack is set when a card stack is clicked/selected
@@ -75,23 +70,27 @@ export class SelectCardStackComponent implements OnInit {
       this.srvCardStacks.addCardToStack({ ...this.cardStackDetails?.value }).subscribe(
         {
       next: details => {
-        console.log(JSON.stringify(details) + ' has been added'),
-        //this.message = "new stack has been added";
+        console.log('New cardstack has been added'),
         this.btnClose.nativeElement.click(),
         this.router.navigate(['/createstack']),
-        (value: IcardStack) => this.currentCardStack = value;
+        (value: IcardStack) => this.srvCardStacks.deckValue(value);
       },
-      complete: () => {
-        this.clicked(this.currentCardStack),
-        this.srvCardStacks.deckValue(this.Stack[this.Stack.length - 1]),
+      complete: () =>
         console.log(this.srvCardStacks.deckDetails)
-      },
+      ,
       error: (err) => this.message = err
     });
 
+    this.getCardStacks();
+  }
+
+  // Retrieving cardstacks
+
+  getCardStacks() {
+
     this.srvCardStacks.getCardStacks().subscribe({
       next: (value: IcardStack[])=> this.Stack = value,
-      complete: () => console.log(this.srvCardStacks.deckDetails),
+      complete: () => console.log(),
       error: (mess) => this.message = mess
     })
   }
@@ -116,10 +115,6 @@ export class SelectCardStackComponent implements OnInit {
   deleteCard() {
     this.srvCardStacks.deleteCardStack(this.currentCardStack);
 
-    this.srvCardStacks.getCardStacks().subscribe({
-      next: (value: IcardStack[])=> this.Stack = value,
-      complete: () => console.log(),
-      error: (mess) => this.message = mess
-    })
+    this.getCardStacks();
   }
 }

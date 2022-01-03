@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class CreateStackComponent implements OnInit {
   currentCardStack!: IcardStack;
 
-  constructor(private http: HttpClient, private router: Router, private srvCardStacks: CardStackServiceService) {
+  constructor(private router: Router, private srvCardStacks: CardStackServiceService) {
      this.currentCardStack = this.srvCardStacks.deckDetails;
    }
 

@@ -14,14 +14,15 @@ export class CreateCardItemComponent implements OnInit {
 @Output("getCardsFromStack") getCardsFromStack: EventEmitter<any> = new EventEmitter();
 
 cardForm!: FormGroup;
+message : string = '';
 
   constructor(private srvCardStacks: CardStackServiceService) { }
 
   ngOnInit(): void {
     this.cardForm = new FormGroup({
       front: new FormControl([this.card?.Front]) ,
-      back: new FormControl([this.card?.Back]),
-      imgUrl: new FormControl([this.card?.ImageURL])
+      back: new FormControl([this.card?.Back])
+      // ,imgUrl: new FormControl([this.card?.ImageURL])
     })
   }
 
@@ -40,6 +41,16 @@ cardForm!: FormGroup;
     this.srvCardStacks.deleteCardFromStack(this.card);
 
     this.getCardsFromStack.emit();
-    
+  }
+
+  updateCardFromStack() {
+    this.srvCardStacks.updateCardFromStack(this.card.CardID, this.cardForm.value)
+    .subscribe({
+      next: card => {
+        console.log(JSON.stringify(card) + ' has been updated');
+      },
+      complete: () => this.getCardsFromStack.emit(),
+      error: (err) => this.message = err
+    })
   }
 }
