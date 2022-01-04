@@ -17,6 +17,7 @@ import { SelectCardStackComponent } from './components/select-card-stack/select-
 import { CreateCardItemComponent } from './components/create-card-item/create-card-item.component';
 
 import { JwtinterceptorService } from './services/jwtinterceptor.service';
+import { ViewStackComponent } from './components/view-stack/view-stack.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { JwtinterceptorService } from './services/jwtinterceptor.service';
     UserHubComponent,
     SelectCardStackComponent,
     CreateCardItemComponent,
+    ViewStackComponent,
   ],
   imports: [
     BrowserModule,

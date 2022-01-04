@@ -101,6 +101,13 @@ export class SelectCardStackComponent implements OnInit {
     this.router.navigate(['/createstack']);
   }
 
+  goToViewCardStack(stack: IcardStack) {
+
+    this.clicked(stack);
+
+    this.router.navigate(['/viewstack']);
+  }
+
   isSelected(cardStack: IcardStack): boolean {
     if (!cardStack || !this.currentCardStack) {
       return false;
@@ -114,7 +121,6 @@ export class SelectCardStackComponent implements OnInit {
 
   deleteCard() {
     this.srvCardStacks.deleteCardStack(this.currentCardStack);
-
     this.getCardStacks();
   }
 }

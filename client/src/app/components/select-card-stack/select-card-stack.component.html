@@ -6,9 +6,9 @@
                 <div class="card-body" style="height: 16rem;">
                   <h5 class="card-title">{{stack.DeckName}}</h5>
                   <div class="overflow-auto description">{{stack.About}}</div>
-                  <p>{{stack.UserID}}</p>
+                  <!-- <p>{{stack.UserID}}</p> -->
                   <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Open</button>
+                    <button type="button" class="btn btn-primary" (click)="goToViewCardStack(stack)">Open</button>
                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <span class="sr-only">Toggle Dropdown</span>
                     </button>
@@ -21,16 +21,8 @@
             </div>
         </div>
 
-        <!-- <div class="col-xs-4 mb-3 card-rows">
-            <a [routerLink]='["/createstack"]' routerLinkActive="active" href="#" class="card add-stack-btn mx-auto card-main" style="width: 20rem; height: 16rem;">
-                <div class="card-body" style="display: flex; align-items: center; justify-content: center; background-color: #0d6efd;">
-                    <h1 style="color: white;">+</h1>
-                </div>
-            </a>
-        </div> -->
-
-        <div class="col-xs-4 mb-3 card-rows" (click)="openDialog()">
-          <a class="card add-stack-btn mx-auto card-main" style="width: 20rem; height: 16rem;">
+        <div class="col-xs-4 mb-3 card-rows">
+          <a class="card add-stack-btn mx-auto card-main" style="width: 20rem; height: 16rem;" (click)="openDialog()">
               <div class="card-body" style="display: flex; align-items: center; justify-content: center; background-color: #0d6efd;">
                   <h1 style="color: white;">+</h1>
               </div>
