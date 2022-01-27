@@ -2,64 +2,71 @@
 
 <body>
   
-  <div class="flip-card" style="width: 60vw; max-height: 30vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem;"> <!-- Card container -->
+  <div class="container">
+    <div class="flip-card" style="width: 60vw; max-height: 30vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem;"> <!-- Card container -->
 
-    <audio id="bruh" preload="auto">
-      <source src="../../../assets/bruh.mp3">
-    </audio>
+      <audio id="bruh" preload="auto">
+        <source src="../../../assets/bruh.mp3">
+      </audio>
+  
+      <div class="flip-card-inner">
+      
+        <div class="flip-card-front"> <!-- Front of card -->
+  
+          <div class="row" style="padding: 1em;">
+  
+            <div class="col">
+              <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+            </div>
+  
+            <div class="col">
+              <h5>Front</h5>
+            </div>
+  
+        </div>
+  
+        <div class="row" style="padding: 1em;">
+          <div class="col">
+              <h2>{{cardsArray[indexCounter].Front}}</h2>
+          </div>
+        </div>
+  
+        </div>
+        
+        <div class="flip-card-back"> <!-- Back of card -->
+  
+          <div class="row" style="padding: 1em;">
+            <div class="col">
+              <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+            </div>
+  
+            <div class="col">
+              <h5>Back</h5>
+          </div>
+  
+        </div>
+  
+        <div class="row" style="padding: 1em;">
+          <div class="col">
+              <h2>{{cardsArray[indexCounter].Back}}</h2>
+          </div>
+      </div>
+  
+        </div>
+        
+      </div>
 
-    <div class="flip-card-inner">
+      <button type="button" class="btn btn-primary" (click)="nextCard()" style="margin: 1em; align-items: end;">Next</button>
+
+      <button type="button" class="btn btn-primary" (click)="previousCard()" style="margin: 1em; align-items: end;">Previous</button>
     
-      <div class="flip-card-front"> <!-- Front of card -->
-
-        <div class="row" style="padding: 1em;">
-
-          <div class="col">
-            <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
-          </div>
-
-          <div class="col">
-            <h5>Front</h5>
-          </div>
-
-      </div>
-
-      <div class="row" style="padding: 1em;">
-        <div class="col">
-            <h2>{{cardsArray[indexCounter].Front}}</h2>
-        </div>
-      </div>
-
-      </div>
-      
-      <div class="flip-card-back"> <!-- Back of card -->
-
-        <div class="row" style="padding: 1em;">
-          <div class="col">
-            <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
-          </div>
-
-          <div class="col">
-            <h5>Back</h5>
-        </div>
-
-      </div>
-
-      <div class="row" style="padding: 1em;">
-        <div class="col">
-            <h2>{{cardsArray[indexCounter].Back}}</h2>
-        </div>
+  
     </div>
 
-      </div>
-      
-    </div>
 
-    <button type="button" class="btn btn-primary" (click)="nextCard()" style="margin: 1em; align-items: end;">Next</button>
-
-    <button type="button" class="btn btn-primary" (click)="previousCard()" style="margin: 1em; align-items: end;">Previous</button>
 
   </div>
+
   </body>
 
   <script>
