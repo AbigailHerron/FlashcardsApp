@@ -8,6 +8,7 @@
       top: 50%;
       transform: translate(-50%, -50%);
       padding: 10px;
+      border-radius: 15px;
     "
   >
     <div class="card-body">
@@ -68,6 +69,6 @@
         <a href="/signup">Don't have an account? Create one here</a>
       </form>
     </div>
-    <div class="card" style="width: auto; padding: 10px">{{ err }}</div>
+    <div class="card" *ngIf="err" style="width: auto; padding: 10px; border-radius: 5px;">{{ err }}</div>
   </div>
 </body>
