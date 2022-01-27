@@ -1,12 +1,78 @@
+  <!-- CARD FLIPPING ANIMATION -->
+
 <body>
-    <div class="card" style="width: 60vw; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px; border: 1px solid;">
+  
+  <div class="flip-card" style="width: 60vw; max-height: 30vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem;"> <!-- Card container -->
 
-      <!-- <div class="card-body" style="border: 1px solid;" *ngFor="let card of cardsArray; let i = index">
-        <p>{{ i + 1 }} {{card.Front}}</p>
-      </div> -->
+    <div class="flip-card-inner">
+    
+      <div class="flip-card-front"> <!-- Front of card -->
 
+        <div class="row" style="padding: 1em;">
+
+          <div class="col">
+            <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+          </div>
+
+          <div class="col">
+            <h5>Front</h5>
+          </div>
+
+      </div>
+
+      <div class="row" style="padding: 1em;">
+        <div class="col">
+            <h2>{{cardsArray[indexCounter].Front}}</h2>
+        </div>
+      </div>
+
+      </div>
+      
+      <div class="flip-card-back"> <!-- Back of card -->
+
+        <div class="row" style="padding: 1em;">
+          <div class="col">
+            <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+          </div>
+
+          <div class="col">
+            <h5>Back</h5>
+        </div>
+
+      </div>
+
+      <div class="row" style="padding: 1em;">
+        <div class="col">
+            <h2>{{cardsArray[indexCounter].Back}}</h2>
+        </div>
+    </div>
+
+      </div>
+      
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="nextCard()" style="margin: 1em; align-items: end;">Next</button>
+
+  </div>
+  </body>
+
+  <!-- ORIGINAL -->
+
+    <!-- <div class="card" style="width: 60vw; max-height: 30vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem; border: 1px solid;">
       <div class="card-body">
-        <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+          <div class="row">
+              <div class="col">
+                <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+              </div>
+              <div class="col" *ngIf="isFlipped == false">
+                <h5>Front</h5>
+            </div>
+            <div class="col" *ngIf="isFlipped == true">
+                <h5>Back</h5>
+            </div>
+
+          </div>
+
 
     <div class="row">
         <div class="col" *ngIf="isFlipped == false">
@@ -28,5 +94,5 @@
         </div>
 
       </div>
-    </div>
-  </body>
+
+    </div> -->

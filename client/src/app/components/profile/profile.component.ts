@@ -14,5 +14,6 @@ export class ProfileComponent implements OnInit {
   constructor(private backEndService : BackendService) { }
 
   ngOnInit(): void {
+
   }
 }
