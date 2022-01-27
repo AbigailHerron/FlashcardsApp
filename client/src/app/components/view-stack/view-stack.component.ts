@@ -13,17 +13,24 @@ export class ViewStackComponent implements OnInit {
   cardsArray : Icard[] = [];
   message : string = '';
   indexCounter: number = 0;
-  isFlipped: boolean = false;
+  //isFlipped: boolean = false;
 
-  constructor(private srvCardStacks: CardStackServiceService) { 
-    this.currentCardStack = this.srvCardStacks.deckDetails;
+  constructor(private srvCardStacks: CardStackServiceService) {
+
+    this.srvCardStacks.cardStackSource.subscribe(cardStackSource => this.currentCardStack = cardStackSource)
+    // this.srvCardStacks.deckValue(this.currentCardStack);
+
   }
 
   ngOnInit(): void {
     
     //GET CARDS FROM STACK
-
     this.getCardsFromStack();
+
+    //Retrieve index if any
+    this.indexCounter = parseInt(sessionStorage.getItem('index') || '0');
+
+    // We need to clear the index of a saved card stack if we enter a new card stack - or save progress in each stack
 
     console.log(this.cardsArray);
   }
@@ -36,25 +43,47 @@ export class ViewStackComponent implements OnInit {
     })
   }
 
-  flipCard() {
+  // flipCard() {
 
-    if (this.isFlipped == false)
-    {
-      this.isFlipped = true;
-    }
-    else
-    this.isFlipped = false;
+  //   if (this.isFlipped == false)
+  //   {
+  //     this.isFlipped = true;
+  //   }
+  //   else
+  //   this.isFlipped = false;
 
-  }
+  // }
 
   nextCard() {
 
-    this.indexCounter++;
-
-    if (this.isFlipped == true)
+    if (this.indexCounter != this.cardsArray.length - 1)
     {
-    this.isFlipped = false;
+      this.indexCounter++;
     }
+
+    sessionStorage.setItem("index", this.indexCounter.toString())
+
+    // if (this.isFlipped == true)
+    // {
+    // this.isFlipped = false;
+    // }
+
+  }
+
+  previousCard() {
+
+    if (this.indexCounter != 0)
+    {
+      this.indexCounter--;
+    }
+
+
+    sessionStorage.setItem("index", this.indexCounter.toString())
+
+    // if (this.isFlipped == true)
+    // {
+    // this.isFlipped = false;
+    // }
 
   }
 }

@@ -12,8 +12,6 @@ import { Icard } from '../interfaces/icard';
 })
 export class CardStackServiceService {
 
-  constructor(private http: HttpClient, private backEndService: BackendService) { }
-
   private user = this.backEndService.userValue;
   private userID = this.user?.UserID;
 
@@ -22,10 +20,14 @@ export class CardStackServiceService {
 
   currentCardStack!: IcardStack;
 
-  private cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack)
-
+  public cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack)
   stackID = this.cardStackSource.value;
-  
+
+  constructor(private http: HttpClient, private backEndService: BackendService) {
+
+
+   }
+
   changeStack(stack: IcardStack) {
     this.cardStackSource.next(stack)
   }
