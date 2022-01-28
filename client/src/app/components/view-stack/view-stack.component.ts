@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Icard } from 'src/app/interfaces/icard';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
+import { Istacksettings } from 'src/app/interfaces/istacksettings';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 
 @Component({
@@ -13,45 +14,60 @@ export class ViewStackComponent implements OnInit {
   cardsArray : Icard[] = [];
   message : string = '';
   indexCounter: number = 0;
+
   //isFlipped: boolean = false;
 
+  countdown!: number;
+  stackSettings!: any; // Should be Istacksettings
+
   constructor(private srvCardStacks: CardStackServiceService) {
-
-    this.srvCardStacks.cardStackSource.subscribe(cardStackSource => this.currentCardStack = cardStackSource)
+    //this.srvCardStacks.cardStackSource.subscribe(cardStackSource => this.currentCardStack = cardStackSource)
     // this.srvCardStacks.deckValue(this.currentCardStack);
-
   }
 
   ngOnInit(): void {
     
+    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); //
+
     //GET CARDS FROM STACK
     this.getCardsFromStack();
+
+    //Retrieve selected options for stack
+    // this.stackSettings = this.srvCardStacks.deckOptionsDetails; // Option 1
+
+    this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}'); // Option 2
+
+    console.log(this.stackSettings.timerLength);
+
+    if (this.stackSettings.timerLength != null)
+    {
+      this.timer();
+    }
 
     //Retrieve index if any
     this.indexCounter = parseInt(sessionStorage.getItem('index') || '0');
 
     // We need to clear the index of a saved card stack if we enter a new card stack - or save progress in each stack
-
-    console.log(this.cardsArray);
+    // console.log(this.cardsArray);
   }
 
   getCardsFromStack() {
+
     this.srvCardStacks.getCardsFromStack().subscribe({
       next: (value: Icard[])=> this.cardsArray = value,
       complete: () => console.log(this.cardsArray),
       error: (mess) => this.message = mess
     })
+
   }
 
   // flipCard() {
-
   //   if (this.isFlipped == false)
   //   {
   //     this.isFlipped = true;
   //   }
   //   else
   //   this.isFlipped = false;
-
   // }
 
   nextCard() {
@@ -77,13 +93,23 @@ export class ViewStackComponent implements OnInit {
       this.indexCounter--;
     }
 
-
     sessionStorage.setItem("index", this.indexCounter.toString())
 
     // if (this.isFlipped == true)
     // {
     // this.isFlipped = false;
     // }
+  }
 
+  timer() {
+
+    this.countdown = this.stackSettings.timerLength;
+
+    console.log("Countdown value is" + this.countdown)
+
+    setInterval(() => {
+      // runs every 1 seconds
+      this.countdown--;
+    }, 1000)
   }
 }

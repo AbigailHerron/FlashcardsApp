@@ -3,6 +3,16 @@
 <body>
   
   <div class="container">
+
+    <div class="row">
+      <div class="col">
+        {{ currentCardStack.DeckName }}
+      </div>
+      <div class="col" *ngIf="countdown != null">
+          <p>{{ countdown }}</p>
+      </div>
+      </div>
+
     <div class="flip-card" style="width: 60vw; max-height: 30vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem;"> <!-- Card container -->
 
       <audio id="bruh" preload="auto">
@@ -69,7 +79,7 @@
 
   </body>
 
-  <script>
+  <!-- <script>
 
       var bruhOne= $("#bruh")[0];
       $(".flip-card")
@@ -78,7 +88,7 @@
       });
 
 
-    </script>
+    </script> -->
 
   <!-- ORIGINAL -->
 

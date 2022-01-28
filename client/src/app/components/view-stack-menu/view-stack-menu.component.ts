@@ -11,30 +11,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./view-stack-menu.component.css']
 })
 export class ViewStackMenuComponent implements OnInit {
-  currentCardStack!: IcardStack;
+  currentCardStack?: IcardStack;
 
   viewStackForm = new FormGroup({
     hints: new FormControl(false, Validators.required),
     timer: new FormControl(false, Validators.required),
     inputs: new FormControl(false, Validators.required),
-    timerLength: new FormControl(0, Validators.required),
-
+    timerLength: new FormControl(null, Validators.required),
   });
 
   constructor(private srvCardStacks: CardStackServiceService, private router: Router) {
-    this.currentCardStack = this.srvCardStacks.deckDetails;
+    // this.currentCardStack = this.srvCardStacks.deckDetails; // Option 1
    }
 
   ngOnInit(): void {
-    this.currentCardStack = this.srvCardStacks.deckDetails;
-  }
+    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); // Option 2
 
-  goToViewCardStack() {
-    this.router.navigate(['/viewstack']);
+    console.log(this.currentCardStack);
   }
 
   onSubmit() {
-    console.log(this.viewStackForm.value);
-  }
 
+    console.log(this.viewStackForm.value);
+
+    this.router.navigate(['/viewstack']);
+
+    //Use service to send viewStackForm values from viewStackMenu details to viewStack
+    // this.srvCardStacks.deckOptions(this.viewStackForm.value); // Option 1
+
+    sessionStorage.setItem('stackOptions', JSON.stringify(this.viewStackForm.value)); // Option 2 
+  }
 }

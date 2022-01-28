@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IcardStack } from '../interfaces/icard-stack';
+import { Istacksettings } from '../interfaces/istacksettings';
 
 import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpEvent, HttpBackend } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
@@ -20,13 +21,15 @@ export class CardStackServiceService {
   private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
 
   currentCardStack!: IcardStack;
-
   public cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack)
   stackID = this.cardStackSource.value;
 
+  selectedCardStackOptions!: Istacksettings;
+  public cardStackOptionsSource = new BehaviorSubject<Istacksettings>(this.selectedCardStackOptions);
+
   constructor(private http: HttpClient, private backEndService: BackendService) {
 
-   }
+  }
 
   changeStack(stack: IcardStack) {
     this.cardStackSource.next(stack)
@@ -41,6 +44,18 @@ export class CardStackServiceService {
 
   public get deckDetails() {
     return this.cardStackSource.value;
+  }
+
+  //____________________________________________________________________________________________________ STORE AND RETRIEVE CARDSTACKMENU OPTIONS
+
+  // Setting card stack options
+  public deckOptions(stackOptions: Istacksettings) {
+    this.cardStackOptionsSource.next(stackOptions);
+  }
+
+  // Retrieving selected options
+  public get deckOptionsDetails() {
+    return this.cardStackOptionsSource.value;
   }
 
   //____________________________________________________________________________________________________ CRUD OPERATIONS FOR CARDS IN A STACK
@@ -68,10 +83,11 @@ export class CardStackServiceService {
   getCardsFromStack(): Observable<Icard[]> {
 
     console.log('Get cardsFromStack called');
-    console.log(this.cardStackSource.value.DeckID);
+    // console.log(this.cardStackSource.value.DeckID);
 
+    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/cards`;
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/cards`;
 
     return this.http.get<Icard[]>(url)
     .pipe(

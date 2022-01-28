@@ -103,7 +103,9 @@ export class SelectCardStackComponent implements OnInit {
 
   goToViewCardStackMenu(stack: IcardStack) {
 
-    this.clicked(stack);
+    // this.clicked(stack); // Option 1
+
+    sessionStorage.setItem('stack', JSON.stringify(stack)); // Option 2 
 
     this.router.navigate(['/viewstackmenu']);
   }
