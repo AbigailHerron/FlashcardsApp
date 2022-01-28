@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Icard } from 'src/app/interfaces/icard';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
-import { Istacksettings } from 'src/app/interfaces/istacksettings';
+// import { Istacksettings } from 'src/app/interfaces/istacksettings';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 
 @Component({
@@ -14,30 +14,24 @@ export class ViewStackComponent implements OnInit {
   cardsArray : Icard[] = [];
   message : string = '';
   indexCounter: number = 0;
-
-  //isFlipped: boolean = false;
-
+  isFlipped: boolean = false; // Needed if stackOptions.inputs == true 
   countdown!: number;
   stackSettings!: any; // Should be Istacksettings
 
   constructor(private srvCardStacks: CardStackServiceService) {
-    //this.srvCardStacks.cardStackSource.subscribe(cardStackSource => this.currentCardStack = cardStackSource)
-    // this.srvCardStacks.deckValue(this.currentCardStack);
+
   }
 
   ngOnInit(): void {
     
-    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); //
+    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); // Setting currentCardStack
 
-    //GET CARDS FROM STACK
+    // Retrieve cards from stack
     this.getCardsFromStack();
 
-    //Retrieve selected options for stack
+    // Retrieve selected options for stack
     // this.stackSettings = this.srvCardStacks.deckOptionsDetails; // Option 1
-
     this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}'); // Option 2
-
-    console.log(this.stackSettings.timerLength);
 
     if (this.stackSettings.timerLength != null)
     {
@@ -48,7 +42,6 @@ export class ViewStackComponent implements OnInit {
     this.indexCounter = parseInt(sessionStorage.getItem('index') || '0');
 
     // We need to clear the index of a saved card stack if we enter a new card stack - or save progress in each stack
-    // console.log(this.cardsArray);
   }
 
   getCardsFromStack() {
@@ -61,14 +54,14 @@ export class ViewStackComponent implements OnInit {
 
   }
 
-  // flipCard() {
-  //   if (this.isFlipped == false)
-  //   {
-  //     this.isFlipped = true;
-  //   }
-  //   else
-  //   this.isFlipped = false;
-  // }
+  flipCard() {
+    if (this.isFlipped == false)
+    {
+      this.isFlipped = true;
+    }
+    else
+    this.isFlipped = false;
+  }
 
   nextCard() {
 
@@ -79,11 +72,10 @@ export class ViewStackComponent implements OnInit {
 
     sessionStorage.setItem("index", this.indexCounter.toString())
 
-    // if (this.isFlipped == true)
-    // {
-    // this.isFlipped = false;
-    // }
-
+    if (this.isFlipped == true)
+    {
+    this.isFlipped = false;
+    }
   }
 
   previousCard() {
@@ -95,17 +87,17 @@ export class ViewStackComponent implements OnInit {
 
     sessionStorage.setItem("index", this.indexCounter.toString())
 
-    // if (this.isFlipped == true)
-    // {
-    // this.isFlipped = false;
-    // }
+    if (this.isFlipped == true)
+    {
+    this.isFlipped = false;
+    }
   }
 
   timer() {
 
-    this.countdown = this.stackSettings.timerLength;
+    this.countdown = this.stackSettings.timerLength; // Setting countdown
 
-    console.log("Countdown value is" + this.countdown)
+    console.log("Countdown value is " + this.countdown)
 
     setInterval(() => {
       // runs every 1 seconds
