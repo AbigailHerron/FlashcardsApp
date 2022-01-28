@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { interval } from 'rxjs';
 import { Icard } from 'src/app/interfaces/icard';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 // import { Istacksettings } from 'src/app/interfaces/istacksettings';
@@ -17,12 +20,20 @@ export class ViewStackComponent implements OnInit {
   isFlipped: boolean = false; // Needed if stackOptions.inputs == true 
   countdown!: number;
   stackSettings!: any; // Should be Istacksettings
+  interval: any;
 
-  constructor(private srvCardStacks: CardStackServiceService) {
+  cardForm!: FormGroup;
+  isCorrect!: boolean;
+
+  constructor(private srvCardStacks: CardStackServiceService, private router: Router) {
 
   }
 
   ngOnInit(): void {
+
+    this.cardForm = new FormGroup({
+      answer: new FormControl('', [Validators.required])
+    })
     
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); // Setting currentCardStack
 
@@ -39,7 +50,7 @@ export class ViewStackComponent implements OnInit {
     }
 
     //Retrieve index if any
-    this.indexCounter = parseInt(sessionStorage.getItem('index') || '0');
+    //this.indexCounter = parseInt(sessionStorage.getItem('index') || '0');
 
     // We need to clear the index of a saved card stack if we enter a new card stack - or save progress in each stack
   }
@@ -65,17 +76,17 @@ export class ViewStackComponent implements OnInit {
 
   nextCard() {
 
+    if (this.isFlipped == true) // Returning card side to front
+    {
+    this.isFlipped = false;
+    }
+
     if (this.indexCounter != this.cardsArray.length - 1)
     {
       this.indexCounter++;
     }
 
     sessionStorage.setItem("index", this.indexCounter.toString())
-
-    if (this.isFlipped == true)
-    {
-    this.isFlipped = false;
-    }
   }
 
   previousCard() {
@@ -87,21 +98,73 @@ export class ViewStackComponent implements OnInit {
 
     sessionStorage.setItem("index", this.indexCounter.toString())
 
-    if (this.isFlipped == true)
+    if (this.isFlipped == true) // Returning card side to front
     {
     this.isFlipped = false;
     }
   }
 
   timer() {
-
     this.countdown = this.stackSettings.timerLength; // Setting countdown
 
-    console.log("Countdown value is " + this.countdown)
-
-    setInterval(() => {
+    this.interval = setInterval(() => {
       // runs every 1 seconds
+
+      if (this.countdown < 0) {
+        clearInterval(this.interval);
+      }
+
       this.countdown--;
     }, 1000)
+  }
+
+  onSubmit() {
+
+    clearInterval(this.interval);
+
+    var button = (document.getElementById("submitButton") as HTMLButtonElement); // Useful
+    button.disabled = true;
+
+    var input = (document.getElementById("answer") as HTMLInputElement);
+    input.disabled = true;
+
+    this.isFlipped = true;
+
+    var answer = this.cardForm.value.answer;
+    this.isCorrect = this.compareAnswers(answer);
+
+    setTimeout(() => {
+      // After 5 seconds we move onto the next card in the array
+
+      if (this.indexCounter == this.cardsArray.length - 1)
+      {
+        this.finish();
+      }
+      else{
+        this.nextCard();
+
+        button.disabled = false;
+        input.disabled = false;
+  
+        input.value = '';
+      }
+    }, 1000);
+  }
+
+  compareAnswers(answer: any) : boolean {
+
+    console.log(answer);
+
+    if (answer.toString() == this.cardsArray[this.indexCounter].Back)
+    {
+      return true;
+    }
+    else return false;
+  }
+
+  finish() { // This function should be able to be called also when user views stacks without inputs
+
+    this.router.navigate(['/userhub']); // Redirect to results component? 
+
   }
 }

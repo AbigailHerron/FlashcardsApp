@@ -43,7 +43,7 @@
   
         </div>
         
-        <div class="flip-card-back"> <!-- Back of card -->
+        <div class="flip-card-back" [ngStyle]="{'background-color': isCorrect == true ? 'green' : 'red'}"> <!-- Back of card -->
   
           <div class="row" style="padding: 1em;">
             <div class="col">
@@ -66,16 +66,37 @@
         
       </div>
 
-      <button type="button" class="btn btn-primary" (click)="flipCard()" style="margin: 1em; align-items: end;">Flip</button>
+      <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
 
-      <button type="button" class="btn btn-primary" (click)="nextCard()" style="margin: 1em; align-items: end;">Next</button>
+      <div class="form-row align-items-center">
 
-      <button type="button" class="btn btn-primary" (click)="previousCard()" style="margin: 1em; align-items: end;">Previous</button>
+        <div class="col-auto" *ngIf="stackSettings.inputs == true">
+          <label class="sr-only" for="inlineFormInput">Answer</label>
+          <input type="text" class="form-control mb-2" id="answer" formControlName="answer" placeholder="Enter answer">
+        </div>
+
+        <div class="col-auto" *ngIf="stackSettings.inputs == true">
+          <button type="submit" class="btn btn-primary" style="margin: 1em; align-items: end;" id="submitButton">Submit</button>
+        </div>
+
+        <div class="col-auto" *ngIf="stackSettings.inputs == false">
+          <button type="button" class="btn btn-primary" (click)="flipCard()" style="margin: 1em; align-items: end;">Flip</button>
+        </div>
+
+        <div class="col-auto" *ngIf="stackSettings.inputs == false">
+          <button type="button" class="btn btn-primary" (click)="nextCard()" style="margin: 1em; align-items: end;">Next</button>
+        </div> 
+
+        <div class="col-auto" *ngIf="stackSettings.inputs == false">
+          <button type="button" class="btn btn-primary" (click)="previousCard()" style="margin: 1em; align-items: end;">Previous</button>
+        </div>
+
+      </div>
+
+    </form>
     
   
     </div>
-
-
 
   </div>
 

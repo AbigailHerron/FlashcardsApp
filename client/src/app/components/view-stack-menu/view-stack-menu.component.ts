@@ -36,7 +36,7 @@ export class ViewStackMenuComponent implements OnInit {
 
     this.router.navigate(['/viewstack']);
 
-    //Use service to send viewStackForm values from viewStackMenu details to viewStack
+    // Use service to send viewStackForm values from viewStackMenu details to viewStack
     // this.srvCardStacks.deckOptions(this.viewStackForm.value); // Option 1
 
     sessionStorage.setItem('stackOptions', JSON.stringify(this.viewStackForm.value)); // Option 2 
