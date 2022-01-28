@@ -8,7 +8,7 @@
                   <div class="overflow-auto description">{{stack.About}}</div>
                   <!-- <p>{{stack.UserID}}</p> -->
                   <div class="btn-group">
-                    <button type="button" class="btn btn-primary" (click)="goToViewCardStack(stack)">Open</button>
+                    <button type="button" class="btn btn-primary" (click)="goToViewCardStackMenu(stack)">Open</button>
                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <span class="sr-only">Toggle Dropdown</span>
                     </button>
@@ -43,11 +43,11 @@
               <form [formGroup]="cardStackDetails">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Deck Name</label>
-                <input type="text" formControlName="DeckName" class="form-control" id="exampleFormControlInput1" placeholder="enter title">
+                <input type="text" formControlName="DeckName" class="form-control" id="exampleFormControlInput1" placeholder="Enter title">
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlTextarea1" class="form-label">About</label>
-                <textarea class="form-control" formControlName="About" placeholder="enter some text" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <textarea class="form-control" formControlName="About" placeholder="Enter some text" id="exampleFormControlTextarea1" rows="3"></textarea>
               </div>
               </form>
             </div>

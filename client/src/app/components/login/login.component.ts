@@ -3,12 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { routingComponents } from 'src/app/app-routing.module';
-
 import { Login } from 'src/app/interfaces/login';
 import { BackendService } from 'src/app/services/backend.service';
-
 
 @Component({
   selector: 'app-login',
@@ -29,22 +25,9 @@ export class LoginComponent implements OnInit {
   constructor(private http: HttpClient, private service: BackendService, private router: Router) { }
 
   ngOnInit(): void {
-    /*
-    this.loginService.getUsers().subscribe({
-      next: (value: Login[]) => (this.login = value),
-      complete: () => console.log(this.login),
-      error: (mess) => (this.message = mess),
-    });
-    */
-
-    //CHECK TO SEE IF USER IS LOGGED IN, IF SO REDIRECT #####
-
-    // if (localStorage.getItem("loggedIn") == "true")
-    // {
-    //     this.router.navigate(['/dashboard']);
-    // }
 
   }
+  
   onSubmit() {
     
     this.service.login(this.loginForm.value)

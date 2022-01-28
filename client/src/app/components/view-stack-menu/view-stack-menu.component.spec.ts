@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { ViewStackMenuComponent } from './view-stack-menu.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('ViewStackMenuComponent', () => {
+  let component: ViewStackMenuComponent;
+  let fixture: ComponentFixture<ViewStackMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ]
+      declarations: [ ViewStackMenuComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(ViewStackMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,8 +22,4 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // Custom tests for login component
-
-  
 });

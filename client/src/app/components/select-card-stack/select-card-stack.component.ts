@@ -101,11 +101,11 @@ export class SelectCardStackComponent implements OnInit {
     this.router.navigate(['/createstack']);
   }
 
-  goToViewCardStack(stack: IcardStack) {
+  goToViewCardStackMenu(stack: IcardStack) {
 
     this.clicked(stack);
 
-    this.router.navigate(['/viewstack']);
+    this.router.navigate(['/viewstackmenu']);
   }
 
   isSelected(cardStack: IcardStack): boolean {

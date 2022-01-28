@@ -12,6 +12,7 @@ import { Icard } from '../interfaces/icard';
 })
 export class CardStackServiceService {
 
+  // Retrieving user, then userID
   private user = this.backEndService.userValue;
   private userID = this.user?.UserID;
 
@@ -25,7 +26,6 @@ export class CardStackServiceService {
 
   constructor(private http: HttpClient, private backEndService: BackendService) {
 
-
    }
 
   changeStack(stack: IcardStack) {
@@ -33,7 +33,6 @@ export class CardStackServiceService {
   }
 
   // SETTING A CARD STACK AS THE CURRENT CARD STACK
-
   public deckValue(cardStack: IcardStack) {
     this.cardStackSource.next(cardStack);
   }
@@ -97,7 +96,6 @@ export class CardStackServiceService {
       catchError(this.handleError)
     )
   }
-
 
   // DELETE A CARD FROM THE STACK
 

@@ -7,6 +7,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { UserHubComponent } from './components/user-hub/user-hub.component';
 import { CreateStackComponent } from './components/create-stack/create-stack.component';
 import { ViewStackComponent } from './components/view-stack/view-stack.component';
+import { ViewStackMenuComponent } from './components/view-stack-menu/view-stack-menu.component';
 
 
 const routes: Routes = [ 
@@ -17,6 +18,7 @@ const routes: Routes = [
 {path: 'profile', component: ProfileComponent},
 {path: 'userhub', component: UserHubComponent},
 {path: 'createstack', component: CreateStackComponent},
+{path: 'viewstackmenu', component: ViewStackMenuComponent},
 {path: 'viewstack', component: ViewStackComponent},
 { path: '**', redirectTo: '' } // Otherwise redirect to home
 ];
