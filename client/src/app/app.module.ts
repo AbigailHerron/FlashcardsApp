@@ -19,6 +19,7 @@ import { CreateCardItemComponent } from './components/create-card-item/create-ca
 import { JwtinterceptorService } from './services/jwtinterceptor.service';
 import { ViewStackComponent } from './components/view-stack/view-stack.component';
 import { ViewStackMenuComponent } from './components/view-stack-menu/view-stack-menu.component';
+import { ViewResultsComponent } from './components/view-results/view-results.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { ViewStackMenuComponent } from './components/view-stack-menu/view-stack-
     CreateCardItemComponent,
     ViewStackComponent,
     ViewStackMenuComponent,
+    ViewResultsComponent,
   ],
   imports: [
     BrowserModule,

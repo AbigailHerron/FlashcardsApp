@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { interval } from 'rxjs';
 import { Icard } from 'src/app/interfaces/icard';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 // import { Istacksettings } from 'src/app/interfaces/istacksettings';
@@ -24,6 +23,8 @@ export class ViewStackComponent implements OnInit {
 
   cardForm!: FormGroup;
   isCorrect!: boolean;
+
+  answeredCorrectly: string[] = [];
 
   constructor(private srvCardStacks: CardStackServiceService, private router: Router) {
 
@@ -140,13 +141,16 @@ export class ViewStackComponent implements OnInit {
       {
         this.finish();
       }
-      else{
+      else
+      {
         this.nextCard();
 
         button.disabled = false;
         input.disabled = false;
   
         input.value = '';
+
+        this.timer();
       }
     }, 1000);
   }
@@ -157,14 +161,29 @@ export class ViewStackComponent implements OnInit {
 
     if (answer.toString() == this.cardsArray[this.indexCounter].Back)
     {
+      this.answeredCorrectly.push('Correct');
       return true;
+
     }
-    else return false;
+    else 
+    {
+      this.answeredCorrectly.push('Incorrect');
+      return false;
+    }
+
   }
 
   finish() { // This function should be able to be called also when user views stacks without inputs
 
-    this.router.navigate(['/userhub']); // Redirect to results component? 
+    sessionStorage.setItem('answeredCorrectly', JSON.stringify(this.answeredCorrectly));
 
+    if (this.stackSettings.inputs == true)
+    {
+      this.router.navigate(['/viewresults']);
+    }
+    else
+    {
+      this.router.navigate(['/userhub']);
+    }
   }
 }

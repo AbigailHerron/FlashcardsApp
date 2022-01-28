@@ -8,6 +8,7 @@ import { UserHubComponent } from './components/user-hub/user-hub.component';
 import { CreateStackComponent } from './components/create-stack/create-stack.component';
 import { ViewStackComponent } from './components/view-stack/view-stack.component';
 import { ViewStackMenuComponent } from './components/view-stack-menu/view-stack-menu.component';
+import { ViewResultsComponent } from './components/view-results/view-results.component';
 
 
 const routes: Routes = [ 
@@ -20,6 +21,7 @@ const routes: Routes = [
 {path: 'createstack', component: CreateStackComponent},
 {path: 'viewstackmenu', component: ViewStackMenuComponent},
 {path: 'viewstack', component: ViewStackComponent},
+{path: 'viewresults', component: ViewResultsComponent},
 { path: '**', redirectTo: '' } // Otherwise redirect to home
 ];
 
