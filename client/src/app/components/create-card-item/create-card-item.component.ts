@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Icard } from 'src/app/interfaces/icard';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 import { EventEmitter } from '@angular/core';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-card-item',
@@ -16,13 +17,14 @@ export class CreateCardItemComponent implements OnInit {
 cardForm!: FormGroup;
 message : string = '';
 
+
   constructor(private srvCardStacks: CardStackServiceService) { }
 
   ngOnInit(): void {
     this.cardForm = new FormGroup({
       front: new FormControl([this.card?.Front]) ,
-      back: new FormControl([this.card?.Back])
-      // ,imgUrl: new FormControl([this.card?.ImageURL])
+      back: new FormControl([this.card?.Back]),
+      imgUrl!: new FormControl([this.card?.ImageURL])
     })
   }
 
@@ -53,4 +55,19 @@ message : string = '';
       error: (err) => this.message = err
     })
   }
+
+  // onSubmit() {
+
+  //   //Adding image to card on Submit
+
+  //   this.srvCardStacks.addImageToCard(this.card.CardID, this.cardForm.value.imgURL) // req.image
+  //   .subscribe({
+  //     next: image => {
+  //       console.log(JSON.stringify(image) + ' has been updated');
+  //     },
+  //     complete: () => console.log('Complete'),
+  //     error: (err) => this.message = err
+  //   })
+
+  // }
 }

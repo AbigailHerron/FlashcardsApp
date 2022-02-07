@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ViewResultsComponent } from './view-results.component';
 
 describe('ViewResultsComponent', () => {

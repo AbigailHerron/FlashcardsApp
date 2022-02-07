@@ -11,7 +11,7 @@ export class ViewResultsComponent implements OnInit {
   constructor() { }
 
   currentCardStack!: IcardStack;
-  answeredCorrectly!: string[];
+  answeredCorrectly: string[] = [];
 
   ngOnInit(): void {
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');

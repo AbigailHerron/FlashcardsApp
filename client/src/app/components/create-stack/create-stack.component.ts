@@ -27,9 +27,10 @@ export class CreateStackComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.stackDetailsForm = new FormGroup({
-      deckname: new FormControl(this.currentCardStack.DeckName, [Validators.required, Validators.minLength(3)]),
-      about: new FormControl(this.currentCardStack.About, [Validators.required, Validators.minLength(3)])
+      deckname: new FormControl(this.currentCardStack?.DeckName, [Validators.required, Validators.minLength(3)]),
+      about: new FormControl(this.currentCardStack?.About, [Validators.required, Validators.minLength(3)])
     })
 
     //GET CARDS FROM STACK

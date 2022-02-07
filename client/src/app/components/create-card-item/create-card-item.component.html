@@ -15,27 +15,87 @@
       </div>
 
     </div> -->
+
+    <!-- <div class="row">
+      <div class="col-sm-12">
+        <div class="preview-images"></div>
+      </div>
+    </div> -->
     
-    <form [formGroup]="cardForm" class="row" style="padding: 2em;">
+    <form [formGroup]="cardForm" class="row"  style="padding: 2em;"> <!-- (ngSubmit) = "onSubmit()" -->
 
-      <div class="col">
-        <input type="text" class="form-control" class="form-control" id="front" formControlName="front" placeholder="Front Text" style="width: 30vw;">
-      </div>
-  
-      <div class="col">
-        <input type="text" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text" style="width: 30vw;">
-      </div>
+      <div class="form-row" style="padding: 1em;">
 
-      <div class="col">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="updateCardFromStack()"><path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z"/></svg>
+      <div class="col-sm-4">
+        <label for="front">Front</label>
+        <input type="text" class="form-control" class="form-control" id="front" formControlName="front" placeholder="Front Text">
       </div>
 
-      <div class="col">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="deleteCardFromStack()"><path d="M3 6v18h18v-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.731 2 1.631 2h5.712z"/></svg>
+      <div class="col-sm-4">
+        <label for="imageURL">Image URL</label>
+        <input type="text" class="form-control" class="form-control" id="imageURL" formControlName="imageURL" placeholder="Enter image URL">
       </div>
-  
-      </form>
 
-  </div>
+      <div class="col">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+
+      <!-- <div class="col">
+        <label for="imgURL">Image</label>
+          <input
+            type="file"
+            name="file"
+            id="imgUrl"
+            formControlName="imgUrl"
+            class="form-control-file border"
+          />
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+
+      </div> -->
+      </div>
+
+      <div class="row" style="padding: 1em;">
+        <div class="col">
+          <label for="back">Back</label>
+          <input type="text" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text">
+        </div>
+      </div>
+
+      <div class="row" style="padding: 1em;">
+        <div class="col-sm-4" style="border: solid 1px; display: grid; grid-template-columns: auto auto;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="updateCardFromStack()"><path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="deleteCardFromStack()"><path d="M3 6v18h18v-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.731 2 1.631 2h5.712z"/></svg>
+        </div>
+      </div>
+
+    </form>
+</div>
+
+  <!-- Previewing image -->
+
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      let imagesPreview = function(input, placeToInsertImagePreview) {
+        if (input.files) {
+          let filesAmount = input.files.length;
+          for (i = 0; i < filesAmount; i++) {
+            let reader = new FileReader();
+            reader.onload = function(event) {
+              $($.parseHTML("<img>"))
+                .attr("src", event.target.result)
+                .appendTo(placeToInsertImagePreview);
+            };
+            reader.readAsDataURL(input.files[i]);
+          }
+        }
+      };
+      $("#input-files").on("change", function() {
+        imagesPreview(this, "div.preview-images");
+      });
+    });
+</script> -->
 
 

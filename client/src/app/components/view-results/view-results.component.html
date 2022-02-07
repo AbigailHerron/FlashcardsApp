@@ -28,7 +28,7 @@
                             </thead>
 
                             <tbody>
-                                <tr *ngFor="let result of answeredCorrectly; let i = index">
+                                <tr *ngFor="let result of [answeredCorrectly]; let i = index">
                                     <td>{{i + 1}}</td>
                                     <td>{{result}}</td>
                                 </tr>

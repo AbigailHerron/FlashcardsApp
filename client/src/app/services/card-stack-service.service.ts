@@ -60,6 +60,24 @@ export class CardStackServiceService {
 
   //____________________________________________________________________________________________________ CRUD OPERATIONS FOR CARDS IN A STACK
 
+  //ADD IMAGE TO CARD
+  
+  // addImageToCard(cardID: any, image: any) {
+
+  //   console.log('Adding image');
+
+  //   console.log(cardID);
+
+  //   console.log(image);
+
+  //   let ImageURI: string = 'https://localhost:8080/upload';
+
+  //   return this.http.post<any>(ImageURI, image)
+  //   .pipe(
+  //     catchError(this.handleError)
+  //   )
+  // }
+
   // CREATE CARDS IN STACK
 
   addBlankCardToStack() {
