@@ -105,6 +105,8 @@ export class CardStackServiceService {
 
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
+    //this.currentCardStack = this.deckDetails;
+
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/cards`;
 
     return this.http.get<Icard[]>(url)

@@ -48,6 +48,10 @@ export class SelectCardStackComponent implements OnInit {
     console.table(this.currentCardStack);
 
     this.srvCardStacks.deckValue(this.currentCardStack)
+
+    sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
+
+
   }
 
   // Open Modal

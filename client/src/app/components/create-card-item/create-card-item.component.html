@@ -1,4 +1,4 @@
-<div class="card" style="width: 80vw; margin: 2em;">
+<div class="card bg-dark" style="width: 80vw; margin: 2em;">
 
     <!-- <div class="row" style="padding: 1em;">
 
@@ -22,7 +22,16 @@
       </div>
     </div> -->
     
-    <form [formGroup]="cardForm" class="row"  style="padding: 2em;"> <!-- (ngSubmit) = "onSubmit()" -->
+    <form [formGroup]="cardForm" class="row"  style="padding: 1em;"> <!-- (ngSubmit) = "onSubmit()" -->
+
+      <div class="row">
+        <div class="col"> <!-- style="display: grid; grid-template-columns: auto auto;" -->
+
+          <a class="material-icons md-36 md-light" (click)="updateCardFromStack()" style="color: white;">save</a>
+          <a class="material-icons md-36 md-light" (click)="deleteCardFromStack()" style="color: white;">delete</a>
+
+        </div>
+      </div>
 
       <div class="form-row" style="padding: 1em;">
 
@@ -31,14 +40,14 @@
         <input type="text" class="form-control" class="form-control" id="front" formControlName="front" placeholder="Front Text">
       </div>
 
-      <div class="col-sm-4">
+      <!-- <div class="col-sm-4">
         <label for="imageURL">Image URL</label>
         <input type="text" class="form-control" class="form-control" id="imageURL" formControlName="imageURL" placeholder="Enter image URL">
-      </div>
+      </div> -->
 
-      <div class="col">
+      <!-- <div class="col">
         <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
+      </div> -->
 
       <!-- <div class="col">
         <label for="imgURL">Image</label>
@@ -53,19 +62,10 @@
           <button type="submit" class="btn btn-primary">Submit</button>
 
       </div> -->
-      </div>
 
-      <div class="row" style="padding: 1em;">
         <div class="col">
           <label for="back">Back</label>
-          <input type="text" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text">
-        </div>
-      </div>
-
-      <div class="row" style="padding: 1em;">
-        <div class="col-sm-4" style="border: solid 1px; display: grid; grid-template-columns: auto auto;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="updateCardFromStack()"><path d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z"/></svg>
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" (click)="deleteCardFromStack()"><path d="M3 6v18h18v-18h-18zm19-4v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.731 2 1.631 2h5.712z"/></svg>
+          <input type="textarea" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text">
         </div>
       </div>
 

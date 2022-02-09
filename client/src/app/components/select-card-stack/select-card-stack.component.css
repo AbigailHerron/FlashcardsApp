@@ -8,18 +8,43 @@
     }
 }
 
-.add-stack-btn:hover{
+h1{
+    color:white;
+}
+
+.add-stack-btn{
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    background-color: #03DAC5;
+    color: white;
+
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+}
+
+/* .add-stack-btn:hover{
     text-decoration: none;
     background-color: white;
+} */
+
+.btn{
+    background-color: #03DAC5;
 }
 
 .description{
     height: 85px;
+    color: white;
 }
 
 .card {
     border-radius: 15px;
     padding: 1em;
+}
+
+.card-title{
+    color: white;
 }
 
 /* Grow Shadow */
@@ -43,4 +68,12 @@
 
   .modal-content {
       border-radius: 15px;
+      color: white;
   }
+
+  
+input{
+    background-color: #d1d1d1;
+}
+
+.material-icons.md-36 { font-size: 36px; }

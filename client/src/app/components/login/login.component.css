@@ -1,3 +1,15 @@
 input:invalid {
   border: 2px solid red;
 }
+
+.card-body{
+  color: white;
+}
+
+input[type="email"] {
+  background-color: #d1d1d1;
+}
+
+input[type="password"] {
+  background-color: #d1d1d1;
+}

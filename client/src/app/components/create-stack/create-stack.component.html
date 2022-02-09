@@ -9,24 +9,17 @@
     <!------------------->
 </div>
 
-<!-------------------- Add card Button -------------------->
-<div class="container" style="display: flex; justify-content: center; padding-bottom: 20px;">
-    <div style="text-align: center;">
-        <button (click)="addNewCard()" class="btn" style="vertical-align: middle; background-color: #b8b8b8;" type="button">
-            <h5 style="color: rgb(255, 255, 255);">+ New Card</h5>
-        </button>
-    </div>
-</div>
-<!--------------------------------------------------------->
+ <!-- Buttons -->
+
+    <button type="button" class="material-icons md-36 btn btn-lg add-stack-btn hvr-grow-shadow" (click)="addNewCard()">add</button>
+
+    <button class="material-icons md-36 btn btn-lg save-button hvr-grow-shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings" style="background-color: #BB86FC;">
+        save
+    </button>
 
 <div class="container" style="display: flex; justify-content: center;">
 
-    <!----------------- Save Stack Button ----------------->
-    <div style="text-align: center;">
-        <button class="btn btn-primary mx-1 my-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings">
-            Save
-        </button>
-    </div>
+
     <!----------------------------------------------------->
 
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettingsLabel" style="border-right: 1px solid black;">

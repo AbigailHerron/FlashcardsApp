@@ -3,3 +3,13 @@
     border-radius: 15px;
     padding: 1em;
 }
+
+label{
+    color: white;
+}
+
+input{
+    background-color: #d1d1d1;
+}
+
+.material-icons.md-36 { font-size: 36px; }
