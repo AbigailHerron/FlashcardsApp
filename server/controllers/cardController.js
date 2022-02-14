@@ -3,7 +3,6 @@ const sqlcon = require('../dbconnection');
 class cardController {
   // Create
   async addCard(req, res) {
-
     console.log('welcome to addCard controller');
 
     try {
@@ -17,7 +16,6 @@ class cardController {
         .execute('addCard');
 
       res.json('You created a Card');
-      
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
@@ -69,6 +67,36 @@ class cardController {
         .input('card_id', req.params.cardID)
         .execute('deleteCard');
       res.send('Deleted Card');
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+  // EASY
+  async easyCard(req, res) {
+    console.log('welcome to easyCard controller');
+    try {
+      const conn = await sqlcon.getConnection();
+      await conn
+        .request()
+        .input('deck_id', req.params.deckID)
+        .input('card_id', req.params.cardID)
+        .execute('easyCard');
+      res.send('Card marked as easy');
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+  // HARD
+  async hardCard(req, res) {
+    console.log('welcome to hardCard controller');
+    try {
+      const conn = await sqlcon.getConnection();
+      await conn
+        .request()
+        .input('deck_id', req.params.deckID)
+        .input('card_id', req.params.cardID)
+        .execute('hardCard');
+      res.send('Card marked as hard');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
