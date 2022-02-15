@@ -20,7 +20,7 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
-  // Read
+  // Returns Certain Cards
   async getCards(req, res) {
     // console.log('welcome to getCards Controller');
     // console.log(req.params);
@@ -31,6 +31,22 @@ class cardController {
         .input('deck_id', req.params.deckID)
         .input('user_id', req.params.userID)
         .execute('getCards');
+      res.json(cards.recordset);
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+  // Returrns All Cards
+  async getAllCards(req, res) {
+    // console.log('welcome to getCards Controller');
+    // console.log(req.params);
+    try {
+      const conn = await sqlcon.getConnection();
+      const cards = await conn
+        .request()
+        .input('deck_id', req.params.deckID)
+        .input('user_id', req.params.userID)
+        .execute('getAllCards');
       res.json(cards.recordset);
     } catch (err) {
       res.status(500).json({ msg: err.message });
