@@ -24,7 +24,7 @@ message : string = '';
     this.cardForm = new FormGroup({
       front: new FormControl([this.card?.Front]) ,
       back: new FormControl([this.card?.Back]),
-      // imgUrl!: new FormControl([this.card?.ImageURL])
+      imgUrl!: new FormControl([this.card?.ImageURL])
     })
   }
 

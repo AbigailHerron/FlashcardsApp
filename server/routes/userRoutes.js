@@ -16,6 +16,8 @@ router.delete('/:userID/deck/:deckID', deckController.deleteDeck);
 router.get('/:userID/deck/:deckID/cards', cardController.getCards);
 router.post('/:userID/deck/:deckID/cards', cardController.addCard);
 router.patch('/:userID/deck/:deckID/card/:cardID', cardController.updateCard);
+
+//New routes
 router.patch(
   '/:userID/deck/:deckID/card/:cardID/easy',
   cardController.easyCard

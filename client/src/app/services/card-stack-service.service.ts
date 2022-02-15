@@ -4,7 +4,7 @@ import { Istacksettings } from '../interfaces/istacksettings';
 
 import { HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpEvent, HttpBackend } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { retry, catchError, map, tap } from 'rxjs/operators';
 import { BackendService } from './backend.service';
 import { Icard } from '../interfaces/icard';
 
@@ -60,24 +60,6 @@ export class CardStackServiceService {
 
   //____________________________________________________________________________________________________ CRUD OPERATIONS FOR CARDS IN A STACK
 
-  //ADD IMAGE TO CARD
-  
-  // addImageToCard(cardID: any, image: any) {
-
-  //   console.log('Adding image');
-
-  //   console.log(cardID);
-
-  //   console.log(image);
-
-  //   let ImageURI: string = 'https://localhost:8080/upload';
-
-  //   return this.http.post<any>(ImageURI, image)
-  //   .pipe(
-  //     catchError(this.handleError)
-  //   )
-  // }
-
   // CREATE CARDS IN STACK
 
   addBlankCardToStack() {
@@ -129,6 +111,30 @@ export class CardStackServiceService {
 
     return this.http.patch<Icard>(url, card)
     .pipe(
+      catchError(this.handleError)
+    )
+  }
+
+  // Setting a card to easy
+  setCardToEasy(cardID: number, card: Icard) {
+
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${cardID}/easy`;
+
+    return this.http.patch<Icard>(url, card)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+  // Setting a card to hard
+  setCardToHard(cardID: number, card: Icard) {
+
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${cardID}`;
+
+    return this.http.patch<Icard>(url, card)
+    .pipe(
+      retry(1),
       catchError(this.handleError)
     )
   }
