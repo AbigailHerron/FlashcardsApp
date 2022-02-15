@@ -13,3 +13,7 @@ input[type="email"] {
 input[type="password"] {
   background-color: #d1d1d1;
 }
+
+.btn{
+  background-color: #03DAC5;
+}

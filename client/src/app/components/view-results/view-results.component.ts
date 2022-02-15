@@ -12,11 +12,28 @@ export class ViewResultsComponent implements OnInit {
 
   currentCardStack!: IcardStack;
   answeredCorrectly: string[] = [];
+  percentage!: Number;
+  count = 0;
 
   ngOnInit(): void {
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
     this.answeredCorrectly = JSON.parse(sessionStorage.getItem('answeredCorrectly') || '{}');
+
+    this.calculatePercentage();
   }
 
+  calculatePercentage(){
+
+    this.answeredCorrectly.forEach(element => {
+
+      if (element == "Correct")
+      {
+        this.count++;
+      }
+
+    });
+
+    this.percentage = (this.count / this.answeredCorrectly.length) * 100;
+  }
 }
