@@ -16,6 +16,7 @@ export class CreateCardItemComponent implements OnInit {
 
 cardForm!: FormGroup;
 message : string = '';
+  errorMessage: any;
 
 
   constructor(private srvCardStacks: CardStackServiceService) { }
@@ -48,11 +49,14 @@ message : string = '';
   updateCardFromStack() {
     this.srvCardStacks.updateCardFromStack(this.card.CardID, this.cardForm.value)
     .subscribe({
-      next: card => {
-        console.log(JSON.stringify(card) + ' has been updated');
-      },
+      // next: card => {
+      //   console.log(JSON.stringify(card) + ' has been updated');
+      // },
       complete: () => this.getCardsFromStack.emit(),
-      error: (err) => this.message = err
+      error: error => {
+        this.errorMessage = error.message
+        console.error('There was an error!', error)
+      }
     })
   }
 

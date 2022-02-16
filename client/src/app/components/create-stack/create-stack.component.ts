@@ -62,7 +62,7 @@ export class CreateStackComponent implements OnInit {
   }
 
   getCardsFromStack() {
-    this.srvCardStacks.getCardsFromStack().subscribe({
+    this.srvCardStacks.getAllCardsFromStack().subscribe({
       next: (value: Icard[])=> this.cardsArray = value,
       complete: () => console.log(this.cardsArray),
       error: (mess) => this.message = mess

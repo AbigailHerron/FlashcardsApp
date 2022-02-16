@@ -162,12 +162,14 @@ export class ViewStackComponent implements OnInit {
     if (answer.toString() == this.cardsArray[this.indexCounter].Back)
     {
       this.answeredCorrectly.push('Correct');
+      this.setToEasy();
       return true;
 
     }
     else 
     {
       this.answeredCorrectly.push('Incorrect');
+      this.setToHard();
       return false;
     }
 
@@ -185,5 +187,24 @@ export class ViewStackComponent implements OnInit {
     {
       this.router.navigate(['/userhub']);
     }
+  }
+
+  // this.srvCardStacks.getCardsFromStack().subscribe({
+  //   next: (value: Icard[])=> this.cardsArray = value,
+  //   complete: () => console.log(this.cardsArray),
+  //   error: (mess) => this.message = mess
+  // })
+
+  setToEasy() {
+    
+    this.srvCardStacks.setCardToEasy(this.cardsArray[this.indexCounter]).subscribe({
+      error: (mess) => this.message = mess
+    });
+  }
+
+  setToHard() {
+    this.srvCardStacks.setCardToHard(this.cardsArray[this.indexCounter]).subscribe({
+      error: error => console.log(error)
+    });
   }
 }

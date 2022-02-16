@@ -4,8 +4,8 @@
         <div style="width: auto;" *ngFor="let stack of Stack" (click)="clicked(stack)" class="col-xs-4 mb-3 card-rows">
             <div class="card mx-auto card-main hvr-grow-shadow bg-dark" style="width: 20rem;">
                 <div class="card-body" style="height: 16rem;">
-                  <h5 class="card-title">{{stack.DeckName}}</h5>
-                  <div class="overflow-auto description">{{stack.About}}</div>
+                  <h3 class="card-title">{{stack.DeckName}}</h3>
+                  <div class="overflow-auto description"><h5>{{stack.About}}</h5></div>
                   <div class="btn-group">
                     <button type="button btn-primary" class="btn " (click)="goToViewCardStackMenu(stack)">Open</button>
                     <button type="button btn-primary" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

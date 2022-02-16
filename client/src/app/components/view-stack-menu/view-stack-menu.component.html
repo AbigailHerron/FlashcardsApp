@@ -1,4 +1,3 @@
-
 <body>
     <div class="card bg-dark" style="width: 60vw; height: 60vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 15px;">
 
@@ -17,21 +16,21 @@
 
                     <div class="row" style="padding: 1em;"> <!-- Row -->
                         <div class="col">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch form-switch-md">
                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckHints" formControlName="hints" [value]="false">
                                 <label class="form-check-label" for="flexSwitchCheckHints">Hints</label>
                             </div>
                         </div>
 
                         <div class="col">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch form-switch-md">
                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckInputs" formControlName="inputs" [value]="false">
                                 <label class="form-check-label" for="flexSwitchCheckInputs">Inputs</label>
                             </div>
                         </div>
                         
                         <div class="col" *ngIf="viewStackForm.get('inputs')?.value == true">
-                            <div class="form-check form-switch">
+                            <div class="form-check form-switch form-switch-md">
                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckTimer" formControlName="timer" [value]="false">
                                 <label class="form-check-label" for="flexSwitchCheckTimer">Timer</label>
                             </div>

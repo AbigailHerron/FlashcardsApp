@@ -27,9 +27,7 @@ export class CardStackServiceService {
   selectedCardStackOptions!: Istacksettings;
   public cardStackOptionsSource = new BehaviorSubject<Istacksettings>(this.selectedCardStackOptions);
 
-  constructor(private http: HttpClient, private backEndService: BackendService) {
-
-  }
+  constructor(private http: HttpClient, private backEndService: BackendService) { }
 
   changeStack(stack: IcardStack) {
     this.cardStackSource.next(stack)
@@ -78,12 +76,25 @@ export class CardStackServiceService {
       .subscribe(() => console.log('added'));
   }
 
-  // GET CARDS FROM STACK
+  // Get all cards from a stack
+
+  getAllCardsFromStack(): Observable<Icard[]> {
+
+    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
+
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/all`;
+
+    return this.http.get<Icard[]>(url)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+
+  }
+
+  // Get due cards from a stack
 
   getCardsFromStack(): Observable<Icard[]> {
-
-    console.log('Get cardsFromStack called');
-    // console.log(this.cardStackSource.value.DeckID);
 
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
@@ -103,40 +114,37 @@ export class CardStackServiceService {
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${cardID}`;
 
-    console.log(url);
-
-    // console.log('updateCardFromStack called');
-
-    // console.log(card);
-
     return this.http.patch<Icard>(url, card)
     .pipe(
+      retry(1),
       catchError(this.handleError)
-    )
+    );
   }
 
   // Setting a card to easy
-  setCardToEasy(cardID: number, card: Icard) {
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${cardID}/easy`;
+  setCardToEasy(card: Icard) {
 
-    return this.http.patch<Icard>(url, card)
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}/easy`;
+
+    return this.http.patch<any>(url, card)
     .pipe(
       retry(1),
       catchError(this.handleError)
-    )
+    );
   }
 
   // Setting a card to hard
-  setCardToHard(cardID: number, card: Icard) {
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${cardID}`;
+  setCardToHard(card: Icard) {
 
-    return this.http.patch<Icard>(url, card)
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}/hard`;
+
+    return this.http.patch<any>(url, card)
     .pipe(
       retry(1),
       catchError(this.handleError)
-    )
+    );
   }
 
   // DELETE A CARD FROM THE STACK
@@ -148,7 +156,6 @@ export class CardStackServiceService {
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}`;
 
     this.http.delete(url).subscribe(() => console.log('Card deleted'));
-
   }
 
   //____________________________________________________________________________________________________ CRUD OPERATIONS FOR CARDSTACKS
@@ -203,7 +210,6 @@ export class CardStackServiceService {
     console.log(url);
 
     this.http.delete(url).subscribe(() => console.log('deleted'));
-
   }
 
   private handleError(error: HttpErrorResponse) {
