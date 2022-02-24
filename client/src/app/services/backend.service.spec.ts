@@ -26,11 +26,15 @@ describe('BackendService', () => {
   });
 
   // Testing login
-  it('login test', () => {
+
+it('login should return value from observable', 
+  (done: DoneFn) => {
     const testData: Login = { UserEmail: 'UserEmail', UserPass: 'UserPass'};
 
-    service.login(testData).subscribe(
-      data => expect(data).toEqual(testData)
-    );
+    service.login(testData).subscribe(data => {
+      expect(data).toBe('observable value');
+      done();
+    });
   });
+
 });

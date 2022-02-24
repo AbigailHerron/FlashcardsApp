@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Login } from 'src/app/interfaces/login';
 import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
@@ -13,32 +11,40 @@ import { BackendService } from 'src/app/services/backend.service';
 })
 export class LoginComponent implements OnInit {
 
+    //login: Login[] = [];
+    // message: string = '';
+    // err: string = '';
+
+    submitted = false;
+    authError = false;
+    authErrorMsg!: string;
+
   loginForm = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    email: new FormControl([''], Validators.required),
+    password: new FormControl([''], Validators.required),
   });
 
-  login: Login[] = [];
-  message: string = '';
-  err: string = '';
+  constructor(private service: BackendService, private router: Router) {}
 
-  constructor(private http: HttpClient, private service: BackendService, private router: Router) { }
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit() {}
   
   onSubmit() {
-    
+    this.submitted = true;
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     this.service.login(this.loginForm.value)
-      .subscribe(
-        (response) => {
-          console.log(response);
+      .subscribe(() => {
+          // Successful login
           this.router.navigate(['/dashboard']);
-        }
-        ,
-        (error) => (this.err = error.error.msg)
-      );
+        },
+        (error) => {
+          // Failed login
+          this.authError = true;
+          (this.authErrorMsg = error.error.msg)
+        });
   }
 }
 

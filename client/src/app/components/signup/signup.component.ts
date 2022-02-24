@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 
 import { BackendService } from 'src/app/services/backend.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -11,7 +11,9 @@ import { BackendService } from 'src/app/services/backend.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  err: string = '';
+  submitted = false;
+  authError = false;
+  authErrorMsg!: string;
 
   signupForm = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -19,17 +21,29 @@ export class SignupComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required]),
   });
+  signup: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private service: BackendService) {}
 
   ngOnInit(): void {}
 
   onSubmit() {
-    this.http
-      .post('http://localhost:3000/user/signup', this.signupForm.value)
-      .subscribe(
-        (response) => console.log(response),
-        (error) => (this.err = error.error.msg)
+    this.submitted = true; 
+
+    if (this.signupForm.invalid) {
+      return;
+    }
+
+    this.service.signup(this.signupForm.value)
+      .subscribe(() => {
+        // Successful signup
+        this.router.navigate(['/dashboard']);
+      },
+        (error) => {
+          // Failed signup
+          this.authError = true;
+          (this.authErrorMsg = error.error.msg)
+        }
       );
   }
 }

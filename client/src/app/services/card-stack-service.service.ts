@@ -112,7 +112,7 @@ export class CardStackServiceService {
 
   updateCardFromStack(cardID: number, card: Icard) : Observable<Icard> {
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${cardID}`;
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}`;
 
     return this.http.patch<Icard>(url, card)
     .pipe(
@@ -125,7 +125,7 @@ export class CardStackServiceService {
 
   setCardToEasy(card: Icard) {
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}/easy`;
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${card.CardID}/easy`;
 
     return this.http.patch<any>(url, card)
     .pipe(
@@ -138,7 +138,7 @@ export class CardStackServiceService {
 
   setCardToHard(card: Icard) {
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}/hard`;
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${card.CardID}/hard`;
 
     return this.http.patch<any>(url, card)
     .pipe(

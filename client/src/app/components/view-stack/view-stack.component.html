@@ -34,6 +34,12 @@
             </div>
   
         </div>
+
+        <div *ngIf="cardsArray[indexCounter]?.ImageURL" class="row">
+          <div class="col">
+            <img src=`{{cardsArray[indexCounter]?.ImageURL}}` alt="Image">
+          </div>
+        </div>
   
         <div class="row" style="padding: 1em;">
           <div class="col">
