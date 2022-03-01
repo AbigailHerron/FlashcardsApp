@@ -1,6 +1,6 @@
 const sqlcon = require('../dbconnection');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 const secret = process.env.ACCESS_TOKEN_SECRET;
 
@@ -48,13 +48,12 @@ class userController {
         .execute('login');
 
       res.send(user.recordset[0]);
-
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
   }
 
-//################################################## LOGIN
+  //################################################## LOGIN
 
   async login(req, res) {
     console.log('welcome to login controller');
@@ -62,7 +61,7 @@ class userController {
       const conn = await sqlcon.getConnection();
 
       const { email, password } = req.body;
-      
+
       // Check if there's existing users in the database
       const existingUser = await conn
         .request()
@@ -84,7 +83,7 @@ class userController {
         password,
         existingUser.recordset[0].UserPass
       );
-      
+
       if (!isMatch) return res.status(400).json({ msg: 'Invalid Details' });
 
       // Send User Data
@@ -94,21 +93,21 @@ class userController {
         .execute('login');
 
       //Send back user details
-      //res.send(user.recordset[0]);  
+      //res.send(user.recordset[0]);
 
       // set the payload for the jwt.
       let payload = {};
       payload.UserID = user.recordset[0].UserID;
       payload.UserEmail = user.recordset[0].UserEmail;
 
-      // sign the jwt and return it in the body of the request.       
+      // sign the jwt and return it in the body of the request.
       let token = jwt.sign(payload, secret, { expiresIn: 60 });
-      res.status(201).json({ 
-      accessToken: token,
-      UserID: user.recordset[0].UserID,
-      UserEmail: user.recordset[0].UserEmail });
+      res.status(201).json({
+        accessToken: token,
+        UserID: user.recordset[0].UserID,
+        UserEmail: user.recordset[0].UserEmail,
+      });
       console.log('login success');
-
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
