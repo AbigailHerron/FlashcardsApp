@@ -1,4 +1,15 @@
 const sqlcon = require('../dbconnection');
+const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
+
+var imageUrl;
+
+// cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 class cardController {
   // Create
@@ -6,16 +17,52 @@ class cardController {
     console.log('welcome to addCard controller');
 
     try {
+    // Add image
+    if (!req.files || Object.keys(req.files).length === 0)
+    return res.status(400).json({ msg: 'Please select an image' });
+
+    const file = req.files.file;
+    console.log(file);
+    if (file.size > 1024 * 1024) {
+      removeTmp(file.tempFilePath);
+      return res.status(400).json({ msg: 'Image is too large' });
+    }
+
+    if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+      removeTmp(file.tempFilePath);
+      return res
+        .status(400)
+        .json({ msg: 'Please select a png or jpeg format' });
+    }
+
+    console.log('hi there!');
+    cloudinary.uploader.upload(
+      file.tempFilePath,
+      { folder: 'testing' },
+      async (err, result) => {
+        if (err) throw err;
+
+        removeTmp(file.tempFilePath);
+
+        var imageUrl = result.secure_url
+        // res.json({ public_id: result.public_id, url: result.secure_url });
+      }
+    );
+
+    //Add card data
+
       const conn = await sqlcon.getConnection();
 
       await conn
         .request()
         .input('front', req.body.Front)
         .input('back', req.body.Back)
+        // .input('imgUrl', result.secure_url)
         .input('deckID', req.params.deckID)
         .execute('addCard');
 
       res.json('You created a Card');
+
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
@@ -76,6 +123,17 @@ class cardController {
   async deleteCard(req, res) {
     console.log('welcome to deleteCard controller');
     try {
+
+      // Delete image 
+      const { public_id } = req.params;
+      if (!public_id) return res.status(400).json({ msg: 'No images Selected' });
+  
+      cloudinary.uploader.destroy(public_id, async (err, result) => {
+        if (err) throw err;
+        res.json({ msg: 'Deleted Image' });
+      });
+
+      // Delete card details
       const conn = await sqlcon.getConnection();
       await conn
         .request()
@@ -117,5 +175,65 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
+
+  // Image functions
+
+  // Upload
+
+  // async uploadImage(req, res)
+  // {
+  //   console.log('welcome to uploadImage function');
+
+  //   try {
+
+  //     if (!req.files || Object.keys(req.files).length === 0)
+  //       return res.status(400).json({ msg: 'Please select an image' });
+  
+  //     const file = req.files.file;
+  //     console.log(file);
+  //     if (file.size > 1024 * 1024) {
+  //       removeTmp(file.tempFilePath);
+  //       return res.status(400).json({ msg: 'Image is too large' });
+  //     }
+  
+  //     if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+  //       removeTmp(file.tempFilePath);
+  //       return res
+  //         .status(400)
+  //         .json({ msg: 'Please select a png or jpeg format' });
+  //     }
+  
+  //     console.log('hi there!');
+  //     cloudinary.uploader.upload(
+  //       file.tempFilePath,
+  //       { folder: 'testing' },
+  //       async (err, result) => {
+  //         if (err) throw err;
+  
+  //         removeTmp(file.tempFilePath);
+  
+  //         res.json({ public_id: result.public_id, url: result.secure_url });
+  //       }
+  //     );
+  //   } catch (err) {
+  //     return res.status(500).json({ msg: err.message });
+  //   }
+  // }
+
+  // // delete
+  // async deleteImage(req, res)
+  // {
+  //   try {
+  //     const { public_id } = req.params;
+  //     if (!public_id) return res.status(400).json({ msg: 'No images Selected' });
+  
+  //     cloudinary.uploader.destroy(public_id, async (err, result) => {
+  //       if (err) throw err;
+  //       res.json({ msg: 'Deleted Image' });
+  //     });
+  //   } catch (err) {
+  //     return res.status(500).json({ msg: err.message });
+  //   }
+  // }
 }
 module.exports = new cardController();

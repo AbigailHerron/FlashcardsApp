@@ -27,5 +27,9 @@ router.patch(
   '/:userID/deck/:deckID/card/:cardID/hard',
   cardController.hardCard
 );
-router.delete('/:userID/deck/:deckID/card/:cardID', cardController.deleteCard);
+
+//Image routes
+// router.post('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
+// router.delete('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
+
 module.exports = router;

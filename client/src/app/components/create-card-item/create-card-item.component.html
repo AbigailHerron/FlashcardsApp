@@ -14,21 +14,20 @@
       <div class="form-row" style="padding: 1em;">
 
         <div class="col-sm-4">
-          <label for="front">Front</label>
+          <label for="front" class="form-label">Front</label>
           <input type="text" class="form-control" class="form-control" id="front" formControlName="front" placeholder="Front Text">
         </div>
 
 
         <div class="col-sm-4">
-          <label for="back">Back</label>
+          <label for="back" class="form-label">Back</label>
           <input type="textarea" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text">
         </div>
 
-        <!-- <div class="col-sm-4">
-          <label for="image">Image</label>
-          <input type="text" class="form-control" class="form-control" id="imgUrl" formControlName="imgUrl" placeholder="Image URL">
-        </div> -->
-
+        <div class="col-sm-4">
+          <label for="formFile" class="form-label">Image Source</label>
+          <input class="form-control" type="file" id="imgUrl" formControlName="imgUrl">
+        </div>
       </div>
     </form>
 </div>

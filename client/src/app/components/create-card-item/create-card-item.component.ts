@@ -62,23 +62,5 @@ message : string = '';
       }
     })
   }
-
-  // onSubmit() {
-
-  //   //Adding image to card on Submit
-
-  //   this.srvCardStacks.addImageToCard(this.card.CardID, this.cardForm.value.imgURL) // req.image
-  //   .subscribe({
-  //     next: image => {
-  //       console.log(JSON.stringify(image) + ' has been updated');
-  //     },
-  //     complete: () => console.log('Complete'),
-  //     error: (err) => this.message = err
-  //   })
-
-  // }
-}
-function cardID(cardID: any) {
-  throw new Error('Function not implemented.');
 }
 
