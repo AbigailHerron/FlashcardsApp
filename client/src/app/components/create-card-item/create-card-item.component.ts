@@ -16,7 +16,9 @@ export class CreateCardItemComponent implements OnInit {
 
 cardForm!: FormGroup;
 message : string = '';
-  errorMessage: any;
+errorMessage: any;
+
+file!: File;
 
 
   constructor(private srvCardStacks: CardStackServiceService) { }
@@ -28,6 +30,9 @@ message : string = '';
       imgUrl!: new FormControl([this.card?.ImageURL])
     })
   }
+
+  
+
 
   get front() {
     return this.cardForm?.get('front');

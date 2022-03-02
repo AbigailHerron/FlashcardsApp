@@ -17,9 +17,7 @@ app.use(
 );
 
 const userRouter = require('./routes/userRoutes');
-const imageUploadRouter = require('./routes/imageUpload');
 app.use('/user', userRouter);
-app.use('/image', imageUploadRouter);
 
 app.listen(PORT);
 console.log('server connected');
