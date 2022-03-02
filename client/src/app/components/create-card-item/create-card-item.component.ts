@@ -47,11 +47,14 @@ message : string = '';
   }
 
   updateCardFromStack() {
+
+    console.log(this.card.CardID)
+
     this.srvCardStacks.updateCardFromStack(this.card.CardID, this.cardForm.value)
     .subscribe({
-      // next: card => {
-      //   console.log(JSON.stringify(card) + ' has been updated');
-      // },
+      next: card => {
+        console.log(JSON.stringify(card) + ' has been updated');
+      },
       complete: () => this.getCardsFromStack.emit(),
       error: error => {
         this.errorMessage = error.message
@@ -75,3 +78,7 @@ message : string = '';
 
   // }
 }
+function cardID(cardID: any) {
+  throw new Error('Function not implemented.');
+}
+

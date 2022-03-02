@@ -68,6 +68,6 @@
         <a href="/login">Have an account? Log in here</a>
       </form>
     </div>
-    <div class="card" *ngIf="err" style="width: auto; padding: 10px; border-radius: 5px;">{{ authErrorMsg }}</div>
+    <div class="card" *ngIf="authErrorMsg" style="width: auto; padding: 10px; border-radius: 5px;">{{ authErrorMsg }}</div>
   </div>
 </body>

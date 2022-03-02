@@ -114,7 +114,12 @@ export class CardStackServiceService {
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}`;
 
-    return this.http.patch<Icard>(url, card)
+    return this.http.put<Icard>(url, card,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      })
     .pipe(
       retry(1),
       catchError(this.handleError)
