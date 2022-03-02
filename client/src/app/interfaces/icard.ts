@@ -1,7 +1,8 @@
 export interface Icard {
-    CardID: number,
-    DeckID: number,
-    Front: string,
-    Back: string,
-    ImageURL?: string
+  CardID: number;
+  DeckID: number;
+  Front: string;
+  Back: string;
+  ImageID?: string;
+  ImageURL?: string;
 }

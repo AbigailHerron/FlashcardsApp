@@ -23,11 +23,23 @@ router.get('/:userID/deck/:deckID/all', cardController.getAllCards);
 router.post('/:userID/deck/:deckID/cards', cardController.addCard);
 router.patch('/:userID/deck/:deckID/card/:cardID', cardController.updateCard);
 
-router.post('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
-router.delete('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
+router.post(
+  '/:userID/deck/:deckID/card/:cardID/uploadImage',
+  cardController.uploadImage
+);
+router.delete(
+  '/:userID/deck/:deckID/card/:cardID/uploadImage',
+  cardController.uploadImage
+);
 
-router.patch('/:userID/deck/:deckID/card/:cardID/easy',cardController.easyCard);
-router.patch('/:userID/deck/:deckID/card/:cardID/hard',  cardController.hardCard);
+router.patch(
+  '/:userID/deck/:deckID/card/:cardID/easy',
+  cardController.easyCard
+);
+router.patch(
+  '/:userID/deck/:deckID/card/:cardID/hard',
+  cardController.hardCard
+);
 
 //_____ Exports
 
