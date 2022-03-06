@@ -1,55 +1,55 @@
 .custom-control-input:focus~.custom-control-label::before {
-    border-color: rgb(3, 255, 3) !important;
-    box-shadow: 0 0 0 0.2rem rgba(255, 47, 69, 0.25) !important;
-  }
-  
-  .custom-control-input:checked~.custom-control-label::before {
-    border-color: rgb(3, 255, 3) !important;
-    background-color: rgb(3, 255, 3) !important;
-  }
-  
-  .custom-control-input:active~.custom-control-label::before {
-    background-color: rgb(3, 255, 3) !important;
-    border-color: rgb(3, 255, 3) !important;
-  }
-  
-  .custom-control-input:focus:not(:checked)~.custom-control-label::before {
-    border-color: rgb(3, 255, 3) !important;
-  }
-  
-  .custom-control-input-green:not(:disabled):active~.custom-control-label::before {
-    background-color: rgb(3, 255, 3) !important;
-    border-color: rgb(3, 255, 3) !important;
-  }
+  border-color: rgb(3, 255, 3) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 47, 69, 0.25) !important;
+}
 
-  .save-button{
-    border-radius: 50%;
-    width: 3em;
-    height: 3em;
+.custom-control-input:checked~.custom-control-label::before {
+  border-color: rgb(3, 255, 3) !important;
+  background-color: rgb(3, 255, 3) !important;
+}
 
-    color: white;
+.custom-control-input:active~.custom-control-label::before {
+  background-color: rgb(3, 255, 3) !important;
+  border-color: rgb(3, 255, 3) !important;
+}
 
-    position: fixed;
-    left: 30px;
-    bottom: 30px;
-  }
+.custom-control-input:focus:not(:checked)~.custom-control-label::before {
+  border-color: rgb(3, 255, 3) !important;
+}
 
-  .add-stack-btn{
-    border-radius: 50%;
-    width: 3em;
-    height: 3em;
+.custom-control-input-green:not(:disabled):active~.custom-control-label::before {
+  background-color: rgb(3, 255, 3) !important;
+  border-color: rgb(3, 255, 3) !important;
+}
 
-    background-color: #03DAC5;
+.save-button{
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
 
-    color: white;
+  color: white;
 
-    /* display: flex;
-    align-items: center;
-    justify-items: center; */
+  position: fixed;
+  left: 30px;
+  bottom: 30px;
+}
 
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
+.add-stack-btn{
+  border-radius: 50%;
+  width: 3em;
+  height: 3em;
+
+  background-color: #03DAC5;
+
+  color: white;
+
+  /* display: flex;
+  align-items: center;
+  justify-items: center; */
+
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
 }
 
 /* Grow Shadow */
@@ -75,4 +75,8 @@
 
 .offcanvas{
   color: white;
+}
+
+input {
+  background-color: #d1d1d1;
 }

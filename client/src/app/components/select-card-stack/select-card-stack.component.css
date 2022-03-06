@@ -1,11 +1,20 @@
 @media (max-width: 720px) {
+
     .card-rows{
         margin: 0 auto;
     }
 
     .card-main{
-        min-width: 28rem;
+        min-width: 20rem;
     }
+
+    
+    .add-stack-btn{
+        color: blue;
+        width: 2em;
+        height: 2em;
+    }
+
 }
 
 h1{
@@ -23,11 +32,6 @@ h1{
     right: 30px;
     bottom: 30px;
 }
-
-/* .add-stack-btn:hover{
-    text-decoration: none;
-    background-color: white;
-} */
 
 .btn{
     background-color: #03DAC5;
@@ -49,7 +53,6 @@ h1{
 
 /* Grow Shadow */
 .hvr-grow-shadow {
-    /* display: inline-block; */
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -58,22 +61,27 @@ h1{
     transition-duration: 0.3s;
     -webkit-transition-property: box-shadow, transform;
     transition-property: box-shadow, transform;
-  }
+}
 
-  .hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
+.hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
     box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
-  }
+}
 
-  .modal-content {
-      border-radius: 15px;
-      color: white;
-  }
+.modal-content {
+    border-radius: 15px;
+    color: white;
+}
 
-  
 input{
     background-color: #d1d1d1;
 }
 
-.material-icons.md-36 { font-size: 36px; }
+textarea{
+    background-color: #d1d1d1;
+}
+
+.material-icons.md-36 { 
+    font-size: 36px;
+}

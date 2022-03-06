@@ -17,6 +17,8 @@ class userController {
     }
   }
 
+    //__________________________________________________ Register function
+
   async register(req, res) {
     console.log('welcom to addUser controller');
     try {
@@ -53,7 +55,7 @@ class userController {
     }
   }
 
-  //################################################## LOGIN
+  //__________________________________________________ Login function
 
   async login(req, res) {
     console.log('welcome to login controller');
@@ -72,7 +74,7 @@ class userController {
 
       console.log(existingUser.recordset[0].UserPass);
 
-      console.log(password);
+      // console.log(password);
 
       let passwordHash = await bcrypt.hash(password, 10);
 

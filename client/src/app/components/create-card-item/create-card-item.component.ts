@@ -42,6 +42,7 @@ export class CreateCardItemComponent implements OnInit {
   styleUpload(): object {
     return { display: this.card?.ImageURL ? 'block' : 'none' };
   }
+
   handleUpload(event: any) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -51,8 +52,11 @@ export class CreateCardItemComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.imageForm.get('data')?.value);
 
+
+
     this.srvCardStacks.uploadImage(formData, this.card.CardID);
   }
+
   handleDelete() {
     //
   }
