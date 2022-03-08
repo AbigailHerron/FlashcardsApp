@@ -23,8 +23,10 @@ app.use(
 
 const userRouter = require('./routes/userRoutes');
 const imageRouter = require('./routes/imageRoutes');
+const publickRouter = require('./routes/publicRoutes');
 app.use('/user', userRouter);
 app.use('/image', imageRouter);
+app.use('', publickRouter);
 
 app.listen(PORT);
 console.log('server connected');

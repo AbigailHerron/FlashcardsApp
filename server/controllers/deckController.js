@@ -44,6 +44,21 @@ class deckController {
     }
   }
 
+  // Read public decks
+  async getPublicDecks(req, res) {
+    console.log('welcome to getPublicDecks controller');
+    try {
+      const conn = await sqlcon.getConnection();
+
+      const decks = await conn
+        .request()
+        .execute('getPublicDecks');
+      res.json(decks.recordset);
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+
   // Update
   async updateDeck(req, res) {
     console.log('welcome to updateDeck controller');

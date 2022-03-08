@@ -84,8 +84,6 @@ export class CreateCardItemComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
-=======
   styleUpload(): object {
     return { display: this.card?.ImageURL ? 'block' : 'none' };
   }
@@ -108,7 +106,6 @@ export class CreateCardItemComponent implements OnInit {
     //
   }
 
->>>>>>> ee05ee07af17ebdaa3f98fc937dcf0f0e6cdee07
   get front() {
     return this.cardForm?.get('front');
   }

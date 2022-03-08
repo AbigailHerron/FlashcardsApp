@@ -9,6 +9,7 @@ import { CreateStackComponent } from './components/create-stack/create-stack.com
 import { ViewStackComponent } from './components/view-stack/view-stack.component';
 import { ViewStackMenuComponent } from './components/view-stack-menu/view-stack-menu.component';
 import { ViewResultsComponent } from './components/view-results/view-results.component';
+import { SelectPublicStackComponent } from './components/select-public-stack/select-public-stack.component';
 
 
 const routes: Routes = [ 
@@ -18,6 +19,7 @@ const routes: Routes = [
 {path: 'dashboard', component: DashboardLinksComponent},
 {path: 'profile', component: ProfileComponent},
 {path: 'userhub', component: UserHubComponent},
+{path: 'communityhub', component: SelectPublicStackComponent},
 {path: 'createstack', component: CreateStackComponent},
 {path: 'viewstackmenu', component: ViewStackMenuComponent},
 {path: 'viewstack', component: ViewStackComponent},

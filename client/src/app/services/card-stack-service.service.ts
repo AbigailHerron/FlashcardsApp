@@ -217,17 +217,23 @@ export class CardStackServiceService {
       );
   }
 
+  // Get public cardstacks
+
+  getPublicCardStacks(): Observable<IcardStack[]> {
+    console.log('Get card service called');
+
+    return this.http.get<IcardStack[]>('http://localhost:3000/publicDecks')
+    .pipe(
+      catchError(this.handleError)
+    );
+
+  }
+
+
   // Update cardstack
 
   updateCardStack(cardStackDetails: IcardStack, cardStackID: number): Observable<IcardStack> {
 
-<<<<<<< HEAD
-  updateCardStack(
-    cardStackDetails: IcardStack,
-    cardStackID: number
-  ) {
-=======
->>>>>>> ee05ee07af17ebdaa3f98fc937dcf0f0e6cdee07
     const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackID}`;
 
     console.log('card-stack-service method: updateCardStack called');
