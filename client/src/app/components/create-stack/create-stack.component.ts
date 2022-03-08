@@ -54,11 +54,11 @@ export class CreateStackComponent implements OnInit {
 
     this.srvCardStacks.updateCardStack(this.stackDetailsForm.value, this.currentCardStack.DeckID)
     .subscribe({
-      next: cardStack => {
-        console.log(JSON.stringify(cardStack) + ' has been updated');
+      next: res => {
+        console.log(res);
       },
+      error: (err) => this.message = err,
       complete: () => this.router.navigate(['/userhub']),
-      error: (err) => this.message = err
     })
   }
 

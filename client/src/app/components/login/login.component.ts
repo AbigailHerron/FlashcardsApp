@@ -11,13 +11,9 @@ import { BackendService } from 'src/app/services/backend.service';
 })
 export class LoginComponent implements OnInit {
 
-    //login: Login[] = [];
-    // message: string = '';
-    // err: string = '';
-
-    submitted = false;
-    authError = false;
-    authErrorMsg!: string;
+  submitted = false;
+  authError = false;
+  authErrorMsg!: string;
 
   loginForm = new FormGroup({
     email: new FormControl([''], Validators.required),

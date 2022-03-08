@@ -44,6 +44,7 @@
         />
       </div>
     </div>
+<<<<<<< HEAD
 
     <div class="row" style="margin-top: 1em;">
 
@@ -52,6 +53,24 @@
         <label for="cloudinaryURL">Cloudinary Url</label>
         <input class="form-control" type="text" id="cloudinaryURL" placeholder="Cloudinary URL" readonly>
 
+=======
+
+    <div class="form-row">
+      <div class="col-md-6">
+        <div class="upload">
+          <label for="formFile" class="form-label">Image Source</label>
+          <input
+            type="file"
+            name="file"
+            id="file_up"
+            (change)="handleUpload($event)"
+          />
+          <div id="file_img" [ngStyle]="styleUpload()">
+            <img src="{{ this.card?.ImageURL }}" alt="" />
+            <span (click)="handleDelete()">X</span>
+          </div>
+        </div>
+>>>>>>> ee05ee07af17ebdaa3f98fc937dcf0f0e6cdee07
       </div>
 
       <div class="col-sm-4">
@@ -71,5 +90,6 @@
       </div>
 
     </div>
+    
   </form>
 </div>
