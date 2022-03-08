@@ -6,6 +6,7 @@ const cardController = require('../controllers/cardController');
 //_____ User Controller
 
 router.get('/info', userController.getUsers);
+router.get('/profile/:userID', userController.profile)
 router.post('/signup', userController.register);
 router.post('/login', userController.login);
 

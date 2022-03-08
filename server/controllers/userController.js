@@ -112,5 +112,31 @@ class userController {
       res.status(500).json({ msg: err.message });
     }
   }
+
+  async profile(req, res) {
+
+    console.log('Welcome to profile function')
+
+    try {
+
+      console.log(req.params.userID);
+
+      const conn = await sqlcon.getConnection();
+      const userDetails = await conn
+      .request()
+      .input('user_id', req.params.userID)
+      .execute('getUserDetails')
+
+      if (userDetails.rowsAffected[0] == 0)
+      return res.status(400).json({ msg: 'No profile match with those credentials' });
+
+      console.log(userDetails.recordset[0]);
+
+      res.send(userDetails.recordset[0]);
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+
+  }
 }
 module.exports = new userController();

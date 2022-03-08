@@ -30,7 +30,8 @@ export class CreateStackComponent implements OnInit {
 
     this.stackDetailsForm = new FormGroup({
       deckname: new FormControl(this.currentCardStack?.DeckName, [Validators.required, Validators.minLength(3)]),
-      about: new FormControl(this.currentCardStack?.About, [Validators.required, Validators.minLength(3)])
+      about: new FormControl(this.currentCardStack?.About, [Validators.required, Validators.minLength(3)]),
+      publicDeck: new FormControl(this.currentCardStack?.PublicDeck, [Validators.required])
     })
 
     //GET CARDS FROM STACK
@@ -49,7 +50,7 @@ export class CreateStackComponent implements OnInit {
 
   onSubmit() {
 
-    console.log(this.currentCardStack.DeckID);
+    console.log(this.currentCardStack);
 
     this.srvCardStacks.updateCardStack(this.stackDetailsForm.value, this.currentCardStack.DeckID)
     .subscribe({

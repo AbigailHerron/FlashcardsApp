@@ -25,7 +25,7 @@ export class CardStackServiceService {
   private user = this.backEndService.userValue;
   private userID = this.user?.UserID;
 
-  // Example use of request parameters
+  // Example use of request paramZZZeters
   private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
 
   currentCardStack!: IcardStack;
@@ -187,7 +187,7 @@ export class CardStackServiceService {
   updateCardStack(
     cardStackDetails: IcardStack,
     cardStackID: number
-  ): Observable<IcardStack> {
+  ) {
     const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackID}`;
 
     console.log('updateCardStack called');

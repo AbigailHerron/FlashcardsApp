@@ -24,7 +24,23 @@ export class BackendService {
     return this.userSubject.value;
   }
 
-  // GET ALL USERS
+  // Get profile details
+
+  getProfileDetails() : Observable<User> {
+
+    console.log(this.userValue?.UserID);
+
+    return this.http.get<User>(`http://localhost:3000/user/profile/${this.userValue?.UserID}`)
+    .pipe(map(user => {
+      localStorage.setItem('currentUser', JSON.stringify(user))
+      this.userSubject.next(user);
+
+      return user;
+    }
+    ))
+  }
+
+  // Get all users
 
   getUsers(): Observable<Login[]> {
     console.log('Get user called');
@@ -34,7 +50,8 @@ export class BackendService {
       .pipe(catchError(this.handleError));
   }
 
-  // REGISTER (POST) A USER
+  // Register (post) a user
+
   public signup(user: Signup): Observable<any> {
 
     return this.http.post<any>('http://localhost:3000/user/signup', user)
@@ -47,7 +64,8 @@ export class BackendService {
     ))
   }
 
-  // LOGIN (GET) A USER
+  // Login (get) a user
+
   public login(user: Login): Observable<any> {
 
     return this.http.post<any>('http://localhost:3000/user/login', user)

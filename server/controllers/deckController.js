@@ -49,15 +49,26 @@ class deckController {
     console.log('welcome to updateDeck controller');
     try {
       const conn = await sqlcon.getConnection();
-      const { deckname, about } = req.body;
+      const { deckname, about, publicDeck } = req.body;
       console.log(req.body);
       console.log(req.params);
+
+      var publicBit;
+
+      if (publicDeck == true)
+      {
+        publicBit = 1;
+      } else {
+        publicBit = 0;
+      }
+
       await conn
         .request()
         .input('deck_id', req.params.deckID)
         .input('user_id', req.params.userID)
         .input('deck_name', deckname)
         .input('about', about)
+        .input('publicDeck', publicBit)
         .execute('updateDeck');
       res.send('Updated Deck');
     } catch (err) {

@@ -20,6 +20,7 @@ export class SelectCardStackComponent implements OnInit {
   cardStackDetails = new FormGroup({
     DeckName: new FormControl('', Validators.required),
     About: new FormControl('', Validators.required),
+    PublicDeck: new FormControl(null, Validators.required)
   });
 
   @ViewChild('btnShow')

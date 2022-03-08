@@ -5,6 +5,10 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000', // your server side code
+
+  cloudName: 'le-nuage',
+  cloudApiKey: '267653187639284',
+  cloudApiSecret: 'pvuBfBA-cCUyJjwNUkZb2g3AxCI'
 };
 
 /*

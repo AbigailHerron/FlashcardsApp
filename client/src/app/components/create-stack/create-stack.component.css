@@ -1,4 +1,4 @@
-.custom-control-input:focus~.custom-control-label::before {
+/* .custom-control-input:focus~.custom-control-label::before {
     border-color: rgb(3, 255, 3) !important;
     box-shadow: 0 0 0 0.2rem rgba(255, 47, 69, 0.25) !important;
   }
@@ -20,7 +20,7 @@
   .custom-control-input-green:not(:disabled):active~.custom-control-label::before {
     background-color: rgb(3, 255, 3) !important;
     border-color: rgb(3, 255, 3) !important;
-  }
+  } */
 
   .save-button{
     border-radius: 50%;

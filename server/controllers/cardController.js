@@ -147,13 +147,13 @@ class cardController {
   }
 
   async uploadImage(req, res) {
-    console.log('welcome to uploadImage controller');
     try {
       // Add image
       if (!req.files || Object.keys(req.files).length === 0)
         return res.status(400).json({ msg: 'Please select an image' });
 
       const file = req.files.file;
+
       if (file.size > 1024 * 1024) {
         removeTmp(file.tempFilePath);
         return res.status(400).json({ msg: 'Image is too large' });
@@ -166,14 +166,16 @@ class cardController {
           .json({ msg: 'Please select a png or jpeg format' });
       }
 
-      cloudinary.uploader.upload(
-        file.tempFilePath,
+      cloudinary.uploader
+      .upload(
+        file,
         { folder: 'testing' },
         async (err, result) => {
           if (err) throw err;
 
           removeTmp(file.tempFilePath);
-          res.json({ public_id: result.public_id, url: result.secure_url });
+          console.log('Success' + result)
+          //res.json({ public_id: result.public_id, url: result.secure_url });
         }
       );
     } catch (err) {

@@ -1,9 +1,52 @@
-<div class="container" style="padding: 2em;">
+<div class="container" style="padding: 2em; color: white">
     <h1>User Profile</h1>
+
+    <br/>
+
     <div class="row">
-        <h3></h3>
-        <h3>{{user!.UserEmail}}</h3>
+        <div class="col-sm-4">
+            <h3>{{user!.UserName}}</h3>
+        </div>
     </div>
+
+    <br/>
+
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>{{user!.UserEmail}}</h3>
+        </div>
+    </div> 
+
+    <br/>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <button tyep="button" class="btn btn-primary" (click)="showEditDetailsForm()">Edit Details</button>
+        </div>
+    </div>
+
+    <br />
+
+    <div id="editDetails">
+        <form>
+            <div class="form-row">
+                <div class="col-5">
+                    <input type="text" class="form-control" placeholder="Username">
+                  </div>
+                <div class="col-7">
+                <input type="text" class="form-control" placeholder="Email">
+              </div>
+            </div>
     
+            <br />
+    
+            <div class="row">
+                <div class="col-sm-2">
+                    <button tyep="button" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
 </div>
 

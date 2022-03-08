@@ -3,4 +3,5 @@ export interface IcardStack {
         About: string,
         DeckName: string,
         UserID: number
+        PublicDeck: boolean
 };

@@ -9,11 +9,33 @@ import { BackendService } from 'src/app/services/backend.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: User | undefined = this.backEndService.userValue!;
+  user: User | undefined = (JSON.parse(localStorage.getItem('currentUser') || '{}')) ;
 
   constructor(private backEndService : BackendService) { }
 
   ngOnInit(): void {
+
+    var x = document.getElementById("editDetails")!;
+    x.style.display = "none";
+
+    this.backEndService.getProfileDetails()
+      .subscribe((res) => {
+        this.user = res;
+      },
+      (error) => {
+        console.log(error);
+      })
+  }
+
+  showEditDetailsForm() {
+
+    var x = document.getElementById("editDetails")!;
+
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
 
   }
 }

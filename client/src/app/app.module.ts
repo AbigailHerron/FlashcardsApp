@@ -21,6 +21,9 @@ import { ViewStackComponent } from './components/view-stack/view-stack.component
 import { ViewStackMenuComponent } from './components/view-stack-menu/view-stack-menu.component';
 import { ViewResultsComponent } from './components/view-results/view-results.component';
 
+import {CloudinaryModule} from '@cloudinary/ng';
+import { SelectPublicStackComponent } from './components/select-public-stack/select-public-stack.component';
+
 
 @NgModule({
   declarations: [
@@ -36,13 +39,15 @@ import { ViewResultsComponent } from './components/view-results/view-results.com
     ViewStackComponent,
     ViewStackMenuComponent,
     ViewResultsComponent,
+    SelectPublicStackComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CloudinaryModule
   ],
   providers: [
     {
