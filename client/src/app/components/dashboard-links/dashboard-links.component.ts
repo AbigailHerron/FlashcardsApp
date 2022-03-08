@@ -12,7 +12,8 @@ export class DashboardLinksComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("retrieiving session state")
-    console.log(this.session.name$)
+    console.log("dashboard-links.component.ts")
+
+    console.log(this.session.$userDetails)
   }
 }

@@ -12,38 +12,37 @@ export class SessionService {
 
   constructor(private sessionStore: SessionStore, private http: HttpClient) { }
 
-    // Register (post) a user
-
+    // RegisteR (post) a user
     public signup(user: Signup): Observable<any> {
 
         return this.http.post<any>('http://localhost:3000/user/signup', user)
         .pipe(tap(user => {
 
-            this.sessionStore.update(state => ({
+            // Updating session state
+            this.sessionStore.update(user => ({
               accessToken: user.accessToken,
-              userName: user.UserName,
-              userEmail: user.UserEmail,
-              userID: user.UserID
+              UserName: user.UserName,
+              UserEmail: user.UserEmail,
+              UserID: user.UserID
             }));
-            
         }))
       }
     
       // Login (get) a user
-    
       public login(user: Login): Observable<User> {
     
         return this.http.post<any>('http://localhost:3000/user/login', user)
         .pipe(tap(user => {
 
+          // Updating session state
           this.sessionStore.update(state => ({
             accessToken: user.accessToken,
-            userName: user.UserName,
-            userEmail: user.UserEmail,
-            userID: user.UserID
+            UserName: user.UserName,
+            UserEmail: user.UserEmail,
+            UserID: user.UserID
           }));
           
       }
-        ))
+      ))
     }
 }

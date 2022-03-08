@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { retry, catchError, map, tap } from 'rxjs/operators';
 import { BackendService } from './backend.service';
 import { Icard } from '../interfaces/icard';
+import { SessionQuery } from '../store/session.query';
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +15,7 @@ import { Icard } from '../interfaces/icard';
 export class CardStackServiceService {
 
   // Retrieving user, then userID
-  private user = this.backEndService.userValue;
-  private userID = this.user?.UserID;
-
-  // Example use of request paramZZZeters
-  private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
+  private userID! : number;
 
   currentCardStack!: IcardStack;
   public cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack);
@@ -29,7 +26,12 @@ export class CardStackServiceService {
     this.selectedCardStackOptions
   );
 
-  constructor(private http: HttpClient, private backEndService: BackendService) { }
+  constructor(private http: HttpClient, private session: SessionQuery) {
+    this.userID = this.session.userID$;
+   }
+
+  // Example use of request paramZZZeters
+  private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
 
   changeStack(stack: IcardStack) {
     this.cardStackSource.next(stack);
@@ -81,6 +83,7 @@ export class CardStackServiceService {
   // Get all cards from a stack
 
   getAllCardsFromStack(): Observable<Icard[]> {
+
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/all`;
@@ -209,9 +212,16 @@ export class CardStackServiceService {
   // Get cardstacks
 
   getCardStacks(): Observable<IcardStack[]> {
+
     console.log('Get card service called');
 
-    return this.http.get<IcardStack[]>(this.deckUri)
+    console.log(this.userID);
+
+    const url = `http://localhost:3000/user/${this.userID}/decks`
+
+    console.log(url);
+
+    return this.http.get<IcardStack[]>(url)
       .pipe(
         catchError(this.handleError)
       );

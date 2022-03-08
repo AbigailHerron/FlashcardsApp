@@ -3,18 +3,18 @@ import { Login } from '../interfaces/login';
 import { EntityStore, StoreConfig, EntityState } from '@datorama/akita';
 
 export interface SessionState {
-    accessToken: string | null,
-    userName: string | null,
-    userEmail: string | null,
-    userID: string | null
+    accessToken: string,
+    UserName: string,
+    UserEmail: string,
+    UserID: number
 }
 
 export function createInitialState(): SessionState {
     return {
-        accessToken: null,
-        userName: null,
-        userEmail: null,
-        userID: null
+        accessToken: '',
+        UserName: '',
+        UserEmail: '',
+        UserID: 0
     };
 }
 

@@ -3,6 +3,9 @@ import { User } from 'src/app/interfaces/user';
 import { BackendService } from 'src/app/services/backend.service';
 
 import { Location } from '@angular/common';
+import { SessionQuery } from 'src/app/store/session.query';
+import { Observable } from 'rxjs';
+import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-profile',
@@ -11,22 +14,18 @@ import { Location } from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
 
-  user: User | undefined = (JSON.parse(localStorage.getItem('currentUser') || '{}')) ;
+  user!: User | null; // = (JSON.parse(localStorage.getItem('currentUser') || '{}'));
 
-  constructor(private backEndService : BackendService, private _location: Location) { }
+  constructor(private _location: Location, private session: SessionQuery) { }
 
   ngOnInit(): void {
 
     var x = document.getElementById("editDetails")!;
     x.style.display = "none";
 
-    this.backEndService.getProfileDetails()
-      .subscribe((res) => {
-        this.user = res;
-      },
-      (error) => {
-        console.log(error);
-      })
+    this.user = this.session.$userDetails;
+
+    console.log(this.user);
   }
 
   backClicked() {
