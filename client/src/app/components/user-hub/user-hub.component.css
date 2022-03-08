@@ -1,0 +1,13 @@
+.back-btn{
+
+    position: fixed;
+    left: 3vw;
+    top: 3vh;
+
+    color: white;
+    cursor: pointer;
+}
+
+.material-icons.md-36 { 
+    font-size: 36px;
+}

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import { BackendService } from 'src/app/services/backend.service';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -11,7 +13,7 @@ export class ProfileComponent implements OnInit {
 
   user: User | undefined = (JSON.parse(localStorage.getItem('currentUser') || '{}')) ;
 
-  constructor(private backEndService : BackendService) { }
+  constructor(private backEndService : BackendService, private _location: Location) { }
 
   ngOnInit(): void {
 
@@ -27,6 +29,10 @@ export class ProfileComponent implements OnInit {
       })
   }
 
+  backClicked() {
+    this._location.back();
+  }
+
   showEditDetailsForm() {
 
     var x = document.getElementById("editDetails")!;
@@ -38,4 +44,6 @@ export class ProfileComponent implements OnInit {
     }
 
   }
+
+   
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionQuery } from 'src/app/store/session.query';
 
 @Component({
   selector: 'app-dashboard-links',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardLinksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private session: SessionQuery) { }
 
   ngOnInit(): void {
-  }
 
+    console.log("retrieiving session state")
+    console.log(this.session.name$)
+  }
 }

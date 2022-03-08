@@ -14,6 +14,7 @@ export class BackendService {
   private userSubject: BehaviorSubject<User|null>;
   public user: Observable<User|null>;
 
+
   constructor(private http: HttpClient) {
     this.userSubject = new BehaviorSubject<User|null>
     (JSON.parse(localStorage.getItem('currentUser') || '{}')) ;
@@ -32,9 +33,8 @@ export class BackendService {
 
     return this.http.get<User>(`http://localhost:3000/user/profile/${this.userValue?.UserID}`)
     .pipe(map(user => {
-      localStorage.setItem('currentUser', JSON.stringify(user))
-      this.userSubject.next(user);
-
+      // localStorage.setItem('currentUser', JSON.stringify(user))
+      // this.userSubject.next(user);
       return user;
     }
     ))
@@ -56,9 +56,8 @@ export class BackendService {
 
     return this.http.post<any>('http://localhost:3000/user/signup', user)
     .pipe(map(user => {
-      localStorage.setItem('currentUser', JSON.stringify(user))
-      this.userSubject.next(user);
-
+      // localStorage.setItem('currentUser', JSON.stringify(user))
+      // this.userSubject.next(user);
       return user;
     }
     ))
@@ -70,14 +69,14 @@ export class BackendService {
 
     return this.http.post<any>('http://localhost:3000/user/login', user)
     .pipe(map(user => {
-      localStorage.setItem('currentUser', JSON.stringify(user))
-      this.userSubject.next(user);
-
+      // localStorage.setItem('currentUser', JSON.stringify(user))
+      // this.userSubject.next(user);
       return user;
     }
     ))
   }
 
+  
   // ERROR HANDLING
 
   private handleError(error: HttpErrorResponse) {

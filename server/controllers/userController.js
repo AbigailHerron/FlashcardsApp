@@ -104,10 +104,12 @@ class userController {
 
       // sign the jwt and return it in the body of the request.
       let token = jwt.sign(payload, secret, { expiresIn: 60 });
+
       res.status(201).json({
         accessToken: token,
-        UserID: user.recordset[0].UserID,
+        UserName: user.recordset[0].UserName,
         UserEmail: user.recordset[0].UserEmail,
+        UserID: user.recordset[0].UserID
       });
       console.log('login success');
     } catch (err) {

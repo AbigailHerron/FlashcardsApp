@@ -3,16 +3,26 @@
     display: flex;
     align-items: center;
 
+    color: white;
+    text-decoration: none;
+
 }
 
 #banner-container{
     display: flex;
     background-color: #BB86FC;
-    font-family: 'Courier New', Courier, monospace;
     font-family: 'Bubbly', sans-serif;                                         
 }
 
 #logo-text{
     color: white;
     text-decoration: none;
+}
+
+#logout{
+    cursor: pointer;
+    position: fixed;
+
+    right: 20px;
+    top: 50;
 }

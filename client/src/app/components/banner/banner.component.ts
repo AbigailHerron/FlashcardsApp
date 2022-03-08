@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-banner',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BannerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
+
+  currentUser: User = JSON.parse(localStorage.getItem('currentUser')!);
 
   ngOnInit(): void {
+    // this.currentUser = this.backend.userValue!;
   }
 
+  logOut() {
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['']);
+  }
 }

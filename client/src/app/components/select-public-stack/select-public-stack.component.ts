@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-select-public-stack',
   templateUrl: './select-public-stack.component.html',
@@ -16,7 +18,7 @@ export class SelectPublicStackComponent implements OnInit {
 
   currentCardStack!: IcardStack;
 
-  constructor(private srvCardStacks: CardStackServiceService, private router: Router) { }
+  constructor(private srvCardStacks: CardStackServiceService, private router: Router, private _location: Location) { }
 
   ngOnInit(): void {
     this.getCardStacks();
@@ -31,6 +33,10 @@ export class SelectPublicStackComponent implements OnInit {
     this.srvCardStacks.deckValue(this.currentCardStack)
 
     sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
+  }
+
+  backClicked() {
+    this._location.back();
   }
 
   // Retrieving cardstacks

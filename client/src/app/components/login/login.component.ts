@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl([''], Validators.required),
   });
 
-  constructor(private service: BackendService, private router: Router) {}
+  constructor(private service: BackendService, private router: Router, private session: SessionService) {}
 
   ngOnInit() {}
   
@@ -31,9 +32,10 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.service.login(this.loginForm.value)
-      .subscribe(() => {
+    this.session.login(this.loginForm.value)
+      .subscribe((res) => {
           // Successful login
+          console.log(res);
           this.router.navigate(['/dashboard']);
         },
         (error) => {

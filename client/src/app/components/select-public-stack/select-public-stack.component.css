@@ -21,16 +21,14 @@ h1{
     color:white;
 }
 
-.add-stack-btn{
-    border-radius: 50%;
-    width: 3em;
-    height: 3em;
-    background-color: #03DAC5;
-    color: white;
+.back-btn{
 
     position: fixed;
-    right: 30px;
-    bottom: 30px;
+    left: 3vw;
+    top: 3vh;
+
+    color: white;
+    cursor: pointer;
 }
 
 .btn{

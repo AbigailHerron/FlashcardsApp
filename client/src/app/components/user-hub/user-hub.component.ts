@@ -3,6 +3,8 @@ import { CardStackServiceService } from 'src/app/services/card-stack-service.ser
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 import { Observable, of, throwError } from 'rxjs';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-user-hub',
   templateUrl: './user-hub.component.html',
@@ -10,9 +12,12 @@ import { Observable, of, throwError } from 'rxjs';
 })
 export class UserHubComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _location: Location) { }
 
   ngOnInit(): void {
   }
 
+  backClicked() {
+    this._location.back();
+  }
 }
