@@ -7,6 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Icard } from 'src/app/interfaces/icard';
 import { Router } from '@angular/router';
 
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-create-stack',
   templateUrl: './create-stack.component.html',
@@ -15,8 +17,8 @@ import { Router } from '@angular/router';
 export class CreateStackComponent implements OnInit {
   currentCardStack!: IcardStack;
 
-  constructor(private router: Router, private srvCardStacks: CardStackServiceService) {
-     this.currentCardStack = this.srvCardStacks.deckDetails;
+  constructor(private router: Router, private srvCardStacks: CardStackServiceService, private _location: Location) {
+     this.currentCardStack = this.srvCardStacks.deckDetails
    }
 
   //private cardStackSource = this.srvCardStacks.deckDetails;
@@ -42,6 +44,10 @@ export class CreateStackComponent implements OnInit {
     //GET CARDS FROM STACK
 
     this.getCardsFromStack();
+  }
+
+  backClicked() {
+    this._location.back();
   }
 
   //ADD NEW CARD TO STACK

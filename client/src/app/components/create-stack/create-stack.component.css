@@ -77,6 +77,16 @@
   color: white;
 }
 
-input {
-  background-color: #d1d1d1;
+.back-btn{
+
+  position: fixed;
+  left: 3vw;
+  top: 3vh;
+
+  color: white;
+  cursor: pointer;
+}
+
+.material-icons.md-36 { 
+  font-size: 36px;
 }

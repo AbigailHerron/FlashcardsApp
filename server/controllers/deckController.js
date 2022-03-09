@@ -52,6 +52,7 @@ class deckController {
       const decks = await conn
         .request()
         .execute('getPublicDecks');
+        
       res.json(decks.recordset);
     } catch (err) {
       res.status(500).json({ msg: err.message });

@@ -1,4 +1,4 @@
-<div class="card" style="width: 80vw; margin: 2em" [ngStyle]="{'background-color':currentStack.Colour}">
+<div class="card bg-dark" style="width: 80vw; margin: 2em; border: 4px solid;" [ngStyle]="{'border-color': currentStack.Colour}">
   <form [formGroup]="cardForm" class="row" style="padding: 1em">
     <!-- (ngSubmit) = "onSubmit()" -->
 
@@ -45,28 +45,21 @@
       </div>
     </div>
 
-    <div class="row" style="margin-top: 1em;">
+    <div class="form-row">
 
       <div class="col-sm-4">
-
         <label for="cloudinaryURL">Cloudinary Url</label>
         <input class="form-control" type="text" id="cloudinaryURL" placeholder="Cloudinary URL" readonly>
-
       </div>
 
       <div class="col-sm-4">
-        
         <label for="selectedFile">Selected File</label>
         <input class="form-control" type="text" id="selectedFile" placeholder="File selected" readonly>
       </div>
 
-      <div class="col-sm-4">
-        <input 
-          style="display: none;"
-          type="file"
-          (change)="onFileSelected($event)"
-          #fileInput>
-        <button type="button" class="btn btn-secondary" (click)="fileInput.click()">Pick File</button>
+      <div class="col-sm-4" >
+        <input style="display: none;" type="file" (change)="onFileSelected($event)" #fileInput>
+        <button type="button" class="btn btn-secondary" (click)="fileInput.click()" style="margin: 2em">Pick File</button>
         <button type="button" class="btn btn-primary" (click)="onUpload()">Upload</button>
       </div>
 
@@ -85,6 +78,7 @@
           </div>
         </div>
       </div> -->
+
     </div>
   </form>
 </div>

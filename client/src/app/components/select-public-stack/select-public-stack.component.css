@@ -19,34 +19,30 @@
 
 h1{
     color:white;
+    font-family: 'Fredoka', sans-serif;
 }
 
 .back-btn{
-
     position: fixed;
     left: 3vw;
     top: 3vh;
-
     color: white;
     cursor: pointer;
 }
 
-.btn{
-    background-color: #03DAC5;
-}
-
 .description{
     height: 85px;
-    color: white;
+    color: black;
 }
 
 .card {
     border-radius: 15px;
     padding: 1em;
+    font-family: 'Fredoka', sans-serif;
 }
 
 .card-title{
-    color: white;
+    color: black;
 }
 
 /* Grow Shadow */
@@ -70,14 +66,6 @@ h1{
 .modal-content {
     border-radius: 15px;
     color: white;
-}
-
-input{
-    background-color: #d1d1d1;
-}
-
-textarea{
-    background-color: #d1d1d1;
 }
 
 .material-icons.md-36 { 
