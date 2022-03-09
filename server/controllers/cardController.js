@@ -69,8 +69,11 @@ class cardController {
   }
   // Returns Certain Cards
   async getCards(req, res) {
+<<<<<<< HEAD
     // console.log('welcome to getCards Controller');
     // console.log(req.params);
+=======
+>>>>>>> 08b1042 (images fully working)
     try {
       const conn = await sqlcon.getConnection();
       const cards = await conn
@@ -176,6 +179,7 @@ class cardController {
     }
   }
 
+<<<<<<< HEAD
   // Image functions
 
   // Upload
@@ -235,5 +239,86 @@ class cardController {
   //     return res.status(500).json({ msg: err.message });
   //   }
   // }
+=======
+  async uploadImage(req, res) {
+    console.log('welcome to uploadImage controller');
+    try {
+      // Add image
+      if (!req.files || Object.keys(req.files).length === 0)
+        return res.status(400).json({ msg: 'Please select an image' });
+
+      const file = req.files.file;
+
+      if (file.size > 1024 * 1024) {
+        removeTmp(file.tempFilePath);
+        return res.status(400).json({ msg: 'Image is too large' });
+      }
+
+      if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+        removeTmp(file.tempFilePath);
+        return res
+          .status(400)
+          .json({ msg: 'Please select a png or jpeg format' });
+      }
+
+      cloudinary.uploader.upload(
+        file.tempFilePath,
+        { folder: 'testing' },
+        async (err, result) => {
+          if (err) throw err;
+
+          removeTmp(file.tempFilePath);
+          res.json({ imageID: result.public_id, imageURL: result.secure_url });
+        }
+      );
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+
+  async updateCardImage(req, res) {
+    console.log(req.body);
+    try {
+      const { imageID, imageURL } = req.body;
+      const conn = await sqlcon.getConnection();
+      await conn
+        .request()
+        .input('deck_id', req.params.deckID)
+        .input('card_id', req.params.cardID)
+        .input('imageID', imageID)
+        .input('imageURL', imageURL)
+        .execute('updateCardImage');
+      res.send('Updated Card');
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+
+  async deleteImage(req, res) {
+    try {
+      console.log(req.body);
+      const { imageID, deckID, cardID } = req.body;
+      const newImageID = null;
+      const newImageURL = null;
+      if (!imageID) return res.status(400).json({ msg: 'No images Selected' });
+
+      cloudinary.uploader.destroy(imageID, async (err) => {
+        if (err) throw err;
+      });
+
+      const conn = await sqlcon.getConnection();
+      await conn
+        .request()
+        .input('deck_id', deckID)
+        .input('card_id', cardID)
+        .input('imageID', newImageID)
+        .input('imageURL', newImageURL)
+        .execute('updateCardImage');
+      res.send('Updated Card');
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+>>>>>>> 08b1042 (images fully working)
 }
 module.exports = new cardController();

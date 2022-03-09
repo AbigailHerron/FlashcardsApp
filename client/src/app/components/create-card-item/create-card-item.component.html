@@ -10,6 +10,12 @@
 
         </div>
       </div>
+<<<<<<< HEAD
+=======
+    </div>
+
+    <!--     <div class="row" style="margin-top: 1em;">
+>>>>>>> 08b1042 (images fully working)
 
       <div class="form-row" style="padding: 1em;">
 
@@ -19,6 +25,7 @@
         </div>
 
 
+<<<<<<< HEAD
         <div class="col-sm-4">
           <label for="back" class="form-label">Back</label>
           <input type="textarea" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text">
@@ -30,6 +37,41 @@
         </div>
       </div>
     </form>
+=======
+      <div class="col-sm-4">
+        
+        <label for="selectedFile">Selected File</label>
+        <input class="form-control" type="text" id="selectedFile" placeholder="File selected" readonly>
+      </div>
+
+      <div class="col-sm-4">
+        <input 
+          style="display: none;"
+          type="file"
+          (change)="onFileSelected($event)"
+          #fileInput>
+        <button type="button" class="btn btn-secondary" (click)="fileInput.click()">Pick File</button>
+        <button type="button" class="btn btn-primary" (click)="onUpload()">Upload</button>
+      </div> -->
+
+    <div class="col-sm-4">
+      <div class="upload">
+        <label for="formFile" class="form-label">Image Source</label>
+        <input
+          type="file"
+          name="file"
+          id="file_up"
+          (change)="handleUpload($event)"
+        />
+        <div id="file_img" [ngStyle]="styleUpload()">
+          <img src="{{ this.card?.ImageURL }}" alt="" />
+          <span (click)="handleDelete()">X</span>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+  </form>
+>>>>>>> 08b1042 (images fully working)
 </div>
 
 
