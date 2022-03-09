@@ -18,26 +18,23 @@
     transform: translate(-50%, -50%); */
 }
 
-.card-text{
-    color: white;
-}
-
 .dashboard-card-clickable:hover{
     text-decoration: none;
 }
 
 a{
     text-decoration: none;
-    color: white;
+    color: black;
 }
 
 .card {
     border-radius: 15px;
     padding: 1em;
     width: 18rem;
-    color: white;
+    color: black;
 
-    font-family: 'Fredoka', sans-serif;
+    background-color: lightgray;
+
     /* position: relative; */
 }
 

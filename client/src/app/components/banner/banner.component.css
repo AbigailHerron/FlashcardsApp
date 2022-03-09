@@ -11,7 +11,7 @@
 #banner-container{
     display: flex;
     background-color: #BB86FC;
-    font-family: 'Bubbly', sans-serif;                                         
+    /* font-family: 'Bubbly', sans-serif;                                          */
 }
 
 #logo-text{
