@@ -3,8 +3,8 @@
     <!--------------------------- OFFCANVAS END ---------------------------->
 
     <!-- CARDS GO HERE -->
-    <div class="row">
-        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index" [card]="c" (getCardsFromStack)="getCardsFromStack()"></app-create-card-item> <!--  -->
+    <div class="row" >
+        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index" [card]="c" [currentStack]="currentCardStack" (getCardsFromStack)="getCardsFromStack()"></app-create-card-item> <!--  -->
     </div>
     <!------------------->
 </div>
@@ -59,21 +59,20 @@
                     <label class="custom-control-label" for="publicDeck">Public</label>
                 </div>
 
-                <!-- <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                    <label class="form-check-label" for="inlineRadio1">Private</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                    <label class="form-check-label" for="inlineRadio2">Public</label>
-                  </div> -->
+                <br />
 
-                <!-- <label for="inputPrivacy">Privacy setting</label> -->
-
-                <!-- <select id="inputPrivacy" class="custom-select" style="width: 25vw;">
-                    <option selected>Private</option>
-                    <option value="1">Public</option>
-                </select> -->
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Example select</label>
+                    <select class="form-control" id="colour" formControlName="colour">
+                      <option value="#ff6961">Red</option>
+                      <option value="#ffb347">Orange</option>
+                      <option value="#fdfd96">Yellow</option>
+                      <option value="#c1e1c1">Green</option>
+                      <option value="#a7c7e7">Blue</option>
+                      <option value="#8686af">Indigo</option>
+                      <option value="#b39eb5">Violet</option>
+                    </select>
+                </div>
 
                 <br />
 

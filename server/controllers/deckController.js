@@ -10,19 +10,18 @@ class deckController {
 
       console.log("Creating new card stack")
 
-      // const { DeckName, About } = req.body;
-      //  console.log(req.body.DeckName);
-      //  console.log(req.body.About);
+      const { DeckName, About } = req.body;
+       console.log(DeckName);
+       console.log(About)
 
-        await conn
+        const deck = await conn
         .request()
-        .input('deck_name', req.body.DeckName)
-        .input('about', req.body.About)
+        .input('deck_name', DeckName)
+        .input('about', About)
         .input('user_idFK', req.params.userID)
         .execute('addDeck');
 
-      res.json('Succesully Created Deck');
-
+        res.json(deck.recordset);
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
@@ -64,7 +63,7 @@ class deckController {
     console.log('welcome to updateDeck controller');
     try {
       const conn = await sqlcon.getConnection();
-      const { deckname, about, publicDeck } = req.body;
+      const { deckname, about, publicDeck, colour } = req.body;
       console.log(req.body);
       console.log(req.params);
 
@@ -84,6 +83,7 @@ class deckController {
         .input('deck_name', deckname)
         .input('about', about)
         .input('publicDeck', publicBit)
+        .input('colour', colour)
         .execute('updateDeck');
       res.send('Updated Deck');
     } catch (err) {

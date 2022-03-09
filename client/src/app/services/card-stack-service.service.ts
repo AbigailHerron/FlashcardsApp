@@ -199,11 +199,13 @@ export class CardStackServiceService {
 
   addCardToStack(cardStackDetails: IcardStack): Observable<IcardStack> {
 
-    console.log('Post cardStack service called');
+    console.log('addCardStack service function called');
+
+    console.log(cardStackDetails);
 
     const url = `http://localhost:3000/user/${this.userID}/decks`;
 
-    return this.http.post<IcardStack>(url, JSON.stringify(cardStackDetails))
+    return this.http.post<IcardStack>(url, cardStackDetails)
       .pipe(
         catchError(this.handleError)
       );
@@ -242,17 +244,14 @@ export class CardStackServiceService {
 
   // Update cardstack
 
-  updateCardStack(cardStackDetails: IcardStack, cardStackID: number): Observable<IcardStack> {
+  updateCardStack(cardStackDetails: IcardStack, cardStackID: number) {
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackID}`;
 
     console.log('card-stack-service method: updateCardStack called');
 
-    return this.http.put<IcardStack>(url, cardStackDetails)
-      .pipe(
-        retry(1),
-        catchError(this.handleError)
-      );
+    return this.http.put<IcardStack>(url, cardStackDetails).subscribe(() => console.log('Updated'));
+      
   }
 
   // Delete cardstack

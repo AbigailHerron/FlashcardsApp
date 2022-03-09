@@ -1,11 +1,9 @@
 <div class="container" style="min-width: 90vw; align-content: center;">
 
-  
-
     <div class="row" style="justify-content: space-around; text-align: center;">
         
         <div style="width: auto;" *ngFor="let stack of Stack" (click)="clicked(stack)" class="col-xs-4 mb-3 card-rows">
-            <div class="card mx-auto card-main hvr-grow-shadow bg-dark" style="width: 20rem;">
+            <div class="card mx-auto card-main hvr-grow-shadow" style="width: 20rem;"  [ngStyle]="{'background-color':stack.Colour}"> <!-- [ngStyle]="{'background-color':'{{stack.Colour}}'}" --> 
                 <div class="card-body" style="height: 16rem;">
                   <h3 class="card-title">{{stack.DeckName}}</h3>
                   <div class="overflow-auto description"><h5>{{stack.About}}</h5></div>

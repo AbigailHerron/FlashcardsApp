@@ -28,10 +28,15 @@ export class CreateStackComponent implements OnInit {
 
   ngOnInit(): void {
 
+    console.log('In ngOnInit create-stack.component.ts');
+
+    console.log(this.currentCardStack);
+
     this.stackDetailsForm = new FormGroup({
-      deckname: new FormControl(this.currentCardStack?.DeckName, [Validators.required, Validators.minLength(3)]),
-      about: new FormControl(this.currentCardStack?.About, [Validators.required, Validators.minLength(3)]),
-      publicDeck: new FormControl(this.currentCardStack?.PublicDeck, [Validators.required])
+      deckname: new FormControl(this.currentCardStack.DeckName, [Validators.required, Validators.minLength(3)]),
+      about: new FormControl(this.currentCardStack.About, [Validators.required, Validators.minLength(3)]),
+      publicDeck: new FormControl(this.currentCardStack.PublicDeck, [Validators.required]),
+      colour: new FormControl(this.currentCardStack.Colour, [Validators.required])
     })
 
     //GET CARDS FROM STACK
@@ -52,14 +57,10 @@ export class CreateStackComponent implements OnInit {
 
     console.log(this.currentCardStack);
 
-    this.srvCardStacks.updateCardStack(this.stackDetailsForm.value, this.currentCardStack.DeckID)
-    .subscribe({
-      next: res => {
-        console.log(res);
-      },
-      error: (err) => this.message = err,
-      complete: () => this.router.navigate(['/userhub']),
-    })
+    this.srvCardStacks.updateCardStack(this.stackDetailsForm.value, this.currentCardStack.DeckID);
+
+    this.router.navigate(['/userhub']);
+
   }
 
   getCardsFromStack() {

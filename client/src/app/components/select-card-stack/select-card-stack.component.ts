@@ -19,8 +19,7 @@ export class SelectCardStackComponent implements OnInit {
 
   cardStackDetails = new FormGroup({
     DeckName: new FormControl('', Validators.required),
-    About: new FormControl('', Validators.required),
-    PublicDeck: new FormControl(null, Validators.required)
+    About: new FormControl('', Validators.required)
   });
 
   @ViewChild('btnShow')
@@ -51,8 +50,6 @@ export class SelectCardStackComponent implements OnInit {
     this.srvCardStacks.deckValue(this.currentCardStack)
 
     sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
-
-
   }
 
   // Open Modal
@@ -70,15 +67,17 @@ export class SelectCardStackComponent implements OnInit {
   // Adding a new stack
 
   addNewStack() {
-    console.log("Creating card stack");
 
-      this.srvCardStacks.addCardToStack({ ...this.cardStackDetails?.value }).subscribe(
+    console.log("component method addNewStack() called");
+    console.log(this.cardStackDetails?.value);
+
+      this.srvCardStacks.addCardToStack(this.cardStackDetails?.value).subscribe(
         {
-      next: details => {
-        console.log('New cardstack has been added'),
+      next: value => {
+        console.log(value),
+        this.srvCardStacks.deckValue(value),
         this.btnClose.nativeElement.click(),
-        this.router.navigate(['/createstack']),
-        (value: IcardStack) => this.srvCardStacks.deckValue(value);
+        this.router.navigate(['/createstack'])
       },
       complete: () =>
         console.log(this.srvCardStacks.deckDetails)
@@ -95,7 +94,6 @@ export class SelectCardStackComponent implements OnInit {
 
     this.srvCardStacks.getCardStacks().subscribe({
       next: (value: IcardStack[])=> this.Stack = value,
-      complete: () => console.log(),
       error: (mess) => this.message = mess
     })
   }

@@ -10,6 +10,7 @@ import {URLConfig} from '@cloudinary/url-gen';
 import {CloudConfig} from '@cloudinary/url-gen';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
+import { IcardStack } from 'src/app/interfaces/icard-stack';
 
 @Component({
   selector: 'app-create-card-item',
@@ -18,6 +19,7 @@ import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 })
 export class CreateCardItemComponent implements OnInit {
   @Input() card!: Icard;
+  @Input() currentStack!: IcardStack
   @Output('getCardsFromStack') getCardsFromStack: EventEmitter<any> = new EventEmitter();
 
   cardForm!: FormGroup;
