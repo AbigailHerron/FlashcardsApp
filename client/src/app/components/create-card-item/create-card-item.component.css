@@ -8,6 +8,16 @@ label {
   color: white;
 }
 
+.icon-btn{
+  margin-left: 2em;
+  cursor: pointer;
+}
+
+.icon-btn:hover{
+  transform: scale(0.95);
+
+}
+
 .upload {
   height: 375px;
   width: 100%;

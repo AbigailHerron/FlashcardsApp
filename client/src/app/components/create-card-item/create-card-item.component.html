@@ -4,18 +4,14 @@
 
     <div class="row">
       <div class="col">
-        <a
-          class="material-icons md-36 md-light"
+        <a class="material-icons md-36 md-light icon-btn"
           (click)="updateCardFromStack()"
           style="color: white"
-          >save</a
-        >
-        <a
-          class="material-icons md-36 md-light"
+          >save</a>
+        <a class="material-icons md-36 md-light icon-btn"
           (click)="deleteCardFromStack()"
           style="color: white"
-          >delete</a
-        >
+          >delete</a>
       </div>
     </div>
 
@@ -45,23 +41,20 @@
       </div>
     </div>
 
-    <div class="form-row">
+    <br />
 
-      <div class="col-sm-4">
-        <label for="cloudinaryURL">Cloudinary Url</label>
-        <input class="form-control" type="text" id="cloudinaryURL" placeholder="Cloudinary URL" readonly>
+    <div class="row" style="padding: 1em;">
+      <div class="col-md-6">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFile" (change)="onFileSelected($event)">
+          <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
       </div>
 
-      <div class="col-sm-4">
-        <label for="selectedFile">Selected File</label>
-        <input class="form-control" type="text" id="selectedFile" placeholder="File selected" readonly>
+      <div class="col-md-6" >
+        <button type="button" class="btn btn-light" (click)="onUpload()">Upload</button>
       </div>
-
-      <div class="col-sm-4" >
-        <input style="display: none;" type="file" (change)="onFileSelected($event)" #fileInput>
-        <button type="button" class="btn btn-secondary" (click)="fileInput.click()" style="margin: 2em">Pick File</button>
-        <button type="button" class="btn btn-primary" (click)="onUpload()">Upload</button>
-      </div>
+    </div>
 
       <!-- <div class="col-sm-4">
         <div class="upload">
@@ -78,7 +71,5 @@
           </div>
         </div>
       </div> -->
-
-    </div>
   </form>
 </div>
