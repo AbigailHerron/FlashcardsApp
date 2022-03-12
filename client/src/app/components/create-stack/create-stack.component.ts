@@ -12,34 +12,46 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-create-stack',
   templateUrl: './create-stack.component.html',
-  styleUrls: ['./create-stack.component.css']
+  styleUrls: ['./create-stack.component.css'],
 })
 export class CreateStackComponent implements OnInit {
   currentCardStack!: IcardStack;
 
-  constructor(private router: Router, private srvCardStacks: CardStackServiceService, private _location: Location) {
-     this.currentCardStack = this.srvCardStacks.deckDetails
-   }
+  constructor(
+    private router: Router,
+    private srvCardStacks: CardStackServiceService,
+    private _location: Location
+  ) {
+    this.currentCardStack = this.srvCardStacks.deckDetails;
+  }
 
   //private cardStackSource = this.srvCardStacks.deckDetails;
 
-  cardsArray : Icard[] = [];
-  stackDetailsForm! : FormGroup;
-  message : string = '';
-
+  cardsArray: Icard[] = [];
+  stackDetailsForm!: FormGroup;
+  message: string = '';
 
   ngOnInit(): void {
-
     console.log('In ngOnInit create-stack.component.ts');
 
     console.log(this.currentCardStack);
 
     this.stackDetailsForm = new FormGroup({
-      deckname: new FormControl(this.currentCardStack.DeckName, [Validators.required, Validators.minLength(3)]),
-      about: new FormControl(this.currentCardStack.About, [Validators.required, Validators.minLength(3)]),
-      publicDeck: new FormControl(this.currentCardStack.PublicDeck, [Validators.required]),
-      colour: new FormControl(this.currentCardStack.Colour, [Validators.required])
-    })
+      deckname: new FormControl(this.currentCardStack.DeckName, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      about: new FormControl(this.currentCardStack.About, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      publicDeck: new FormControl(this.currentCardStack.PublicDeck, [
+        Validators.required,
+      ]),
+      colour: new FormControl(this.currentCardStack.Colour, [
+        Validators.required,
+      ]),
+    });
 
     //GET CARDS FROM STACK
 
@@ -60,20 +72,21 @@ export class CreateStackComponent implements OnInit {
   //UPDATE CARDSTACK DETAILS
 
   onSubmit() {
-
     console.log(this.currentCardStack);
 
-    this.srvCardStacks.updateCardStack(this.stackDetailsForm.value, this.currentCardStack.DeckID);
+    this.srvCardStacks.updateCardStack(
+      this.stackDetailsForm.value,
+      this.currentCardStack.DeckID
+    );
 
     this.router.navigate(['/userhub']);
-
   }
 
   getCardsFromStack() {
     this.srvCardStacks.getAllCardsFromStack().subscribe({
-      next: (value: Icard[])=> this.cardsArray = value,
+      next: (value: Icard[]) => (this.cardsArray = value),
       complete: () => console.log(this.cardsArray),
-      error: (mess) => this.message = mess
-    })
+      error: (mess) => (this.message = mess),
+    });
   }
 }

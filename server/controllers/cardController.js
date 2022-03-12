@@ -2,6 +2,12 @@ const sqlcon = require('../dbconnection');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
+const removeTmp = (path) => {
+  fs.unlink(path, (err) => {
+    if (err) throw err;
+  });
+};
+
 // cloudinary
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -9,21 +15,15 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-// Delete TempFiles
-const removeTmp = (path) => {
-  fs.unlink(path, (err) => {
-    if (err) throw err;
-  });
-};
-
 class cardController {
-  //_____ Create card
-
+  // Create
   async addCard(req, res) {
     console.log('welcome to addCard controller');
+
     try {
       //Add card data
       const conn = await sqlcon.getConnection();
+
       await conn
         .request()
         .input('front', req.body.Front)
@@ -37,11 +37,8 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
-
-  //_____ Get due cards
-
+  // Returns Certain Cards
   async getCards(req, res) {
-    console.log('welcome to getCards Controller');
     try {
       const conn = await sqlcon.getConnection();
       const cards = await conn
@@ -54,11 +51,10 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
-
-  //_____ Get all cards
-
+  // Returrns All Cards
   async getAllCards(req, res) {
-    console.log('welcome to getCards Controller');
+    // console.log('welcome to getCards Controller');
+    // console.log(req.params);
     try {
       const conn = await sqlcon.getConnection();
       const cards = await conn
@@ -71,13 +67,13 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
-
-  //_____ Update card
-
+  // Update
   async updateCard(req, res) {
     console.log('welcome to updateCard controller');
+    console.log(req.body);
+    console.log(req.params);
     try {
-      const { front, back, public_id, url } = req.body;
+      const { front, back } = req.body;
       const conn = await sqlcon.getConnection();
       await conn
         .request()
@@ -85,8 +81,6 @@ class cardController {
         .input('card_id', req.params.cardID)
         .input('front', front)
         .input('back', back)
-        .input('imageID', public_id)
-        .input('imageURL', url)
         .execute('updateCard');
       res.send('Updated Card');
     } catch (err) {
@@ -94,11 +88,21 @@ class cardController {
     }
   }
 
-  //_____ Delete card
-
+  // Delete
   async deleteCard(req, res) {
     console.log('welcome to deleteCard controller');
     try {
+      // Delete image
+      const imageID = req.url.substring(req.url.indexOf('/testing/') + 1);
+      console.log(imageID);
+      console.log(typeof imageID);
+      if (imageID !== 'testing/null') {
+        console.log('hello to cloudinary destroy');
+        cloudinary.uploader.destroy(imageID, async (err) => {
+          if (err) throw err;
+        });
+      }
+
       // Delete card details
       const conn = await sqlcon.getConnection();
       await conn
@@ -112,8 +116,7 @@ class cardController {
     }
   }
 
-  //_____ Set difficulty to easy
-
+  // EASY
   async easyCard(req, res) {
     console.log('welcome to easyCard controller');
     try {
@@ -128,9 +131,7 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
-
-  //_____ Set difficulty to hard
-
+  // HARD
   async hardCard(req, res) {
     console.log('welcome to hardCard controller');
     try {
@@ -145,8 +146,8 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
-
   async uploadImage(req, res) {
+    console.log('welcome to uploadImage controller');
     try {
       // Add image
       if (!req.files || Object.keys(req.files).length === 0)
@@ -166,16 +167,14 @@ class cardController {
           .json({ msg: 'Please select a png or jpeg format' });
       }
 
-      cloudinary.uploader
-      .upload(
-        file,
+      cloudinary.uploader.upload(
+        file.tempFilePath,
         { folder: 'testing' },
         async (err, result) => {
           if (err) throw err;
 
           removeTmp(file.tempFilePath);
-          console.log('Success' + result)
-          //res.json({ public_id: result.public_id, url: result.secure_url });
+          res.json({ imageID: result.public_id, imageURL: result.secure_url });
         }
       );
     } catch (err) {
@@ -183,28 +182,48 @@ class cardController {
     }
   }
 
-  async deleteImage(req, res) {
-    console.log('welcome to deleteImage controller');
+  async updateCardImage(req, res) {
+    console.log(req.body);
     try {
-      // example url http://localhost:3000/image/delete/testing/h2rq5diwrxxvtb5uhjw7
-      // req.url
-      // returns testing/h2rq5diwrxxvtb5uhjw7
-      const public_id = req.url.substring('/delete/'.length);
-      console.log(public_id);
-      if (!public_id)
-        return res.status(400).json({ msg: 'No images Selected' });
+      const { imageID, imageURL } = req.body;
+      const conn = await sqlcon.getConnection();
+      await conn
+        .request()
+        .input('deck_id', req.params.deckID)
+        .input('card_id', req.params.cardID)
+        .input('imageID', imageID)
+        .input('imageURL', imageURL)
+        .execute('updateCardImage');
+      res.send('Updated Card');
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
 
-      cloudinary.uploader.destroy(public_id, async (err, result) => {
+  async deleteImage(req, res) {
+    try {
+      console.log(req.body);
+      const { imageID, deckID, cardID } = req.body;
+      const newImageID = null;
+      const newImageURL = null;
+      if (!imageID) return res.status(400).json({ msg: 'No images Selected' });
+
+      cloudinary.uploader.destroy(imageID, async (err) => {
         if (err) throw err;
-
-        res.json({ msg: 'Deleted Image' });
       });
+
+      const conn = await sqlcon.getConnection();
+      await conn
+        .request()
+        .input('deck_id', deckID)
+        .input('card_id', cardID)
+        .input('imageID', newImageID)
+        .input('imageURL', newImageURL)
+        .execute('updateCardImage');
+      res.send('Updated Card');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
   }
 }
-
-//_____ Exports
-
 module.exports = new cardController();

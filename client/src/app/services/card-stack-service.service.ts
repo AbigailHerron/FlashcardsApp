@@ -2,7 +2,16 @@ import { Injectable } from '@angular/core';
 import { IcardStack } from '../interfaces/icard-stack';
 import { Istacksettings } from '../interfaces/istacksettings';
 
-import {HttpClient, HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest, HttpEvent, HttpBackend } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHandler,
+  HttpHeaders,
+  HttpInterceptor,
+  HttpRequest,
+  HttpEvent,
+  HttpBackend,
+} from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { retry, catchError, map, tap } from 'rxjs/operators';
 import { BackendService } from './backend.service';
@@ -13,12 +22,15 @@ import { SessionQuery } from '../store/session.query';
   providedIn: 'root',
 })
 export class CardStackServiceService {
-
   // Retrieving user, then userID
-  private userID! : number;
+  private userID!: number;
+
+  private httpSkipInterceptor: HttpClient;
 
   currentCardStack!: IcardStack;
-  public cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack);
+  public cardStackSource = new BehaviorSubject<IcardStack>(
+    this.currentCardStack
+  );
   stackID = this.cardStackSource.value;
 
   selectedCardStackOptions!: Istacksettings;
@@ -26,9 +38,16 @@ export class CardStackServiceService {
     this.selectedCardStackOptions
   );
 
-  constructor(private http: HttpClient, private session: SessionQuery) {
+  private imageID?: string;
+
+  constructor(
+    private http: HttpClient,
+    private handler: HttpBackend,
+    private session: SessionQuery
+  ) {
     this.userID = this.session.userID$;
-   }
+    this.httpSkipInterceptor = new HttpClient(handler);
+  }
 
   // Example use of request paramZZZeters
   private deckUri = `http://localhost:3000/user/${this.userID}/decks`;
@@ -83,7 +102,6 @@ export class CardStackServiceService {
   // Get all cards from a stack
 
   getAllCardsFromStack(): Observable<Icard[]> {
-
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/all`;
@@ -111,7 +129,7 @@ export class CardStackServiceService {
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}`;
 
     return this.http
-      .put<Icard>(url, card, {
+      .patch<Icard>(url, card, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
         }),
@@ -123,41 +141,30 @@ export class CardStackServiceService {
 
   uploadImage(formData: FormData, cardID: number) {
     const url = 'http://localhost:3000/image/upload';
-    return this.http
+    return this.httpSkipInterceptor
       .post<any>(url, formData)
       .subscribe((res) => this.updateCardImage(res, cardID));
   }
 
   // Delete image from card
 
-  deleteImage() {
-    //const url = 'http://localhost:3000/image/delete/${this.publicID}'
+  deleteImage(imageID: any, cardID: any) {
+    const url = 'http://localhost:3000/image/delete';
+    const deckID = this.currentCardStack.DeckID;
+    this.http
+      .post<any>(url, { imageID, deckID, cardID })
+      .subscribe((res) => console.log(res));
   }
 
   // Update card image
 
-  updateCardImage(imageDetails: Icard, cardID: number): Observable<Icard> {
-    /*     return this.http
+  updateCardImage(imageDetails: Icard, cardID: number) {
+    console.log(imageDetails);
+    console.log(`${this.userID},${this.currentCardStack.DeckID},${cardID}`);
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}/update-image`;
+    this.http
       .patch<any>(url, imageDetails)
-      .pipe(retry(1), catchError(this.handleError)); */
-
-    // Can't make this http call
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}`;
-
-    return this.http
-      .patch<Icard>(url, imageDetails, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-      })
-      .pipe(retry(1), catchError(this.handleError));
-
-      // ########## Important
-
-      // The card controller is returning a json response
-      // res.json({ public_id: result.public_id, url: result.secure_url });
-
-      // We arent able to parse this correctly
+      .subscribe((res) => console.log(res));
   }
 
   // Setting card difficulty to easy
@@ -175,22 +182,21 @@ export class CardStackServiceService {
   setCardToHard(card: Icard) {
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${card.CardID}/hard`;
 
-    return this.http.patch<any>(url, card)
-      .pipe(
-        retry(1),
-        catchError(this.handleError)
-      );
+    return this.http
+      .patch<any>(url, card)
+      .pipe(retry(1), catchError(this.handleError));
   }
 
   // Delete card from stack
 
   deleteCardFromStack(card: Icard) {
-
     console.log('deleteCardFromStack called');
+    if (card.ImageID === null) {
+      this.imageID = 'testing/null';
+    }
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}/image/${this.imageID}`;
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}`;
-
-    this.http.delete(url).subscribe(() => console.log('Card deleted'));
+    this.http.delete<any>(url).subscribe(() => console.log('Card deleted'));
   }
 
   //____________________________________________________________________________________________________ CRUD operations for card stacks
@@ -198,35 +204,29 @@ export class CardStackServiceService {
   // Create cardstack
 
   addCardToStack(cardStackDetails: IcardStack): Observable<IcardStack> {
-
     console.log('addCardStack service function called');
 
     console.log(cardStackDetails);
 
     const url = `http://localhost:3000/user/${this.userID}/decks`;
 
-    return this.http.post<IcardStack>(url, cardStackDetails)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http
+      .post<IcardStack>(url, cardStackDetails)
+      .pipe(catchError(this.handleError));
   }
 
   // Get cardstacks
 
   getCardStacks(): Observable<IcardStack[]> {
-
     console.log('Get card service called');
 
     console.log(this.userID);
 
-    const url = `http://localhost:3000/user/${this.userID}/decks`
+    const url = `http://localhost:3000/user/${this.userID}/decks`;
 
     console.log(url);
 
-    return this.http.get<IcardStack[]>(url)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.get<IcardStack[]>(url).pipe(catchError(this.handleError));
   }
 
   // Get public cardstacks
@@ -234,24 +234,21 @@ export class CardStackServiceService {
   getPublicCardStacks(): Observable<IcardStack[]> {
     console.log('Get card service called');
 
-    return this.http.get<IcardStack[]>('http://localhost:3000/publicDecks')
-    .pipe(
-      catchError(this.handleError)
-    );
-
+    return this.http
+      .get<IcardStack[]>('http://localhost:3000/publicDecks')
+      .pipe(catchError(this.handleError));
   }
-
 
   // Update cardstack
 
   updateCardStack(cardStackDetails: IcardStack, cardStackID: number) {
-
     const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackID}`;
 
     console.log('card-stack-service method: updateCardStack called');
 
-    return this.http.put<IcardStack>(url, cardStackDetails).subscribe(() => console.log('Updated'));
-      
+    return this.http
+      .put<IcardStack>(url, cardStackDetails)
+      .subscribe(() => console.log('Updated'));
   }
 
   // Delete cardstack

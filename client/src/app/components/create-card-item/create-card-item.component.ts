@@ -5,9 +5,9 @@ import { CardStackServiceService } from 'src/app/services/card-stack-service.ser
 import { EventEmitter } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 
-import {CloudinaryImage} from '@cloudinary/url-gen';
-import {URLConfig} from '@cloudinary/url-gen';
-import {CloudConfig} from '@cloudinary/url-gen';
+import { CloudinaryImage } from '@cloudinary/url-gen';
+import { URLConfig } from '@cloudinary/url-gen';
+import { CloudConfig } from '@cloudinary/url-gen';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpEventType, HttpHeaders } from '@angular/common/http';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
@@ -19,8 +19,9 @@ import { IcardStack } from 'src/app/interfaces/icard-stack';
 })
 export class CreateCardItemComponent implements OnInit {
   @Input() card!: Icard;
-  @Input() currentStack!: IcardStack
-  @Output('getCardsFromStack') getCardsFromStack: EventEmitter<any> = new EventEmitter();
+  @Input() currentStack!: IcardStack;
+  @Output('getCardsFromStack') getCardsFromStack: EventEmitter<any> =
+    new EventEmitter();
 
   cardForm!: FormGroup;
   imageForm!: FormGroup;
@@ -36,45 +37,42 @@ export class CreateCardItemComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.cardDataInitialiser();
 
     this.imageForm = this.formBuilder.group({ data: [''] });
   }
 
   onFileSelected(e: Event) {
-
     this.selectedFile = (e.target as HTMLInputElement).files![0];
-
   }
 
   onUpload() {
+    const fd = new FormData();
 
-    const fd = new FormData
-
-    fd.append('image', this.selectedFile, this.selectedFile.name)
+    fd.append('image', this.selectedFile, this.selectedFile.name);
 
     console.log(fd.get('image'));
 
-    this.http.post('http://localhost:3000/image/upload', fd, {
-      headers: new HttpHeaders({
-        'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
-      }),
-      reportProgress: true, 
-      observe: 'events'
-    })
-    .subscribe(
-      (res) => {
-        console.log(res);
-      }
-      // event => {
-      // if (event.type === HttpEventType.UploadProgress) {
-      //   console.log('Upload Progress: ' + (event.loaded / event.total!) * 100)
-      // } if (event.type === HttpEventType.Response) {
-      //   console.log(event);
-      //} 
-    )
+    this.http
+      .post('http://localhost:3000/image/upload', fd, {
+        headers: new HttpHeaders({
+          'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Origin': '*',
+        }),
+        reportProgress: true,
+        observe: 'events',
+      })
+      .subscribe(
+        (res) => {
+          console.log(res);
+        }
+        // event => {
+        // if (event.type === HttpEventType.UploadProgress) {
+        //   console.log('Upload Progress: ' + (event.loaded / event.total!) * 100)
+        // } if (event.type === HttpEventType.Response) {
+        //   console.log(event);
+        //}
+      );
   }
 
   cardDataInitialiser(): void {
@@ -91,21 +89,17 @@ export class CreateCardItemComponent implements OnInit {
   }
 
   handleUpload(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.imageForm.get('data')?.setValue(file);
-    }
-
+    const file = event.target.files[0];
+    console.log(file);
+    this.imageForm.get('data')?.setValue(file);
+    console.log(this.imageForm.get('data')?.value);
     const formData = new FormData();
-    formData.append('file', this.imageForm.get('data')?.value);
-
-
-
+    formData.append('file', file);
     this.srvCardStacks.uploadImage(formData, this.card.CardID);
   }
 
   handleDelete() {
-    //
+    this.srvCardStacks.deleteImage(this.card.ImageID, this.card.CardID);
   }
 
   get front() {
