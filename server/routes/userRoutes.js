@@ -19,13 +19,16 @@ router.delete('/:userID/deck/:deckID', deckController.deleteDeck);
 
 //_____ Card Controller
 
-router.get('/:userID/deck/:deckID/cards', cardController.getCards);
-router.get('/:userID/deck/:deckID/all', cardController.getAllCards);
+router.get('/:userID/deck/:deckID/cards', cardController.getCards); // Get due cards
+router.get('/:userID/deck/:deckID/all', cardController.getAllCards); // Get all cards
 router.post('/:userID/deck/:deckID/cards', cardController.addCard);
 router.patch('/:userID/deck/:deckID/card/:cardID', cardController.updateCard);
+router.delete('/:userID/deck/:deckID/card/:cardID', cardController.deleteCard)
 
-router.post('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
-router.delete('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
+router.patch('/:userID/deck/:deckID/card/:cardID/update-image', cardController.updateCardImage);
+
+// router.post('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
+// router.delete('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
 
 router.patch('/:userID/deck/:deckID/card/:cardID/easy', cardController.easyCard);
 router.patch('/:userID/deck/:deckID/card/:cardID/hard', cardController.hardCard);

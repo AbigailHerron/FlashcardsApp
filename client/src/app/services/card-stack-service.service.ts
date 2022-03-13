@@ -15,7 +15,9 @@ import { SessionQuery } from '../store/session.query';
 export class CardStackServiceService {
 
   // Retrieving user, then userID
-  private userID! : number;
+  private userID!: number;
+
+  private httpSkipInterceptor: HttpClient;
 
   currentCardStack!: IcardStack;
   public cardStackSource = new BehaviorSubject<IcardStack>(this.currentCardStack);
@@ -26,8 +28,11 @@ export class CardStackServiceService {
     this.selectedCardStackOptions
   );
 
-  constructor(private http: HttpClient, private session: SessionQuery) {
-    this.userID = this.session.userID$;
+  constructor(private handler: HttpBackend, private http: HttpClient, private session: SessionQuery) {
+
+    this.userID = this.session.userId$;
+    this.httpSkipInterceptor = new HttpClient(handler);
+
    }
 
   // Example use of request paramZZZeters
@@ -97,67 +102,61 @@ export class CardStackServiceService {
 
   getCardsFromStack(): Observable<Icard[]> {
     this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
-
-    //this.currentCardStack = this.deckDetails;
-
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/cards`;
+    console.log(url);
 
     return this.http.get<Icard[]>(url).pipe(catchError(this.handleError));
   }
 
   // Update card in stack
 
-  updateCardFromStack(cardID: number, card: Icard): Observable<Icard> {
+  updateCardFromStack(cardID: number, card: Icard) {
+
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}`;
 
+    console.log(url);
+
     return this.http
-      .put<Icard>(url, card, {
+      .patch<Icard>(url, card, {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
         }),
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .subscribe((res) => console.log(res));
   }
 
   // Upload image to card
 
   uploadImage(formData: FormData, cardID: number) {
     const url = 'http://localhost:3000/image/upload';
-    return this.http
+    return this.httpSkipInterceptor
       .post<any>(url, formData)
       .subscribe((res) => this.updateCardImage(res, cardID));
   }
 
   // Delete image from card
 
-  deleteImage() {
-    //const url = 'http://localhost:3000/image/delete/${this.publicID}'
+  deleteImage(imageID: any, cardID: any) {
+    const url = 'http://localhost:3000/image/delete';
+    const deckID = this.currentCardStack.DeckID;
+    this.http
+      .post<any>(url, { imageID, deckID, cardID })
+      .subscribe((res) => console.log(res));
   }
 
   // Update card image
 
-  updateCardImage(imageDetails: Icard, cardID: number): Observable<Icard> {
+  updateCardImage(imageDetails: Icard, cardID: number) {
     /*     return this.http
       .patch<any>(url, imageDetails)
       .pipe(retry(1), catchError(this.handleError)); */
-
+    console.log(imageDetails);
+    console.log(`${this.userID},${this.currentCardStack.DeckID},${cardID}`);
     // Can't make this http call
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}`;
-
-    return this.http
-      .patch<Icard>(url, imageDetails, {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-        }),
-      })
-      .pipe(retry(1), catchError(this.handleError));
-
-      // ########## Important
-
-      // The card controller is returning a json response
-      // res.json({ public_id: result.public_id, url: result.secure_url });
-
-      // We arent able to parse this correctly
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentCardStack.DeckID}/card/${cardID}/update-image`;
+    this.http
+      .patch<any>(url, imageDetails)
+      .subscribe((res) => console.log(res));
   }
 
   // Setting card difficulty to easy
@@ -189,6 +188,8 @@ export class CardStackServiceService {
     console.log('deleteCardFromStack called');
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.cardStackSource.value.DeckID}/card/${card.CardID}`;
+
+    console.log(url);
 
     this.http.delete(url).subscribe(() => console.log('Card deleted'));
   }
@@ -249,6 +250,8 @@ export class CardStackServiceService {
     const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackID}`;
 
     console.log('card-stack-service method: updateCardStack called');
+
+    console.log(cardStackDetails);
 
     return this.http.put<IcardStack>(url, cardStackDetails).subscribe(() => console.log('Updated'));
       

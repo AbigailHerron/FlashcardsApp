@@ -12,6 +12,12 @@
                 </div>
             </div>
 
+            <div class="row" style="padding: 1em;">
+                <div class="col">
+                    <h3>Cards Due {{ currentCardStack?.CardsDue }}</h3>
+                </div>
+            </div>
+
             <form [formGroup]="viewStackForm" (ngSubmit)="onSubmit()"> <!-- Form -->
                 <div class="form-group">
 
@@ -44,6 +50,8 @@
                             <p>Inputs: {{ viewStackForm.get('inputs')?.value }}</p>
                         </div> -->
                     </div>
+
+                    
 
                     <div class="row" *ngIf="viewStackForm.get('timer')?.value == true" style="padding: 1em;"> 
 

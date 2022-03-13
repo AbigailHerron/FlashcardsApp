@@ -267,7 +267,7 @@ describe('SignUpComponent integrated testing', () => {
 
     //__________
   
-fit('backendService signup() should be called', fakeAsync(() => {
+it('backendService signup() should be called', fakeAsync(() => {
   
     serviceSpy = spyOn(service, 'signup').and.callThrough();
 

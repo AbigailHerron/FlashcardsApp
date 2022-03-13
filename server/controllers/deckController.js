@@ -61,7 +61,9 @@ class deckController {
 
   // Update
   async updateDeck(req, res) {
+
     console.log('welcome to updateDeck controller');
+    
     try {
       const conn = await sqlcon.getConnection();
       const { deckname, about, publicDeck, colour } = req.body;

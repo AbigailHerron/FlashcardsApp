@@ -38,7 +38,6 @@ export class CreateCardItemComponent implements OnInit {
   ngOnInit(): void {
 
     this.cardDataInitialiser();
-
     this.imageForm = this.formBuilder.group({ data: [''] });
   }
 
@@ -52,17 +51,12 @@ export class CreateCardItemComponent implements OnInit {
 
     const fd = new FormData
 
-    fd.append('image', this.selectedFile, this.selectedFile.name)
-
-    console.log(fd.get('image'));
-
-    this.http.post('http://localhost:3000/image/upload', fd, {
+    fd.append('image', this.selectedFile)
+    this.http
+    .post('http://localhost:3000/image/upload', fd, {
       headers: new HttpHeaders({
         'Content-Type': 'multipart/form-data',
-        'Access-Control-Allow-Origin': '*',
-      }),
-      reportProgress: true, 
-      observe: 'events'
+      })
     })
     .subscribe(
       (res) => {
@@ -74,7 +68,7 @@ export class CreateCardItemComponent implements OnInit {
       // } if (event.type === HttpEventType.Response) {
       //   console.log(event);
       //} 
-    )
+    );
   }
 
   cardDataInitialiser(): void {
@@ -91,20 +85,17 @@ export class CreateCardItemComponent implements OnInit {
   }
 
   handleUpload(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.imageForm.get('data')?.setValue(file);
-    }
-
+    const file = event.target.files[0];
+    console.log(file);
+    this.imageForm.get('data')?.setValue(file);
+    console.log(this.imageForm.get('data')?.value);
     const formData = new FormData();
-    formData.append('file', this.imageForm.get('data')?.value);
-
-
-
+    formData.append('file', file);
     this.srvCardStacks.uploadImage(formData, this.card.CardID);
   }
 
   handleDelete() {
+    this.srvCardStacks.deleteImage(this.card.ImageID, this.card.CardID);
     //
   }
 
@@ -126,19 +117,10 @@ export class CreateCardItemComponent implements OnInit {
   }
 
   updateCardFromStack() {
-    console.log(this.card.CardID);
 
-    this.srvCardStacks
-      .updateCardFromStack(this.card.CardID, this.cardForm.value)
-      .subscribe({
-        next: (card) => {
-          console.log(JSON.stringify(card) + ' has been updated');
-        },
-        complete: () => this.getCardsFromStack.emit(),
-        error: (error) => {
-          this.errorMessage = error.message;
-          console.error('There was an error!', error);
-        },
-      });
+    console.log(this.card);
+
+    this.srvCardStacks.updateCardFromStack(this.card.CardID, this.cardForm.value);
+
   }
 }

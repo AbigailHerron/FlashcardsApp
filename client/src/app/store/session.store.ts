@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Login } from '../interfaces/login';
 import { EntityStore, StoreConfig, EntityState } from '@datorama/akita';
 
 export interface SessionState {
@@ -19,12 +18,13 @@ export function createInitialState(): SessionState {
 }
 
 @Injectable({ providedIn: 'root'})
-@StoreConfig({ name: 'session' })
+@StoreConfig({ name: 'session' , resettable: true})
 export class SessionStore extends EntityStore<SessionState> {
 
   constructor() {
     super(createInitialState());
   }
+}
 
   // login(session: SessionState) {
   //   this.update(session);
@@ -35,4 +35,3 @@ export class SessionStore extends EntityStore<SessionState> {
   //   //storage.clearSesssion();
   //   this.update(createInitialState());
   // }
-}

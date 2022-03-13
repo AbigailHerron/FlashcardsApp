@@ -81,7 +81,6 @@ describe('LoginComponent isolated test', () => {
     updateForm(blankUser.email, blankUser.password);
     expect(component.loginForm.invalid).toBeTruthy();
   }));
-
 });
 
 //-------------------------------------------------- Shallow Test (Template Rendering)

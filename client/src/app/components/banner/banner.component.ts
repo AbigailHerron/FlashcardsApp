@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user';
+import { Location } from '@angular/common';
+import { SessionQuery } from 'src/app/store/session.query';
+
+import { resetStores } from "@datorama/akita";
+import { BehaviorSubject, Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-banner',
@@ -9,16 +15,23 @@ import { User } from 'src/app/interfaces/user';
 })
 export class BannerComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(public router: Router, private _location: Location, private authQuery: SessionQuery) { }
 
-  currentUser: User = JSON.parse(localStorage.getItem('currentUser')!);
-
+  userID$!: Observable<number>;
+  
   ngOnInit(): void {
-    // this.currentUser = this.backend.userValue!;
+    this.userID$ = this.authQuery.userID$;
   }
 
   logOut() {
-    localStorage.removeItem('currentUser');
+
+    console.log("logOut() method called");
+    resetStores();
     this.router.navigate(['']);
   }
+
+  backClicked() {
+    this._location.back();
+  }
+
 }

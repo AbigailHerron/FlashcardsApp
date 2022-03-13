@@ -17,7 +17,7 @@ export class UserHubComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  backClicked() {
-    this._location.back();
-  }
+  // backClicked() {
+  //   this._location.back();
+  // }
 }

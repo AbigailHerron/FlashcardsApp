@@ -26,8 +26,8 @@ h1{
     border-radius: 50%;
     width: 3em;
     height: 3em;
-    background-color: #03DAC5;
-    color: white;
+    background-color: white;
+    color: black;
 
     position: fixed;
     right: 30px;

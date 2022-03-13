@@ -3,60 +3,67 @@
     <!-- (ngSubmit) = "onSubmit()" -->
 
     <div class="row">
+
+
       <div class="col">
+
         <a class="material-icons md-36 md-light icon-btn"
           (click)="updateCardFromStack()"
-          style="color: white"
-          >save</a>
+          style="color: white">save</a>
+
         <a class="material-icons md-36 md-light icon-btn"
           (click)="deleteCardFromStack()"
-          style="color: white"
-          >delete</a>
+          style="color: white">delete</a>
+
+          <div class="row">
+            <div class="col">
+              <label for="front" class="form-label">Front</label>
+              <input
+                type="text"
+                class="form-control"
+                class="form-control"
+                id="front"
+                formControlName="front"
+                placeholder="Front Text"
+              />
+            </div>
+          </div>
+
+          <br />
+
+          <div class="row">
+            <div class="col">
+              <label for="back" class="form-label">Back</label>
+              <input
+                type="textarea"
+                class="form-control"
+                class="form-control"
+                id="back"
+                formControlName="back"
+                placeholder="Back Text"
+              />
+            </div>
+          </div>
+
+          <br />
+
+          <div class="row">
+            <div class="col">
+              <label for="hint" class="form-label">Hint</label>
+              <input
+                type="textarea"
+                class="form-control"
+                class="form-control"
+                id="hint"
+                formControlName="hint"
+                placeholder="Hint Text"
+              />
+            </div>
+          </div>
+
       </div>
-    </div>
 
-    <div class="form-row" style="padding: 1em">
-      <div class="col-md-6">
-        <label for="front" class="form-label">Front</label>
-        <input
-          type="text"
-          class="form-control"
-          class="form-control"
-          id="front"
-          formControlName="front"
-          placeholder="Front Text"
-        />
-      </div>
-
-      <div class="col-md-6">
-        <label for="back" class="form-label">Back</label>
-        <input
-          type="textarea"
-          class="form-control"
-          class="form-control"
-          id="back"
-          formControlName="back"
-          placeholder="Back Text"
-        />
-      </div>
-    </div>
-
-    <br />
-
-    <div class="row" style="padding: 1em;">
-      <div class="col-md-6">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile" (change)="onFileSelected($event)">
-          <label class="custom-file-label" for="customFile">Choose file</label>
-        </div>
-      </div>
-
-      <div class="col-md-6" >
-        <button type="button" class="btn btn-light" (click)="onUpload()">Upload</button>
-      </div>
-    </div>
-
-      <!-- <div class="col-sm-4">
+      <div class="col">
         <div class="upload">
           <label for="formFile" class="form-label">Image Source</label>
           <input
@@ -70,6 +77,7 @@
             <span (click)="handleDelete()">X</span>
           </div>
         </div>
-      </div> -->
+      </div>
+    </div>
   </form>
 </div>

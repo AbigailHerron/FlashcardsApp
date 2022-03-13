@@ -26,3 +26,13 @@
     right: 20px;
     top: 50;
 }
+
+.back-btn{
+
+    position: fixed;
+    left: 3vw;
+    top: 3vh;
+
+    color: white;
+    cursor: pointer;
+}
