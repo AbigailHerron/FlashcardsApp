@@ -6,6 +6,8 @@
 
 label {
   color: white;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 .icon-btn{
@@ -76,4 +78,9 @@ label {
 
 .material-icons.md-36 {
   font-size: 36px;
+}
+
+input{
+  margin-left: 1em;
+  margin-right: 1em;
 }

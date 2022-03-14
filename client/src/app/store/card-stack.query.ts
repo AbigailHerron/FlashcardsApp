@@ -30,7 +30,7 @@ export class CardStackQuery extends Query<CardStackState> {
   // Value
   currentStackValue$ = this.getValue();
 
-  cardStackID$ = this.getValue().DeckID;
+  cardStackID$ = this.select('DeckID');
   
 
   constructor(protected store: CardStackStore) {

@@ -5,6 +5,7 @@ import { Icard } from 'src/app/interfaces/icard';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 // import { Istacksettings } from 'src/app/interfaces/istacksettings';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
+import { CardStackQuery } from 'src/app/store/card-stack.query';
 
 @Component({
   selector: 'app-view-stack',
@@ -21,14 +22,18 @@ export class ViewStackComponent implements OnInit {
   stackSettings!: any; // Should be Istacksettings
   interval: any;
 
+  progress: number = 0;
+  progressString!: string;
+
   cardForm!: FormGroup;
   isCorrect!: boolean;
 
   answeredCorrectly: string[] = [];
 
-  constructor(private srvCardStacks: CardStackServiceService, private router: Router) {
+  constructor(private srvCardStacks: CardStackServiceService, private router: Router, private cardStackQuery: CardStackQuery) {
 
-  }
+    this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack = res);
+   }
 
   ngOnInit(): void {
 
@@ -36,7 +41,7 @@ export class ViewStackComponent implements OnInit {
       answer: new FormControl('', [Validators.required])
     })
     
-    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); // Setting currentCardStack
+    // this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); // Setting currentCardStack
 
     // Retrieve cards from stack
     this.getCardsFromStack();
@@ -85,6 +90,11 @@ export class ViewStackComponent implements OnInit {
     if (this.indexCounter != this.cardsArray.length - 1)
     {
       this.indexCounter++;
+
+      this.progress = (this.indexCounter / this.cardsArray.length)
+
+      console.log(this.progress);
+
     }
 
     sessionStorage.setItem("index", this.indexCounter.toString())
@@ -95,6 +105,8 @@ export class ViewStackComponent implements OnInit {
     if (this.indexCounter != 0)
     {
       this.indexCounter--;
+
+      this.progress = (this.indexCounter / this.cardsArray.length)
     }
 
     sessionStorage.setItem("index", this.indexCounter.toString())

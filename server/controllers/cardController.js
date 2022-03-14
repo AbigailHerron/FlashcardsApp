@@ -67,13 +67,14 @@ class cardController {
       res.status(500).json({ msg: err.message });
     }
   }
+
   // Update
   async updateCard(req, res) {
     console.log('welcome to updateCard controller');
     console.log(req.body);
     console.log(req.params);
     try {
-      const { front, back } = req.body;
+      const { front, hint, back } = req.body;
 
       console.log(req.body);
 
@@ -83,9 +84,10 @@ class cardController {
         .input('deck_id', req.params.deckID)
         .input('card_id', req.params.cardID)
         .input('front', front)
+        .input('hint', hint)
         .input('back', back)
         .execute('updateCard');
-      res.send('Updated Card');
+      res.json('Updated Card');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
@@ -117,7 +119,7 @@ class cardController {
         .input('deck_id', req.params.deckID)
         .input('card_id', req.params.cardID)
         .execute('deleteCard');
-      res.send('Deleted Card');
+      res.json('Deleted Card');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

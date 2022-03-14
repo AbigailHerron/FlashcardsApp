@@ -31,13 +31,7 @@ export class CardStackServiceService {
   private userID!: number;
 
   currentCardStack$!: Observable<IcardStack>;
-  
   currentStackID$!: number;
-  
-  // public cardStackSource = new BehaviorSubject<IcardStack>(
-  //   this.currentCardStack
-  // );
-  // stackID = this.cardStackSource.value;
 
 
   selectedCardStackOptions!: Istacksettings;
@@ -53,7 +47,7 @@ export class CardStackServiceService {
 
     this.cardStackQuery.currentStackState$.pipe(mapTo(this.currentCardStack$));
 
-    this.currentStackID$ = this.cardStackQuery.cardStackID$;
+    this.cardStackQuery.cardStackID$.subscribe(res => this.currentStackID$ = res);
 
     this.httpSkipInterceptor = new HttpClient(handler);
   }
@@ -62,19 +56,17 @@ export class CardStackServiceService {
 
     this.cardStackStore.update(stack);
 
-    // this.cardStackSource.next(stack);
-
   }
 
   // Setting cardstack as current cardstack
-
   public deckValue(cardStack: IcardStack) {
 
     console.log("Updating CardStackStore value")
 
     this.cardStackStore.update(cardStack);
 
-    // this.cardStackQuery.currentStack$.subscribe(res => console.log(res));
+    console.log("Current CardStackStore value")
+     this.cardStackQuery.currentStack$.subscribe(res => console.log(res));
 
     // this.cardStackSource.next(cardStack);
   }
@@ -107,7 +99,8 @@ export class CardStackServiceService {
   // Add blank card to stack
 
   addBlankCardToStack() {
-    console.log('Post cardStack service called');
+
+    console.log('addBlankCardToStack function called | card-stack-service.service.ts');
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/cards`;
 
@@ -141,6 +134,9 @@ export class CardStackServiceService {
     // this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/cards`;
+
+    console.log(this.currentStackID$);
+    
     console.log(url);
 
     return this.http.get<Icard[]>(url).pipe(catchError(this.handleError));
@@ -219,10 +215,12 @@ export class CardStackServiceService {
 
   deleteCardFromStack(card: Icard) {
     console.log('deleteCardFromStack called');
-    if (card.ImageID === null) {
-      this.imageID = 'testing/null';
-    }
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${card.CardID}/image/${this.imageID}`;
+
+    // if (card.ImageID === null) {
+    //   this.imageID = 'testing/null';
+    // }
+
+    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${card.CardID}`;
 
     this.http.delete<any>(url).subscribe(() => console.log('Card deleted'));
   }
