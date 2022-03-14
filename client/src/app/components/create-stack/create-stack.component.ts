@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Icard } from 'src/app/interfaces/icard';
 import { Router } from '@angular/router';
 
 import { Location } from '@angular/common';
+import { mapTo } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-stack',
@@ -15,14 +15,16 @@ import { Location } from '@angular/common';
   styleUrls: ['./create-stack.component.css'],
 })
 export class CreateStackComponent implements OnInit {
-  currentCardStack!: IcardStack;
+  currentCardStack$!: IcardStack;
 
   constructor(
     private router: Router,
     private srvCardStacks: CardStackServiceService,
     private _location: Location
   ) {
-    this.currentCardStack = this.srvCardStacks.deckDetails;
+
+
+    this.srvCardStacks.deckDetails.subscribe(res => this.currentCardStack$ = res);
   }
 
   //private cardStackSource = this.srvCardStacks.deckDetails;
@@ -34,21 +36,21 @@ export class CreateStackComponent implements OnInit {
   ngOnInit(): void {
     console.log('In ngOnInit create-stack.component.ts');
 
-    console.log(this.currentCardStack);
+    console.log(this.currentCardStack$);
 
     this.stackDetailsForm = new FormGroup({
-      deckname: new FormControl(this.currentCardStack.DeckName, [
+      deckname: new FormControl(this.currentCardStack$.DeckName, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      about: new FormControl(this.currentCardStack.About, [
+      about: new FormControl(this.currentCardStack$.About, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      publicDeck: new FormControl(this.currentCardStack.PublicDeck, [
+      publicDeck: new FormControl(this.currentCardStack$.PublicDeck, [
         Validators.required,
       ]),
-      colour: new FormControl(this.currentCardStack.Colour, [
+      colour: new FormControl(this.currentCardStack$.Colour, [
         Validators.required,
       ]),
     });
@@ -72,11 +74,11 @@ export class CreateStackComponent implements OnInit {
   //UPDATE CARDSTACK DETAILS
 
   onSubmit() {
-    console.log(this.currentCardStack);
+    console.log(this.currentCardStack$);
 
     this.srvCardStacks.updateCardStack(
       this.stackDetailsForm.value,
-      this.currentCardStack.DeckID
+      this.currentCardStack$.DeckID
     );
 
     this.router.navigate(['/userhub']);
@@ -90,3 +92,4 @@ export class CreateStackComponent implements OnInit {
     });
   }
 }
+

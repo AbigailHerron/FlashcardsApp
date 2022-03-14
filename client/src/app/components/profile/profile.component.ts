@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
     var x = document.getElementById("editDetails")!;
     x.style.display = "none";
 
-    this.user = this.session.$userDetails;
+    this.user = this.session.userDetails$;
 
     console.log(this.user);
   }

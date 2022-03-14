@@ -6,64 +6,45 @@
   <form [formGroup]="cardForm" class="row" style="padding: 1em">
     <!-- (ngSubmit) = "onSubmit()" -->
 
-    <div class="row">
-
-
+    
       <div class="col">
 
-        <a class="material-icons md-36 md-light icon-btn"
-          (click)="updateCardFromStack()"
-          style="color: white">save</a>
+        <a class="material-icons md-36 md-light icon-btn" (click)="updateCardFromStack()" style="color: white">save</a>
+        <a class="material-icons md-36 md-light icon-btn" (click)="deleteCardFromStack()" style="color: white">delete</a>
 
-        <a class="material-icons md-36 md-light icon-btn"
-          (click)="deleteCardFromStack()"
-          style="color: white">delete</a>
+      </div>
 
-          <div class="row">
-            <div class="col">
-              <label for="front" class="form-label">Front</label>
-              <input
-                type="text"
-                class="form-control"
-                class="form-control"
-                id="front"
-                formControlName="front"
-                placeholder="Front Text"
-              />
-            </div>
-          </div>
+      <div class="row">
 
-          <br />
+        <div class="col">
+          <label for="front" class="form-label">Front</label>
+          <input type="text" class="form-control" class="form-control" id="front" formControlName="front" placeholder="Front Text"/>
+        </div>
 
-          <div class="row">
-            <div class="col">
-              <label for="back" class="form-label">Back</label>
-              <input
-                type="textarea"
-                class="form-control"
-                class="form-control"
-                id="back"
-                formControlName="back"
-                placeholder="Back Text"
-              />
-            </div>
-          </div>
+        <div class="col">
+          <label for="back" class="form-label">Back</label>
+          <input type="textarea" class="form-control" class="form-control" id="back" formControlName="back" placeholder="Back Text"/>
+        </div>
 
-          <br />
+        <div class="col">
+          <label for="hint" class="form-label">Hint</label>
+          <input type="textarea"class="form-control" class="form-control" id="hint" formControlName="hint" placeholder="Hint Text"/>
+        </div>
+      </div>
 
-          <div class="row">
-            <div class="col">
-              <label for="hint" class="form-label">Hint</label>
-              <input
-                type="textarea"
-                class="form-control"
-                class="form-control"
-                id="hint"
-                formControlName="hint"
-                placeholder="Hint Text"
-              />
-            </div>
-          </div>
+    <div class="col-sm-4">
+      <div class="upload">
+        <label for="formFile" class="form-label">Image Source</label>
+        <input type="file" name="file" id="file_up" (change)="handleUpload($event)">
+        <div id="file_img" [ngStyle]="styleUpload()">
+          <img src="{{ this.card?.ImageURL }}" alt="" />
+          <span (click)="handleDelete()">X</span>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
 
     <!--
       <div class="row" style="padding: 1em;">
@@ -89,21 +70,3 @@
             <span (click)="handleDelete()">X</span>
           </div>
     </div> -->
-
-    <div class="col-sm-4">
-      <div class="upload">
-        <label for="formFile" class="form-label">Image Source</label>
-        <input
-          type="file"
-          name="file"
-          id="file_up"
-          (change)="handleUpload($event)"
-        />
-        <div id="file_img" [ngStyle]="styleUpload()">
-          <img src="{{ this.card?.ImageURL }}" alt="" />
-          <span (click)="handleDelete()">X</span>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>

@@ -4,7 +4,7 @@
 
     <!-- CARDS GO HERE -->
     <div class="row" >
-        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index" [card]="c" [currentStack]="currentCardStack" (getCardsFromStack)="getCardsFromStack()"></app-create-card-item> <!--  -->
+        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index" [card]="c" [currentStack]="currentCardStack$" (getCardsFromStack)="getCardsFromStack()"></app-create-card-item> <!--  -->
     </div>
     <!------------------->
 </div>

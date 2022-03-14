@@ -7,6 +7,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CardStackQuery } from 'src/app/store/card-stack.query';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class SelectCardStackComponent implements OnInit {
 
   currentCardStack!: IcardStack;
 
-  constructor(private srvCardStacks: CardStackServiceService, private router: Router, private modalService: NgbModal) { }
+  constructor(private srvCardStacks: CardStackServiceService, private router: Router, private modalService: NgbModal, private cardStackQuery: CardStackQuery) { }
 
   // Retrieve user details from local storage + send user ID in req.body
 
@@ -44,12 +45,16 @@ export class SelectCardStackComponent implements OnInit {
   // currentCardStack is set when a card stack is clicked/selected
 
   clicked (cardStack: IcardStack): void {
-    this.currentCardStack = cardStack;
-    console.table(this.currentCardStack);
 
-    this.srvCardStacks.deckValue(this.currentCardStack)
+    // this.currentCardStack = cardStack;
 
-    sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
+    // console.table(cardStack);
+
+    this.srvCardStacks.deckValue(cardStack)
+
+    // sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
+
+    this.cardStackQuery.currentStack$.subscribe(res => console.log(res));
   }
 
   // Open Modal
