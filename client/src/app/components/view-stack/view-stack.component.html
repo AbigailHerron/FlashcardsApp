@@ -1,20 +1,18 @@
-  <!-- CARD FLIPPING ANIMATION -->
+<!-- CARD FLIPPING ANIMATION -->
 
-<body style="background-color: #121212;">
-  
+<body style="background-color: #121212">
   <div class="container">
-
     <div class="row header">
-
       <div class="col">
         <h1>{{ currentCardStack.DeckName }}</h1>
       </div>
 
       <div class="col" *ngIf="countdown != null">
-        <span class="material-icons md-36" style="color: white; display: inline;">timer</span>
-        <h1 style="display: inline;">{{ countdown }}</h1>
+        <span class="material-icons md-36" style="color: white; display: inline"
+          >timer</span
+        >
+        <h1 style="display: inline">{{ countdown }}</h1>
       </div>
-
     </div>
 
     <div class="flip-card" style="width: 60vw; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem;" [ngClass]="{'do-flip': isFlipped == true}"> <!-- Card container -->
@@ -26,83 +24,121 @@
           <div class="row" style="padding: 1em;">
   
             <div class="col">
-              <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+              <h5 class="card-title">
+                Card {{ indexCounter + 1 }} of {{ cardsArray.length }}
+              </h5>
             </div>
-  
+
             <div class="col">
               <h5>Front</h5>
             </div>
-  
-        </div>
-
-        <div class="row" style="padding: 1em;">
-
-          <div *ngIf="cardsArray[indexCounter]?.ImageURL" class="col">
-            <img src={{cardsArray[indexCounter]?.ImageURL}} alt="Image" style="height: 128px;">
           </div>
-  
 
-          <div class="col">
-              <h2>{{cardsArray[indexCounter]?.Front}}</h2>
-          </div>
-        </div>
-  
-        </div>
-        
-        <div class="flip-card-back" [ngStyle]="{'background-color': isCorrect == true ? 'green' : 'red'}" [ngStyle]="{'background-color': stackSettings.Inputs == true ? 'green' : 'lightgray'}"   style="border-radius: 15px"> <!-- Back of card -->
-  
-          <div class="row" style="padding: 1em;">
+          <div *ngIf="cardsArray[indexCounter]?.ImageURL" class="row">
             <div class="col">
-              <h5 class="card-title">Card {{indexCounter + 1}} of {{cardsArray.length}}</h5>
+              <div class="image-container">
+                <img
+                  src="{{ cardsArray[indexCounter]?.ImageURL }}"
+                  alt="Image"
+                />
+              </div>
             </div>
-  
+          </div>
+
+          <div class="row" style="padding: 1em">
+            <div class="col">
+              <h2>{{ cardsArray[indexCounter]?.Front }}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="flip-card-back"
+          [ngStyle]="{
+            'background-color': isCorrect == true ? 'green' : 'red'
+          }"
+          style="border-radius: 15px"
+        >
+          <!-- Back of card -->
+
+          <div class="row" style="padding: 1em">
+            <div class="col">
+              <h5 class="card-title">
+                Card {{ indexCounter + 1 }} of {{ cardsArray.length }}
+              </h5>
+            </div>
+
             <div class="col">
               <h5>Back</h5>
             </div>
-  
           </div>
-  
-          <div class="row" style="padding: 1em;">
+
+          <div class="row" style="padding: 1em">
             <div class="col">
-              <h2>{{cardsArray[indexCounter]?.Back}}</h2>
+              <h2>{{ cardsArray[indexCounter]?.Back }}</h2>
             </div>
           </div>
-  
         </div>
-        
       </div>
 
       <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+        <div class="form-row align-items-center">
+          <div class="col-auto" *ngIf="stackSettings.inputs == true">
+            <label class="sr-only" for="inlineFormInput">Answer</label>
+            <input
+              type="text"
+              class="form-control mb-2"
+              id="answer"
+              formControlName="answer"
+              placeholder="Enter answer"
+            />
+          </div>
 
-      <div class="form-row align-items-center">
+          <div class="col-auto" *ngIf="stackSettings.inputs == true">
+            <button
+              type="submit"
+              class="btn"
+              style="margin: 1em; align-items: end"
+              id="submitButton"
+            >
+              Submit
+            </button>
+          </div>
 
-        <div class="col-auto" *ngIf="stackSettings.inputs == true">
-          <label class="sr-only" for="inlineFormInput">Answer</label>
-          <input type="text" class="form-control mb-2" id="answer" formControlName="answer" placeholder="Enter answer">
+          <div class="col-auto" *ngIf="stackSettings.inputs == false">
+            <button
+              type="button"
+              class="btn"
+              (click)="flipCard()"
+              style="margin: 1em; align-items: end"
+            >
+              Flip
+            </button>
+          </div>
+
+          <div class="col-auto" *ngIf="stackSettings.inputs == false">
+            <button
+              type="button"
+              class="btn"
+              (click)="nextCard()"
+              style="margin: 1em; align-items: end"
+            >
+              Next
+            </button>
+          </div>
+
+          <div class="col-auto" *ngIf="stackSettings.inputs == false">
+            <button
+              type="button"
+              class="btn"
+              (click)="previousCard()"
+              style="margin: 1em; align-items: end"
+            >
+              Previous
+            </button>
+          </div>
         </div>
-
-        <div class="col-auto" *ngIf="stackSettings.inputs == true">
-          <button type="submit" class="btn" style="margin: 1em; align-items: end;" id="submitButton">Submit</button>
-        </div>
-
-        <div class="col-auto" *ngIf="stackSettings.inputs == false">
-          <button type="button" class="btn" (click)="flipCard()" style="margin: 1em; align-items: end;">Flip</button>
-        </div>
-
-        <div class="col-auto" *ngIf="stackSettings.inputs == false">
-          <button type="button" class="btn" (click)="nextCard()" style="margin: 1em; align-items: end;">Next</button>
-        </div> 
-
-        <div class="col-auto" *ngIf="stackSettings.inputs == false">
-          <button type="button" class="btn" (click)="previousCard()" style="margin: 1em; align-items: end;">Previous</button>
-        </div>
-
-      </div>
-
-    </form>
-  
+      </form>
     </div>
-
   </div>
-
 </body>

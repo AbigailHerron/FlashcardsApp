@@ -6,15 +6,10 @@ const fileUpload = require('express-fileupload');
 require('dotenv').config();
 const PORT = process.env.PORT;
 
-var corsOptions = { 
-origin: 'http://localhost:4200',
-optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ extended: true})); //Parse URL-encoded bodies
-app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true })); //Parse URL-encoded bodies
+app.use(cors());
 app.use(
   fileUpload({
     useTempFiles: true,
