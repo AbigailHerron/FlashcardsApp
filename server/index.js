@@ -25,3 +25,4 @@ app.use('', publickRouter);
 
 app.listen(PORT);
 console.log('server connected');
+module.exports = app;

@@ -95,11 +95,8 @@ class cardController {
 
   // Delete
   async deleteCard(req, res) {
-
     console.log('welcome to deleteCard controller');
 
-
-    
     try {
       // Delete image
       const imageID = req.url.substring(req.url.indexOf('/testing/') + 1);
@@ -229,7 +226,7 @@ class cardController {
         .input('imageID', newImageID)
         .input('imageURL', newImageURL)
         .execute('updateCardImage');
-      res.send('Updated Card');
+      res.send('Deleted Image');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
