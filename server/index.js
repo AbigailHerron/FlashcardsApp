@@ -4,7 +4,7 @@ const fileUpload = require('express-fileupload');
 
 // dot env package
 require('dotenv').config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 app.use(express.json());
@@ -15,6 +15,7 @@ app.use(
     useTempFiles: true,
   })
 );
+app.use(express.static('public'));
 
 const userRouter = require('./routes/userRoutes');
 const imageRouter = require('./routes/imageRoutes');
@@ -24,5 +25,3 @@ app.use('/image', imageRouter);
 app.use('', publickRouter);
 
 app.listen(PORT);
-console.log('server connected');
-module.exports = app;

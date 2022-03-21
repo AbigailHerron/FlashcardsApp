@@ -9,38 +9,35 @@ import { User } from '../interfaces/user';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
+  constructor(private sessionStore: SessionStore, private http: HttpClient) {}
 
-  constructor(private sessionStore: SessionStore, private http: HttpClient) { }
+  // RegisteR (post) a user
+  public signup(user: Signup): Observable<any> {
+    return this.http.post<any>('user/signup', user).pipe(
+      tap((user) => {
+        // Updating session state
+        this.sessionStore.update(() => ({
+          accessToken: user.accessToken,
+          UserName: user.UserName,
+          UserEmail: user.UserEmail,
+          UserID: user.UserID,
+        }));
+      })
+    );
+  }
 
-    // RegisteR (post) a user
-    public signup(user: Signup): Observable<any> {
-
-        return this.http.post<any>('http://localhost:3000/user/signup', user)
-        .pipe(tap(user => {
-
-            // Updating session state
-            this.sessionStore.update(() => ({
-              accessToken: user.accessToken,
-              UserName: user.UserName,
-              UserEmail: user.UserEmail,
-              UserID: user.UserID
-            }));
-        }))
-      }
-    
-      // Login (post) a user
-      public login(user: Login): Observable<User> {
-    
-        return this.http.post<any>('http://localhost:3000/user/login', user)
-        .pipe(tap(user => {
-
-          // Updating session state
-          this.sessionStore.update(() => ({
-            accessToken: user.accessToken,
-            UserName: user.UserName,
-            UserEmail: user.UserEmail,
-            UserID: user.UserID
-          }));    
-      }))
-    }
+  // Login (post) a user
+  public login(user: Login): Observable<User> {
+    return this.http.post<any>('user/login', user).pipe(
+      tap((user) => {
+        // Updating session state
+        this.sessionStore.update(() => ({
+          accessToken: user.accessToken,
+          UserName: user.UserName,
+          UserEmail: user.UserEmail,
+          UserID: user.UserID,
+        }));
+      })
+    );
+  }
 }

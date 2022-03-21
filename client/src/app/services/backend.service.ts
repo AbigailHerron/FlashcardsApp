@@ -1,43 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Login } from '../interfaces/login';
 
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../interfaces/user';
 import { Signup } from '../interfaces/signup';
 
-@Injectable({ providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class BackendService {
-
-  private dataUri = 'http://localhost:3000/user';
-  private userSubject: BehaviorSubject<User|null>;
-  public user: Observable<User|null>;
-
+  private dataUri = 'user';
+  private userSubject: BehaviorSubject<User | null>;
+  public user: Observable<User | null>;
 
   constructor(private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User|null>
-    (JSON.parse(localStorage.getItem('currentUser') || '{}')) ;
+    this.userSubject = new BehaviorSubject<User | null>(
+      JSON.parse(localStorage.getItem('currentUser') || '{}')
+    );
     this.user = this.userSubject.asObservable();
   }
 
-  public get userValue(): User|null {
+  public get userValue(): User | null {
     return this.userSubject.value;
   }
 
   // Get profile details
 
-  getProfileDetails() : Observable<User> {
-
+  getProfileDetails(): Observable<User> {
     console.log(this.userValue?.UserID);
 
-    return this.http.get<User>(`http://localhost:3000/user/profile/${this.userValue?.UserID}`)
-    .pipe(map(user => {
-      // localStorage.setItem('currentUser', JSON.stringify(user))
-      // this.userSubject.next(user);
-      return user;
-    }
-    ))
+    return this.http.get<User>(`user/profile/${this.userValue?.UserID}`).pipe(
+      map((user) => {
+        // localStorage.setItem('currentUser', JSON.stringify(user))
+        // this.userSubject.next(user);
+        return user;
+      })
+    );
   }
 
   // Get all users
@@ -53,30 +55,27 @@ export class BackendService {
   // Register (post) a user
 
   public signup(user: Signup): Observable<any> {
-
-    return this.http.post<any>('http://localhost:3000/user/signup', user)
-    .pipe(map(user => {
-      // localStorage.setItem('currentUser', JSON.stringify(user))
-      // this.userSubject.next(user);
-      return user;
-    }
-    ))
+    return this.http.post<any>('user/signup', user).pipe(
+      map((user) => {
+        // localStorage.setItem('currentUser', JSON.stringify(user))
+        // this.userSubject.next(user);
+        return user;
+      })
+    );
   }
 
   // Login (get) a user
 
   public login(user: Login): Observable<any> {
-
-    return this.http.post<any>('http://localhost:3000/user/login', user)
-    .pipe(map(user => {
-      // localStorage.setItem('currentUser', JSON.stringify(user))
-      // this.userSubject.next(user);
-      return user;
-    }
-    ))
+    return this.http.post<any>('user/login', user).pipe(
+      map((user) => {
+        // localStorage.setItem('currentUser', JSON.stringify(user))
+        // this.userSubject.next(user);
+        return user;
+      })
+    );
   }
 
-  
   // ERROR HANDLING
 
   private handleError(error: HttpErrorResponse) {

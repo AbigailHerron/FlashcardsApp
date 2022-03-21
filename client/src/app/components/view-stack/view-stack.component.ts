@@ -192,7 +192,7 @@ export class ViewStackComponent implements OnInit {
     this.srvCardStacks
       .setCardToEasy(this.cardsArray[this.indexCounter])
       .subscribe((res) => console.log(res));
-    this.answeredCorrectly.push('Incorrect');
+    this.answeredCorrectly.push('Correct');
     if (this.indexCounter == this.cardsArray.length - 1) {
       this.finish();
     } else {
@@ -204,7 +204,7 @@ export class ViewStackComponent implements OnInit {
     this.srvCardStacks
       .setCardToHard(this.cardsArray[this.indexCounter])
       .subscribe((res) => console.log(res));
-    this.answeredCorrectly.push('Correct');
+    this.answeredCorrectly.push('Incorrect');
     if (this.indexCounter == this.cardsArray.length - 1) {
       this.finish();
     } else {
