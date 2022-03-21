@@ -3,7 +3,8 @@
   
     <div class="container">
 
-        <div class="card bg-dark" style="width: 60vw; height: 60vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem;">
+        <div class="card" style="width: 60vw; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 2rem; color: black;" [ngStyle]="{'background-color': currentCardStack$.Colour }"
+        >
             <div class="card-body">
 
                 <div class="row" style="padding: 1em;">
@@ -13,7 +14,7 @@
                     </div>
         
                     <div class="col">
-                        <h1>{{ currentCardStack.DeckName }}</h1>
+                        <h1>{{ currentCardStack$.DeckName }}</h1>
                     </div>
         
                 </div>
@@ -45,7 +46,7 @@
 
                 <div class="row" style="padding: 1em;">
                     <div class="col">
-                        <button type="button" class="btn" routerLink="/userhub" style="align-items: right;">Return to userhub</button>
+                        <button type="button" class="btn btn-light" routerLink="/userhub" style="align-items: right;">Return to userhub</button>
                     </div>
                 </div>
       

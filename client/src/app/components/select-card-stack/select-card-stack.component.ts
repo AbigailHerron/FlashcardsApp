@@ -48,13 +48,13 @@ export class SelectCardStackComponent implements OnInit {
 
     // this.currentCardStack = cardStack;
 
-    // console.table(cardStack);
+    console.table(cardStack);
 
     this.srvCardStacks.deckValue(cardStack)
 
     // sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
 
-    this.cardStackQuery.currentStack$.subscribe(res => console.log(res));
+    // this.cardStackQuery.currentStack$.subscribe(res => console.log(res));
   }
 
   // Open Modal
@@ -106,14 +106,13 @@ export class SelectCardStackComponent implements OnInit {
   // Editing a card stack (implements the create-stack component interfaces)
 
   goToEditCardStack() {
+
     this.router.navigate(['/createstack']);
   }
 
   goToViewCardStackMenu(stack: IcardStack) {
 
-    // this.clicked(stack); // Option 1
-
-    sessionStorage.setItem('stack', JSON.stringify(stack)); // Option 2 
+    this.srvCardStacks.changeStack(stack);
 
     this.router.navigate(['/viewstackmenu']);
   }
@@ -130,7 +129,11 @@ export class SelectCardStackComponent implements OnInit {
   // Deleting a card stack
 
   deleteCard() {
+    
+    console.log('deleteCard()');
+
     this.srvCardStacks.deleteCardStack(this.currentCardStack);
+
     this.getCardStacks();
   }
 }

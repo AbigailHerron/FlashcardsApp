@@ -20,8 +20,7 @@ import { IcardStack } from 'src/app/interfaces/icard-stack';
 export class CreateCardItemComponent implements OnInit {
   @Input() card!: Icard;
   @Input() currentStack!: IcardStack;
-  @Output('getCardsFromStack') getCardsFromStack: EventEmitter<any> =
-    new EventEmitter();
+  @Output('getCardsFromStack') getCardsFromStack: EventEmitter<any> = new EventEmitter();
 
   cardForm!: FormGroup;
   imageForm!: FormGroup;
@@ -30,11 +29,7 @@ export class CreateCardItemComponent implements OnInit {
 
   selectedFile: any | null;
 
-  constructor(
-    private srvCardStacks: CardStackServiceService,
-    private formBuilder: FormBuilder,
-    private http: HttpClient
-  ) {}
+  constructor(private srvCardStacks: CardStackServiceService, private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.cardDataInitialiser();
@@ -99,7 +94,14 @@ export class CreateCardItemComponent implements OnInit {
   }
 
   handleDelete() {
-    this.srvCardStacks.deleteImage(this.card.ImageID, this.card.CardID);
+
+    console.log(this.card.CardID);
+
+    const imageID = (this.card.ImageURL)?.slice(69, -5);
+
+    console.log('Card ImageID : ' + imageID);
+
+    this.srvCardStacks.deleteImage(this.card.CardID, imageID);
   }
 
   get front() {
@@ -114,6 +116,9 @@ export class CreateCardItemComponent implements OnInit {
   }
 
   deleteCardFromStack() {
+
+    console.log(this.card);
+
     this.srvCardStacks.deleteCardFromStack(this.card);
 
     this.getCardsFromStack.emit();
@@ -124,6 +129,5 @@ export class CreateCardItemComponent implements OnInit {
     console.log(this.card);
 
     this.srvCardStacks.updateCardFromStack(this.card.CardID, this.cardForm.value);
-
   }
 }

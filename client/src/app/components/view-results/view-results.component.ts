@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
+import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 
 @Component({
   selector: 'app-view-results',
@@ -8,15 +9,16 @@ import { IcardStack } from 'src/app/interfaces/icard-stack';
 })
 export class ViewResultsComponent implements OnInit {
 
-  constructor() { }
-
-  currentCardStack!: IcardStack;
+  currentCardStack$!: IcardStack;
   answeredCorrectly: string[] = [];
   percentage!: Number;
   count = 0;
 
+  constructor(private srvCardStacks: CardStackServiceService) { 
+    this.srvCardStacks.deckDetails.subscribe(res => this.currentCardStack$ = res);
+  }
+
   ngOnInit(): void {
-    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
 
     this.answeredCorrectly = JSON.parse(sessionStorage.getItem('answeredCorrectly') || '{}');
 

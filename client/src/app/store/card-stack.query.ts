@@ -25,6 +25,8 @@ export class CardStackQuery extends Query<CardStackState> {
     ]
   );
 
+  cardsDue$ = this.select('CardsDue');
+
   currentStackAll$ = this.select();
 
   // Value

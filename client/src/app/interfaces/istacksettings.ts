@@ -3,4 +3,5 @@ export interface Istacksettings {
     Timer: boolean,
     Inputs: boolean,
     TimerLength?: any
+    ViewCardsDue: boolean
 }

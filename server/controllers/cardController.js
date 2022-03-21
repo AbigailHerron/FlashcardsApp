@@ -97,8 +97,6 @@ class cardController {
   async deleteCard(req, res) {
 
     console.log('welcome to deleteCard controller');
-
-
     
     try {
       // Delete image
@@ -210,16 +208,27 @@ class cardController {
   }
 
   async deleteImage(req, res) {
+
+    console.log('In deleteImage()');
+
+    const imageID  = req.params.imageID;
+
+    console.log(imageID);
+    
     try {
-      console.log(req.body);
-      const { imageID, deckID, cardID } = req.body;
-      const newImageID = null;
-      const newImageURL = null;
+
       if (!imageID) return res.status(400).json({ msg: 'No images Selected' });
 
-      cloudinary.uploader.destroy(imageID, async (err) => {
+      cloudinary.uploader.destroy('testing/' + imageID, async (err) => {
         if (err) throw err;
       });
+
+      console.log('Updating card after image delete');
+
+      const { deckID, cardID } = req.params;
+
+      const newImageID = null;
+      const newImageURL = null;
 
       const conn = await sqlcon.getConnection();
       await conn
@@ -229,7 +238,7 @@ class cardController {
         .input('imageID', newImageID)
         .input('imageURL', newImageURL)
         .execute('updateCardImage');
-      res.send('Updated Card');
+      res.json('Updated Card');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Icard } from 'src/app/interfaces/icard';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
+import { Istacksettings } from 'src/app/interfaces/istacksettings';
 // import { Istacksettings } from 'src/app/interfaces/istacksettings';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 import { CardStackQuery } from 'src/app/store/card-stack.query';
@@ -19,7 +20,7 @@ export class ViewStackComponent implements OnInit {
   indexCounter: number = 0;
   isFlipped: boolean = false; // Needed if stackOptions.inputs == true 
   countdown!: number;
-  stackSettings!: any; // Should be Istacksettings
+  stackSettings!: Istacksettings; // Should be Istacksettings
   interval: any;
 
   progress: number = 0;
@@ -33,6 +34,8 @@ export class ViewStackComponent implements OnInit {
   constructor(private srvCardStacks: CardStackServiceService, private router: Router, private cardStackQuery: CardStackQuery) {
 
     this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack = res);
+
+    
    }
 
   ngOnInit(): void {
@@ -50,7 +53,7 @@ export class ViewStackComponent implements OnInit {
     // this.stackSettings = this.srvCardStacks.deckOptionsDetails; // Option 1
     this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}'); // Option 2
 
-    if (this.stackSettings.timerLength != null)
+    if (this.stackSettings.TimerLength != null)
     {
       this.timer();
     }
@@ -63,11 +66,35 @@ export class ViewStackComponent implements OnInit {
 
   getCardsFromStack() {
 
-    this.srvCardStacks.getCardsFromStack().subscribe({
-      next: (value: Icard[])=> this.cardsArray = value,
-      complete: () => console.log(this.cardsArray),
-      error: (mess) => this.message = mess
-    })
+    this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}');
+
+    console.log('In getCardsFromStack() | view-stack-component.ts');
+
+    console.log(this.stackSettings);
+
+    if (this.stackSettings.ViewCardsDue == true)
+    {
+      console.log('Calling service method getCardsFromStack()')
+
+      this.srvCardStacks.getCardsFromStack().subscribe({
+        next: (value: Icard[])=> this.cardsArray = value,
+        complete: () => console.log(this.cardsArray),
+        error: (mess) => this.message = mess
+      })
+    }
+    else if (this.stackSettings.ViewCardsDue == false)
+    {
+      console.log('Calling service method getAllCardsFromStack()')
+
+      this.srvCardStacks.getAllCardsFromStack().subscribe({
+        next: (value: Icard[])=> this.cardsArray = value,
+        complete: () => console.log(this.cardsArray),
+        error: (mess) => this.message = mess
+      })
+    }
+
+
+
 
   }
 
@@ -118,7 +145,7 @@ export class ViewStackComponent implements OnInit {
   }
 
   timer() {
-    this.countdown = this.stackSettings.timerLength; // Setting countdown
+    this.countdown = this.stackSettings.TimerLength; // Setting countdown
 
     this.interval = setInterval(() => {
       // runs every 1 seconds
@@ -171,27 +198,43 @@ export class ViewStackComponent implements OnInit {
 
     console.log(answer);
 
-    if (answer.toString() == this.cardsArray[this.indexCounter].Back)
-    {
-      this.answeredCorrectly.push('Correct');
-      this.setToEasy();
-      return true;
+    this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}');
 
-    }
-    else 
-    {
-      this.answeredCorrectly.push('Incorrect');
-      this.setToHard();
-      return false;
-    }
+    console.log('In compareAnswers() | view-stack-component.ts');
 
+    console.log(this.stackSettings);
+
+      if (answer.toString() == this.cardsArray[this.indexCounter].Back)
+      {
+        this.answeredCorrectly.push('Correct');
+
+        if (this.stackSettings.ViewCardsDue == true)
+        {
+          console.log('Setting card to easy')
+          this.setToEasy();
+        }
+
+        return true;
+      }
+      else 
+      {
+        this.answeredCorrectly.push('Incorrect');
+
+        if (this.stackSettings.ViewCardsDue == true)
+        {
+          console.log('Setting card to hard')
+          this.setToHard();
+        }
+
+        return false;
+      }
   }
 
   finish() { // This function should be able to be called also when user views stacks without inputs
 
     sessionStorage.setItem('answeredCorrectly', JSON.stringify(this.answeredCorrectly));
 
-    if (this.stackSettings.inputs == true)
+    if (this.stackSettings.Inputs == true)
     {
       this.router.navigate(['/viewresults']);
     }
@@ -209,14 +252,14 @@ export class ViewStackComponent implements OnInit {
 
   setToEasy() {
     
-    this.srvCardStacks.setCardToEasy(this.cardsArray[this.indexCounter]).subscribe({
-      error: (mess) => this.message = mess
-    });
+    this.srvCardStacks.setCardToEasy(this.cardsArray[this.indexCounter]);
+
+    console.log('Card set to easy');
   }
 
   setToHard() {
-    this.srvCardStacks.setCardToHard(this.cardsArray[this.indexCounter]).subscribe({
-      error: error => console.log(error)
-    });
+    this.srvCardStacks.setCardToHard(this.cardsArray[this.indexCounter]);
+
+    console.log('Card set to hard')
   }
 }

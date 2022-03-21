@@ -4,6 +4,7 @@ import { Validators } from '@angular/forms';
 import { IcardStack } from 'src/app/interfaces/icard-stack';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 import { Router } from '@angular/router';
+import { CardStackQuery } from 'src/app/store/card-stack.query';
 
 @Component({
   selector: 'app-view-stack-menu',
@@ -11,34 +12,67 @@ import { Router } from '@angular/router';
   styleUrls: ['./view-stack-menu.component.css']
 })
 export class ViewStackMenuComponent implements OnInit {
-  currentCardStack?: IcardStack;
+  currentCardStack!: IcardStack;
+  numberOfCardsDue!: number;
+  // viewCardsDue!: boolean
 
   viewStackForm = new FormGroup({
-    hints: new FormControl(false, Validators.required),
-    timer: new FormControl(false, Validators.required),
-    inputs: new FormControl(false, Validators.required),
-    timerLength: new FormControl(null, Validators.required),
+    Hints: new FormControl(false, Validators.required),
+    Timer: new FormControl(false, Validators.required),
+    Inputs: new FormControl(false, Validators.required),
+    TimerLength: new FormControl(null, Validators.required),
+    ViewCardsDue: new FormControl(false, Validators.required)
   });
 
-  constructor(private srvCardStacks: CardStackServiceService, private router: Router) {
-    // this.currentCardStack = this.srvCardStacks.deckDetails; // Option 1
+
+  constructor(private router: Router, private cardStackQuery: CardStackQuery) {
+    this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack = res);
+    this.cardStackQuery.cardsDue$.subscribe(res => this.numberOfCardsDue = res)
    }
 
   ngOnInit(): void {
-    this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); // Option 2
 
-    console.log(this.currentCardStack);
+    console.log('In view-stack-menu.component.ts')
+    console.log('Current card stack : ' + this.currentCardStack.DeckName);
+
+    var button = (document.getElementById("viewDueCardsButton") as HTMLButtonElement); // Useful
+
+    if (this.numberOfCardsDue == 0)
+    {
+      button.disabled = true;
+    }
+
+
+
   }
 
   onSubmit() {
 
-    console.log(this.viewStackForm.value);
+  }
 
-    this.router.navigate(['/viewstack']);
+  viewDueCards() {
 
-    // Use service to send viewStackForm values from viewStackMenu details to viewStack
-    // this.srvCardStacks.deckOptions(this.viewStackForm.value); // Option 1
+    console.log('In viewDueCards()');
+
+    this.viewStackForm.controls['ViewCardsDue'].setValue(true);
+
+    console.log('viewDueCards() viewStackForm.viewCardsDue: ' + this.viewStackForm.value.viewCardsDue);
 
     sessionStorage.setItem('stackOptions', JSON.stringify(this.viewStackForm.value)); // Option 2 
+
+    this.router.navigate(['/viewstack']);
+  }
+
+  viewAllCards() {
+
+    console.log('In viewAllCards()');
+
+    this.viewStackForm.controls['ViewCardsDue'].setValue(false);
+
+    console.log('viewDueCards() viewStackForm.viewCardsDue: ' + this.viewStackForm.value.viewCardsDue);
+
+    sessionStorage.setItem('stackOptions', JSON.stringify(this.viewStackForm.value)); // Option 2 
+
+    this.router.navigate(['/viewstack']);
   }
 }

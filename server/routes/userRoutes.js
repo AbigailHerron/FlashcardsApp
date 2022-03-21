@@ -8,21 +8,22 @@ router.get('/info', userController.getUsers);
 router.get('/profile/:userID', userController.profile);
 router.post('/signup', userController.register);
 router.post('/login', userController.login);
+
 // Decks
 router.get('/:userID/decks', deckController.getDecks);
 router.post('/:userID/decks', deckController.addDeck);
 router.patch('/:userID/deck/:deckID', deckController.updateDeck);
 router.delete('/:userID/deck/:deckID', deckController.deleteDeck);
 
-//_____ Card Controller
+// Cards
 
 router.get('/:userID/deck/:deckID/cards', cardController.getCards); // Get due cards
 router.get('/:userID/deck/:deckID/all', cardController.getAllCards); // Get all cards
 router.post('/:userID/deck/:deckID/cards', cardController.addCard);
-router.delete(
-  '/:userID/deck/:deckID/card/:cardID/image/testing/:imageID',
-  cardController.deleteCard
-);
+
+// Images
+router.delete('/:userID/deck/:deckID/card/:cardID/image/testing/:imageID', cardController.deleteImage);
+
 router.patch('/:userID/deck/:deckID/card/:cardID', cardController.updateCard);
 router.delete('/:userID/deck/:deckID/card/:cardID', cardController.deleteCard)
 

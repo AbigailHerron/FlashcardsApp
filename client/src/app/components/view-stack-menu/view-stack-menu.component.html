@@ -1,5 +1,5 @@
 <body>
-    <div class="card" style="width: 60vw; height: 60vh; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 15px; color: black;" [ngStyle]="{'background-color':currentCardStack?.Colour}"
+    <div class="card" style="width: 60vw; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 15px; color: black;" [ngStyle]="{'background-color':currentCardStack?.Colour}"
     >
 
         <div class="card-body">
@@ -24,21 +24,21 @@
                     <div class="row" style="padding: 1em;"> <!-- Row -->
                         <div class="col">
                             <div class="form-check form-switch form-switch-md">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckHints" formControlName="hints" [value]="false">
-                                <label class="form-check-label" for="flexSwitchCheckHints">Hints</label>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="form-check form-switch form-switch-md">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckInputs" formControlName="inputs" [value]="false">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckInputs" formControlName="Inputs" [value]="false">
                                 <label class="form-check-label" for="flexSwitchCheckInputs">Inputs</label>
                             </div>
                         </div>
-                        
-                        <div class="col" *ngIf="viewStackForm.get('inputs')?.value == true">
+
+                        <div class="col" *ngIf="viewStackForm.get('Inputs')?.value == true">
                             <div class="form-check form-switch form-switch-md">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckTimer" formControlName="timer" [value]="false">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckHints" formControlName="Hints" [value]="false">
+                                <label class="form-check-label" for="flexSwitchCheckHints">Hints</label>
+                            </div>
+                        </div>
+                        
+                        <div class="col" *ngIf="viewStackForm.get('Inputs')?.value == true">
+                            <div class="form-check form-switch form-switch-md">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckTimer" formControlName="Timer" [value]="false">
                                 <label class="form-check-label" for="flexSwitchCheckTimer">Timer</label>
                             </div>
                         </div>
@@ -53,19 +53,19 @@
 
                     
 
-                    <div class="row" *ngIf="viewStackForm.get('timer')?.value == true" style="padding: 1em;"> 
+                    <div class="row" *ngIf="viewStackForm.get('Timer')?.value == true" style="padding: 1em;"> 
 
                         <div class="col">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="timerLength" id="timerLength" formControlName="timerLength" [value]=15>
-                                <label class="form-check-label" for="timerLength">15 Seconds</label>
+                                <input class="form-check-input" type="radio" name="timerLength" id="TimerLength" formControlName="TimerLength" [value]=15>
+                                <label class="form-check-label" for="TimerLength">15 Seconds</label>
                             </div>
                         </div>
 
                         <div class="col">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="timerLength" id="timerLength" formControlName="timerLength" [value]=30>
-                                <label class="form-check-label" for="timerLength">30 Seconds</label>
+                                <input class="form-check-input" type="radio" name="timerLength" id="TimerLength" formControlName="TimerLength" [value]=30>
+                                <label class="form-check-label" for="TimerLength">30 Seconds</label>
                             </div>
                         </div>
                     </div>
@@ -73,9 +73,13 @@
             </form>
 
             <div class="row" style="padding: 1em;">
-                <div class="col">
-                    <button type="submit" (click)="onSubmit()" class="btn btn-light">Continue</button>
+                <div class="col" *ngIf="currentCardStack.PublicDeck == false">
+                    <button type="submit" (click)="viewDueCards()" class="btn btn-light" id="viewDueCardsButton">View due cards</button>
                 </div>
+                <div class="col">
+                    <button type="submit" (click)="viewAllCards()" class="btn btn-light">View all cards</button>
+                </div>
+
             </div>
         </div>
     </div>
