@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const path = require('path');
 
 // dot env package
 require('dotenv').config();
@@ -15,7 +16,10 @@ app.use(
     useTempFiles: true,
   })
 );
-app.use(express.static('public'));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('public'));
+}
 
 const userRouter = require('./routes/userRoutes');
 const imageRouter = require('./routes/imageRoutes');
