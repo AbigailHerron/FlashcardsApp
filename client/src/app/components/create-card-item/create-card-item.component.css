@@ -10,29 +10,27 @@ label {
   margin-right: 1em;
 }
 
-.icon-btn{
+.icon-btn {
   margin-left: 2em;
   cursor: pointer;
 }
 
-.icon-btn:hover{
+.icon-btn:hover {
   transform: scale(0.95);
-
 }
 
 .upload {
   height: 375px;
   width: 100%;
   border: 1px solid #ddd;
-  padding: 15px;
-  margin: 20px;
+  padding-right: 1.75rem;
   position: relative;
 }
 
 #file_up {
   position: relative;
   width: 100%;
-  height: 80%;
+  height: 85%;
   outline: none;
 }
 #file_up::before {
@@ -80,7 +78,7 @@ label {
   font-size: 36px;
 }
 
-input{
+input {
   margin-left: 1em;
   margin-right: 1em;
 }

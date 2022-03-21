@@ -1,84 +1,136 @@
+<div
+  class="container-fluid"
+  class="overflow-auto"
+  style="display: flex; justify-content: center; padding-top: 20px"
+>
+  <!--------------------------- OFFCANVAS END ---------------------------->
 
-<div class="container-fluid" class="overflow-auto" style="display: flex; justify-content: center; padding-top: 20px;">
-    <!--------------------------- OFFCANVAS END ---------------------------->
-
-    <!-- CARDS GO HERE -->
-    <div class="row" >
-        <app-create-card-item style="display: flex; justify-content: center;" *ngFor="let c of cardsArray; let i = index" [card]="c" [currentStack]="currentCardStack$" (getCardsFromStack)="getCardsFromStack()"></app-create-card-item> <!--  -->
-    </div>
-    <!------------------->
+  <!-- CARDS GO HERE -->
+  <div class="row">
+    <app-create-card-item
+      style="display: flex; justify-content: center"
+      *ngFor="let c of cardsArray; let i = index"
+      [card]="c"
+      [currentStack]="currentCardStack$"
+      (getCardsFromStack)="getCardsFromStack()"
+    ></app-create-card-item>
+    <!--  -->
+  </div>
+  <!------------------->
 </div>
 
- <!-- Buttons -->
+<!-- Buttons -->
 
-    <button type="button" class="material-icons md-36 btn btn-lg add-stack-btn hvr-grow-shadow" (click)="addNewCard()">add</button>
+<button
+  type="button"
+  class="material-icons md-36 btn btn-lg add-stack-btn hvr-grow-shadow"
+  (click)="addNewCard()"
+>
+  add
+</button>
 
-    <button class="material-icons md-36 btn btn-lg save-button hvr-grow-shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings" style="background-color: #BB86FC;">
-        save
-    </button>
+<button
+  class="material-icons md-36 btn btn-lg save-button hvr-grow-shadow"
+  type="button"
+  data-bs-toggle="offcanvas"
+  data-bs-target="#offcanvasSettings"
+  aria-controls="offcanvasSettings"
+  style="background-color: #bb86fc"
+>
+  save
+</button>
 
-<div class="container" style="display: flex; justify-content: center;">
+<div class="container" style="display: flex; justify-content: center">
+  <!----------------------------------------------------->
 
+  <div
+    class="offcanvas offcanvas-start bg-dark"
+    tabindex="-1"
+    id="offcanvasSettings"
+    aria-labelledby="offcanvasSettingsLabel"
+    style="border-right: 1px solid black"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Stack Details</h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
 
-    <!----------------------------------------------------->
-
-    <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettingsLabel" style="border-right: 1px solid black;">
-
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Stack Details</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-
-        <!--------------------------- OFFCANVAS START ---------------------------->
-        <div class="offcanvas-body" style="margin: 1em;">
-
-            <!-- Name
+    <!--------------------------- OFFCANVAS START ---------------------------->
+    <div class="offcanvas-body" style="margin: 1em">
+      <!-- Name
             Description
             Image
             public/private status-->
 
-            <form [formGroup]="stackDetailsForm" (ngSubmit)="onSubmit()">
-
-                <div class="form-group">
-                <label for="deckName">Stack title</label>
-                <input type="text" class="form-control" id="deckName" formControlName="deckname" placeholder="A descriptive title">
-                <small class="form-text text-muted">This is how you (and everyone else) will see your stack!</small>
-                </div>
-                
-                <div class="form-group">
-                <label for="about">Description</label>
-                <input type="text" class="form-control" id="about" formControlName="about" placeholder="A really good description of this stack.">
-                </div>
-
-                <br>
-
-                
-
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="publicDeck" formControlName="publicDeck">
-                    <label class="custom-control-label" for="publicDeck">Public</label>
-                </div>
-
-                <br />
-
-                <div class="form-group">
-                    <label for="exampleFormControlSelect1">Example select</label>
-                    <select class="form-control" id="colour" formControlName="colour">
-                      <option value="#ff6961">Red</option>
-                      <option value="#ffb347">Orange</option>
-                      <option value="#fdfd96">Yellow</option>
-                      <option value="#c1e1c1">Green</option>
-                      <option value="#a7c7e7">Blue</option>
-                      <option value="#BB86FC">Indigo</option>
-                      <option value="#b39eb5">Violet</option>
-                    </select>
-                </div>
-
-                <br />
-
-                <button type="submit" style="text-align: center;" class="btn btn-primary" style="background-color: #03DAC5;">Save</button>
-                
-            </form>
+      <form [formGroup]="stackDetailsForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="deckName">Stack title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="deckName"
+            formControlName="deckname"
+            placeholder="A descriptive title"
+          />
+          <small class="form-text text-muted"
+            >This is how you (and everyone else) will see your stack!</small
+          >
         </div>
+
+        <div class="form-group">
+          <label for="about">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="about"
+            formControlName="about"
+            placeholder="A really good description of this stack."
+          />
+        </div>
+
+        <br />
+
+        <div class="custom-control custom-switch">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="publicDeck"
+            formControlName="publicDeck"
+          />
+          <label class="custom-control-label" for="publicDeck">Public</label>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+          <label for="exampleFormControlSelect1">Select Color</label>
+          <select class="form-control" id="colour" formControlName="colour">
+            <option value="#ff6961">Red</option>
+            <option value="#ffb347">Orange</option>
+            <option value="#fdfd96">Yellow</option>
+            <option value="#c1e1c1">Green</option>
+            <option value="#a7c7e7">Blue</option>
+            <option value="#BB86FC">Indigo</option>
+            <option value="#b39eb5">Violet</option>
+          </select>
+        </div>
+
+        <br />
+
+        <button
+          type="submit"
+          style="text-align: center"
+          class="btn btn-primary"
+          style="background-color: #03dac5"
+        >
+          Save
+        </button>
+      </form>
     </div>
+  </div>
 </div>

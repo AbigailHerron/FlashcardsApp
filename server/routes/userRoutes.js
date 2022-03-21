@@ -24,15 +24,18 @@ router.delete(
   cardController.deleteCard
 );
 router.patch('/:userID/deck/:deckID/card/:cardID', cardController.updateCard);
-router.delete('/:userID/deck/:deckID/card/:cardID', cardController.deleteCard)
-
-router.patch('/:userID/deck/:deckID/card/:cardID/update-image', cardController.updateCardImage);
-
-// router.post('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
-// router.delete('/:userID/deck/:deckID/card/:cardID/uploadImage', cardController.uploadImage);
-
-router.patch('/:userID/deck/:deckID/card/:cardID/easy', cardController.easyCard);
-router.patch('/:userID/deck/:deckID/card/:cardID/hard', cardController.hardCard);
+router.patch(
+  '/:userID/deck/:deckID/card/:cardID/update-image',
+  cardController.updateCardImage
+);
+router.patch(
+  '/:userID/deck/:deckID/card/:cardID/easy',
+  cardController.easyCard
+);
+router.patch(
+  '/:userID/deck/:deckID/card/:cardID/hard',
+  cardController.hardCard
+);
 
 //_____ Exports
 module.exports = router;
