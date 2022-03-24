@@ -6,13 +6,13 @@ input:invalid {
   color: white;
 }
 
-input[type="email"] {
+/* input[type="email"] {
   background-color: #d1d1d1;
 }
 
 input[type="password"] {
   background-color: #d1d1d1;
-}
+} */
 
 .btn{
   background-color: #03DAC5;

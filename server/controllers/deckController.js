@@ -3,7 +3,9 @@ const sqlcon = require('../dbconnection');
 class deckController {
   // Create
   async addDeck(req, res) {
+
     console.log('welcome to addDeck controller');
+
 
     try {
       const conn = await sqlcon.getConnection();
@@ -11,6 +13,7 @@ class deckController {
       console.log("Creating new card stack")
 
       const { DeckName, About } = req.body;
+
        console.log(DeckName);
        console.log(About)
 
@@ -22,6 +25,7 @@ class deckController {
         .execute('addDeck');
 
         res.json(deck.recordset);
+        
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

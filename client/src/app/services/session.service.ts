@@ -6,11 +6,18 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
+import { SessionQuery } from '../store/session.query';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
 
-  constructor(private sessionStore: SessionStore, private http: HttpClient) { }
+  constructor(private sessionStore: SessionStore, private http: HttpClient, private sessionQuery: SessionQuery) { }
+
+    public get UserID() {
+
+      return this.sessionQuery.userId$
+
+    }
 
     // RegisteR (post) a user
     public signup(user: Signup): Observable<any> {

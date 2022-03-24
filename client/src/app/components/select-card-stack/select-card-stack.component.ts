@@ -6,8 +6,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CardStackQuery } from 'src/app/store/card-stack.query';
 
 
 @Component({
@@ -33,28 +31,20 @@ export class SelectCardStackComponent implements OnInit {
 
   currentCardStack!: IcardStack;
 
-  constructor(private srvCardStacks: CardStackServiceService, private router: Router, private modalService: NgbModal, private cardStackQuery: CardStackQuery) { }
-
-  // Retrieve user details from local storage + send user ID in req.body
+  constructor(private srvCardStacks: CardStackServiceService, private router: Router) { }
 
   ngOnInit():  void {
 
     this.getCardStacks();
   }
 
-  // currentCardStack is set when a card stack is clicked/selected
+  // Setting deckValue as cardstack that is clicked
 
   clicked (cardStack: IcardStack): void {
-
-    // this.currentCardStack = cardStack;
 
     console.table(cardStack);
 
     this.srvCardStacks.deckValue(cardStack)
-
-    // sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
-
-    // this.cardStackQuery.currentStack$.subscribe(res => console.log(res));
   }
 
   // Open Modal
@@ -73,24 +63,15 @@ export class SelectCardStackComponent implements OnInit {
 
   addNewStack() {
 
-    console.log("component method addNewStack() called");
-    console.log(this.cardStackDetails?.value);
+    console.log("addNewStack() called");
 
-      this.srvCardStacks.addCardToStack(this.cardStackDetails?.value).subscribe(
-        {
-      next: value => {
-        console.log(value),
-        this.srvCardStacks.deckValue(value),
-        this.btnClose.nativeElement.click(),
-        this.router.navigate(['/createstack'])
-      },
-      complete: () =>
-        console.log(this.srvCardStacks.deckDetails)
-      ,
-      error: (err) => this.message = err
-    });
+    console.table(this.cardStackDetails?.value);
 
-    this.getCardStacks();
+      this.srvCardStacks.addCardToStack(this.cardStackDetails?.value);
+
+      this.btnClose.nativeElement.click();
+
+      this.getCardStacks();
   }
 
   // Retrieving cardstacks
@@ -109,6 +90,8 @@ export class SelectCardStackComponent implements OnInit {
 
     this.router.navigate(['/createstack']);
   }
+
+  // Open menu for currentCardStack
 
   goToViewCardStackMenu(stack: IcardStack) {
 

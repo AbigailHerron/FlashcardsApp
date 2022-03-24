@@ -40,6 +40,7 @@ export class CardStackServiceService {
   );
 
   private imageID?: string;
+  message: any;
 
   constructor(private http: HttpClient,    private handler: HttpBackend,    private session: SessionQuery,    private cardStackQuery: CardStackQuery, private cardStackStore: CardStackStore) {
 
@@ -56,8 +57,21 @@ export class CardStackServiceService {
 
   changeStack(stack: IcardStack) {
 
-    this.cardStackStore.update(stack);
+    console.log('In changeStack()');
 
+    console.table(stack);
+
+    this.cardStackStore.update(() => ({
+
+      DeckID: stack.DeckID,
+      About: stack.About,
+      DeckName: stack.DeckName,
+      UserID: stack.UserID,
+      PublicDeck: stack.PublicDeck,
+      Colour: stack.Colour,
+      CardsDue: stack.CardsDue
+
+    }));
   }
 
   // Setting cardstack as current cardstack
@@ -120,11 +134,7 @@ export class CardStackServiceService {
 
   getAllCardsFromStack(): Observable<Icard[]> {
 
-    // this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}');
-
     const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/all`;
-
-    console.log(this.currentCardStack$);
 
     return this.http
       .get<Icard[]>(url)
@@ -246,16 +256,27 @@ export class CardStackServiceService {
 
   // Create cardstack
 
-  addCardToStack(cardStackDetails: IcardStack): Observable<IcardStack> {
+  addCardToStack(cardStackDetails: IcardStack) {
+
     console.log('addCardStack service function called');
 
-    console.log(cardStackDetails);
+    console.table(cardStackDetails);
 
     const url = `http://localhost:3000/user/${this.userID}/decks`;
 
-    return this.http
-      .post<IcardStack>(url, cardStackDetails)
-      .pipe(catchError(this.handleError));
+    this.http.post<IcardStack>(url, cardStackDetails).subscribe(
+      {
+        next: value => {
+
+          console.log('Created card stack')
+
+          console.table(value);
+
+          this.changeStack(value);
+        },
+        error: (err) => this.message = err
+      }
+    )
   }
 
   // Get cardstacks

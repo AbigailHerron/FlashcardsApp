@@ -1,5 +1,4 @@
-
-<div class="container-fluid" class="overflow-auto" style="display: flex; justify-content: center; padding-top: 20px; overflow-x: hidden;">
+<div class="container-fluid" style="display: flex; justify-content: center; padding-top: 20px;">
     <!--------------------------- OFFCANVAS END ---------------------------->
 
     <!-- CARDS GO HERE -->
@@ -54,15 +53,15 @@
 
                 
 
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="publicDeck" formControlName="publicDeck">
-                    <label class="custom-control-label" for="publicDeck">Public</label>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="publicDeck" formControlName="publicDeck">
+                    <label class="form-check-label" for="publicDeck">Public</label>
                 </div>
 
                 <br />
 
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Example select</label>
+                    <label for="exampleFormControlSelect1">Select colour</label>
                     <select class="form-control" id="colour" formControlName="colour">
                       <option value="#ff6961">Red</option>
                       <option value="#ffb347">Orange</option>
@@ -76,7 +75,7 @@
 
                 <br />
 
-                <button type="submit" style="text-align: center;" class="btn btn-primary" style="background-color: #03DAC5;">Save</button>
+                <button type="submit" style="text-align: center;" class="btn btn-light">Save</button>
                 
             </form>
         </div>

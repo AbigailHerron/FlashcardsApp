@@ -73,7 +73,7 @@
             </form>
 
             <div class="row" style="padding: 1em;">
-                <div class="col" *ngIf="currentCardStack.PublicDeck == false">
+                <div class="col" *ngIf="currentCardStack.UserID == currentUserID">
                     <button type="submit" (click)="viewDueCards()" class="btn btn-light" id="viewDueCardsButton">View due cards</button>
                 </div>
                 <div class="col">

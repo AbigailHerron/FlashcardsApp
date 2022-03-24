@@ -20,7 +20,7 @@ export class ViewStackComponent implements OnInit {
   indexCounter: number = 0;
   isFlipped: boolean = false; // Needed if stackOptions.inputs == true 
   countdown!: number;
-  stackSettings!: Istacksettings; // Should be Istacksettings
+  stackSettings!: Istacksettings;
   interval: any;
 
   progress: number = 0;
@@ -35,7 +35,12 @@ export class ViewStackComponent implements OnInit {
 
     this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack = res);
 
-    
+    // var button = (document.getElementById("nextButton") as HTMLButtonElement);
+
+    // if (this.cardsArray.length == (this.cardsArray.length - 1))
+    // {
+    //   button.disabled = true;
+    // }
    }
 
   ngOnInit(): void {
@@ -44,13 +49,10 @@ export class ViewStackComponent implements OnInit {
       answer: new FormControl('', [Validators.required])
     })
     
-    // this.currentCardStack = JSON.parse(sessionStorage.getItem('stack') || '{}'); // Setting currentCardStack
-
     // Retrieve cards from stack
     this.getCardsFromStack();
 
     // Retrieve selected options for stack
-    // this.stackSettings = this.srvCardStacks.deckOptionsDetails; // Option 1
     this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}'); // Option 2
 
     if (this.stackSettings.TimerLength != null)
@@ -92,19 +94,17 @@ export class ViewStackComponent implements OnInit {
         error: (mess) => this.message = mess
       })
     }
-
-
-
-
   }
 
   flipCard() {
+
     if (this.isFlipped == false)
     {
       this.isFlipped = true;
     }
     else
     this.isFlipped = false;
+
   }
 
   nextCard() {
@@ -230,7 +230,7 @@ export class ViewStackComponent implements OnInit {
       }
   }
 
-  finish() { // This function should be able to be called also when user views stacks without inputs
+  finish() { 
 
     sessionStorage.setItem('answeredCorrectly', JSON.stringify(this.answeredCorrectly));
 
@@ -258,8 +258,9 @@ export class ViewStackComponent implements OnInit {
   }
 
   setToHard() {
+
     this.srvCardStacks.setCardToHard(this.cardsArray[this.indexCounter]);
 
-    console.log('Card set to hard')
+    console.log('Card set to hard');
   }
 }

@@ -5,6 +5,7 @@ import { IcardStack } from 'src/app/interfaces/icard-stack';
 import { CardStackServiceService } from 'src/app/services/card-stack-service.service';
 import { Router } from '@angular/router';
 import { CardStackQuery } from 'src/app/store/card-stack.query';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-view-stack-menu',
@@ -12,9 +13,12 @@ import { CardStackQuery } from 'src/app/store/card-stack.query';
   styleUrls: ['./view-stack-menu.component.css']
 })
 export class ViewStackMenuComponent implements OnInit {
+
   currentCardStack!: IcardStack;
   numberOfCardsDue!: number;
   // viewCardsDue!: boolean
+
+  currentUserID!: number;
 
   viewStackForm = new FormGroup({
     Hints: new FormControl(false, Validators.required),
@@ -24,13 +28,17 @@ export class ViewStackMenuComponent implements OnInit {
     ViewCardsDue: new FormControl(false, Validators.required)
   });
 
+  constructor(private router: Router, private cardStackQuery: CardStackQuery, private sessionService: SessionService) {
 
-  constructor(private router: Router, private cardStackQuery: CardStackQuery) {
     this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack = res);
     this.cardStackQuery.cardsDue$.subscribe(res => this.numberOfCardsDue = res)
+
+    this.currentUserID = this.sessionService.UserID;
    }
 
   ngOnInit(): void {
+
+
 
     console.log('In view-stack-menu.component.ts')
     console.log('Current card stack : ' + this.currentCardStack.DeckName);
@@ -41,9 +49,6 @@ export class ViewStackMenuComponent implements OnInit {
     {
       button.disabled = true;
     }
-
-
-
   }
 
   onSubmit() {

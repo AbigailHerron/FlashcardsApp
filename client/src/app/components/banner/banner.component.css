@@ -1,15 +1,15 @@
-#banner{
-    height: 10vh;
-    display: flex;
-    align-items: center;
-
+.banner{
+    padding-top: 1em;
+    padding-bottom: 1em;
     color: white;
     text-decoration: none;
-
+    background-color: #BB86FC;
 }
 
-#banner-container{
+.banner-container{
+
     display: flex;
+
     background-color: #BB86FC;
     /* font-family: 'Bubbly', sans-serif;                                          */
 }
@@ -21,17 +21,21 @@
 
 #logout{
     cursor: pointer;
-    position: fixed;
 
+    /* 
+    position: fixed;
     right: 20px;
     top: 50;
+     */
 }
 
 .back-btn{
-
+    
+    /* 
     position: fixed;
     left: 3vw;
-    top: 3vh;
+    top: 3vh; 
+    */
 
     color: white;
     cursor: pointer;

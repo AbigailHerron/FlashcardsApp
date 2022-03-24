@@ -34,6 +34,7 @@ export class CreateStackComponent implements OnInit {
   message: string = '';
 
   ngOnInit(): void {
+    
     console.log('In ngOnInit create-stack.component.ts');
 
     console.log(this.currentCardStack$);

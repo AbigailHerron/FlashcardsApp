@@ -6,16 +6,15 @@
 
 }
 
+.dashboard-cards{
+    margin-bottom: 2em;
+}
+
 .card-body{
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
 }
 
 .dashboard-card-clickable:hover{
@@ -28,6 +27,7 @@ a{
 }
 
 .card {
+
     border-radius: 15px;
     padding: 1em;
     width: 18rem;
@@ -40,7 +40,6 @@ a{
 
 /* Grow Shadow */
 .hvr-grow-shadow {
-    /* display: inline-block; */
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
@@ -51,8 +50,8 @@ a{
     transition-property: box-shadow, transform;
   }
 
-  .hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
+.hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
     box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
-  }
+}
