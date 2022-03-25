@@ -35,6 +35,9 @@ export class ViewStackComponent implements OnInit {
 
     this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack = res);
 
+    // Retrieve selected options for stack
+    this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}'); // Option 2
+
     // var button = (document.getElementById("nextButton") as HTMLButtonElement);
 
     // if (this.cardsArray.length == (this.cardsArray.length - 1))
@@ -44,15 +47,13 @@ export class ViewStackComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
     this.cardForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     })
     
     // Retrieve cards from stack
     this.getCardsFromStack();
-
-    // Retrieve selected options for stack
-    this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}'); // Option 2
 
     if (this.stackSettings.TimerLength != null)
     {
@@ -61,19 +62,14 @@ export class ViewStackComponent implements OnInit {
 
     //Retrieve index if any
     //this.indexCounter = parseInt(sessionStorage.getItem('index') || '0');
-
     // We need to clear the index of a saved card stack if we enter a new card stack - or save progress in each stack
   }
 
   getCardsFromStack() {
 
-    this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}');
-
     console.log('In getCardsFromStack() | view-stack-component.ts');
 
-    console.log(this.stackSettings);
-
-    if (this.stackSettings.ViewCardsDue == true)
+    if (this.stackSettings.ViewCardsDue == true) // Retrieve due cards
     {
       console.log('Calling service method getCardsFromStack()')
 
@@ -83,7 +79,7 @@ export class ViewStackComponent implements OnInit {
         error: (mess) => this.message = mess
       })
     }
-    else if (this.stackSettings.ViewCardsDue == false)
+    else if (this.stackSettings.ViewCardsDue == false) // Retrieve all cards
     {
       console.log('Calling service method getAllCardsFromStack()')
 
@@ -102,43 +98,38 @@ export class ViewStackComponent implements OnInit {
       this.isFlipped = true;
     }
     else
-    this.isFlipped = false;
-
+      this.isFlipped = false;
   }
 
   nextCard() {
-    if (this.isFlipped == true) {
-      // Returning card side to front
-      this.isFlipped = false;
-    }
 
+    // Update progress bar
     if (this.indexCounter != this.cardsArray.length - 1) {
       this.indexCounter++;
 
       this.progress = this.indexCounter / this.cardsArray.length;
-
-      console.log(this.progress);
     }
 
+    // Set index
     sessionStorage.setItem('index', this.indexCounter.toString());
   }
 
   previousCard() {
+
+    // Update progress bar
     if (this.indexCounter != 0) {
       this.indexCounter--;
 
       this.progress = this.indexCounter / this.cardsArray.length;
     }
 
+    // Set index
     sessionStorage.setItem('index', this.indexCounter.toString());
 
-    if (this.isFlipped == true) {
-      // Returning card side to front
-      this.isFlipped = false;
-    }
   }
 
   timer() {
+
     this.countdown = this.stackSettings.TimerLength; // Setting countdown
 
     this.interval = setInterval(() => {
@@ -150,9 +141,11 @@ export class ViewStackComponent implements OnInit {
 
       this.countdown--;
     }, 1000);
+
   }
 
   onSubmit() {
+
     clearInterval(this.interval);
 
     var button = document.getElementById('submitButton') as HTMLButtonElement; // Useful
@@ -164,14 +157,20 @@ export class ViewStackComponent implements OnInit {
     this.isFlipped = true;
 
     var answer = this.cardForm.value.answer;
+
+    // Compare answers
     this.isCorrect = this.compareAnswers(answer);
 
     setTimeout(() => {
+
       // After 5 seconds we move onto the next card in the array
 
       if (this.indexCounter == this.cardsArray.length - 1) {
+
         this.finish();
+
       } else {
+
         this.nextCard();
 
         button.disabled = false;
@@ -185,22 +184,17 @@ export class ViewStackComponent implements OnInit {
   }
 
   compareAnswers(answer: any): boolean {
+
     console.log(answer);
 
-<<<<<<< HEAD
-    this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}');
-
     console.log('In compareAnswers() | view-stack-component.ts');
-
-    console.log(this.stackSettings);
 
       if (answer.toString() == this.cardsArray[this.indexCounter].Back)
       {
         this.answeredCorrectly.push('Correct');
 
-        if (this.stackSettings.ViewCardsDue == true)
+        if (this.stackSettings.ViewCardsDue == true) // If we are viewing due cards - we can update card difficulty - else no
         {
-          console.log('Setting card to easy')
           this.setToEasy();
         }
 
@@ -210,9 +204,8 @@ export class ViewStackComponent implements OnInit {
       {
         this.answeredCorrectly.push('Incorrect');
 
-        if (this.stackSettings.ViewCardsDue == true)
+        if (this.stackSettings.ViewCardsDue == true) // If we are viewing due cards - we can update card difficulty - else no
         {
-          console.log('Setting card to hard')
           this.setToHard();
         }
 
@@ -222,80 +215,31 @@ export class ViewStackComponent implements OnInit {
 
   finish() { 
 
+    // Set results in sessionStorage
+
     sessionStorage.setItem('answeredCorrectly', JSON.stringify(this.answeredCorrectly));
 
-    if (this.stackSettings.Inputs == true)
-    {
-      this.router.navigate(['/viewresults']);
-    }
-    else
-    {
-      this.router.navigate(['/userhub']);
-    }
-=======
-    if (answer.toString() == this.cardsArray[this.indexCounter].Back) {
-      this.answeredCorrectly.push('Correct');
-      this.setToEasy();
-      return true;
-    } else {
-      this.answeredCorrectly.push('Incorrect');
-      this.setToHard();
-      return false;
-    }
-  }
+    // Navigate to view results
 
-  finish() {
-    // This function should be able to be called also when user views stacks without inputs
-
-    sessionStorage.setItem(
-      'answeredCorrectly',
-      JSON.stringify(this.answeredCorrectly)
-    );
     this.router.navigate(['/viewresults']);
->>>>>>> 959747cac47ad6be47501b96c42ce62c50e86665
+
   }
 
-  // this.srvCardStacks.getCardsFromStack().subscribe({
-  //   next: (value: Icard[])=> this.cardsArray = value,
-  //   complete: () => console.log(this.cardsArray),
-  //   error: (mess) => this.message = mess
-  // })
-
+  // Set current card to easy
   setToEasy() {
-<<<<<<< HEAD
-    
+
+    console.log('Setting card to easy');
+
     this.srvCardStacks.setCardToEasy(this.cardsArray[this.indexCounter]);
 
-    console.log('Card set to easy');
   }
 
+  // Set current card to hard
   setToHard() {
+
+    console.log('Setting card to hard');
 
     this.srvCardStacks.setCardToHard(this.cardsArray[this.indexCounter]);
 
-    console.log('Card set to hard');
-=======
-    this.srvCardStacks
-      .setCardToEasy(this.cardsArray[this.indexCounter])
-      .subscribe((res) => console.log(res));
-    this.answeredCorrectly.push('Correct');
-    if (this.indexCounter == this.cardsArray.length - 1) {
-      this.finish();
-    } else {
-      this.nextCard();
-    }
-  }
-
-  setToHard() {
-    this.srvCardStacks
-      .setCardToHard(this.cardsArray[this.indexCounter])
-      .subscribe((res) => console.log(res));
-    this.answeredCorrectly.push('Incorrect');
-    if (this.indexCounter == this.cardsArray.length - 1) {
-      this.finish();
-    } else {
-      this.nextCard();
-    }
->>>>>>> 959747cac47ad6be47501b96c42ce62c50e86665
   }
 }

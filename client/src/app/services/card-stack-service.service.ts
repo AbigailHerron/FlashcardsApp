@@ -288,7 +288,7 @@ export class CardStackServiceService {
 
     console.log(this.userID);
 
-    const url = `user/${this.userID}/decks`;
+    const url = `http://localhost:3000/user/${this.userID}/decks`;
 
     console.log(url);
 

@@ -11,6 +11,8 @@ import { SessionQuery } from '../store/session.query';
 @Injectable({ providedIn: 'root' })
 export class SessionService {
 
+  private url = 'http://localhost:3000/user'
+
   constructor(private sessionStore: SessionStore, private http: HttpClient, private sessionQuery: SessionQuery) { }
 
     public get UserID() {
@@ -21,11 +23,25 @@ export class SessionService {
 
   // Login (post) a user
   public login(user: Login): Observable<User> {
-    return this.http.post<any>('user/login', user).pipe(
+    return this.http.post<any>(`${this.url}/login`, user).pipe(
       tap((user) => {
         // Updating session state
         this.sessionStore.update(() => ({
           accessToken: user.accessToken,
+          UserName: user.UserName,
+          UserEmail: user.UserEmail,
+          UserID: user.UserID,
+        }));
+      })
+    );
+  }
+
+  // Signup (post) a user
+  public signup(user: Login): Observable<User> {
+    return this.http.post<any>(`${this.url}/signup`, user).pipe(
+      tap((user) => {
+        // Updating session state
+        this.sessionStore.update(() => ({
           UserName: user.UserName,
           UserEmail: user.UserEmail,
           UserID: user.UserID,
