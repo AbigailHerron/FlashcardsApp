@@ -98,7 +98,6 @@ class cardController {
 
   // Delete
   async deleteCard(req, res) {
-
     console.log('welcome to deleteCard controller');
     
     try {

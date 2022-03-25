@@ -19,19 +19,16 @@ import { SessionQuery } from '../store/session.query';
 import { CardStackQuery } from '../store/card-stack.query';
 import { CardStackStore } from '../store/card-stack.store';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class CardStackServiceService {
-
   private httpSkipInterceptor: HttpClient;
 
   private userID!: number;
 
   currentCardStack$!: IcardStack;
   currentStackID$!: number;
-
 
   selectedCardStackOptions!: Istacksettings;
   public cardStackOptionsSource = new BehaviorSubject<Istacksettings>(
@@ -41,8 +38,13 @@ export class CardStackServiceService {
   private imageID?: string;
   message: any;
 
-  constructor(private http: HttpClient,    private handler: HttpBackend,    private session: SessionQuery,    private cardStackQuery: CardStackQuery, private cardStackStore: CardStackStore) {
-
+  constructor(
+    private http: HttpClient,
+    private handler: HttpBackend,
+    private session: SessionQuery,
+    private cardStackQuery: CardStackQuery,
+    private cardStackStore: CardStackStore
+  ) {
     this.userID = this.session.userId$;
 
     // this.cardStackQuery.currentStackState$.pipe(mapTo(this.currentCardStack$));
@@ -75,13 +77,12 @@ export class CardStackServiceService {
 
   // Setting cardstack as current cardstack
   public deckValue(cardStack: IcardStack) {
-
-    console.log("Updating CardStackStore value")
+    console.log('Updating CardStackStore value');
 
     this.cardStackStore.update(cardStack);
 
-    console.log("Current CardStackStore value")
-     this.cardStackQuery.currentStack$.subscribe(res => console.log(res));
+    console.log('Current CardStackStore value');
+    this.cardStackQuery.currentStack$.subscribe((res) => console.log(res));
 
     // this.cardStackSource.next(cardStack);
   }
@@ -89,12 +90,10 @@ export class CardStackServiceService {
   // Retrieve current card stack
 
   public get deckDetails() {
-
     // Returning state ( Observable )
-    return this.cardStackQuery.currentStack$
+    return this.cardStackQuery.currentStack$;
 
     // return this.cardStackSource.value;
-
   }
 
   //____________________________________________________________________________________________________ Store and retrieve card stack menu details
@@ -114,6 +113,9 @@ export class CardStackServiceService {
   // Add blank card to stack
 
   addBlankCardToStack() {
+    console.log(
+      'addBlankCardToStack function called | card-stack-service.service.ts'
+    );
 
     console.log('addBlankCardToStack function called | card-stack-service.service.ts');
 
@@ -286,7 +288,7 @@ export class CardStackServiceService {
 
     console.log(this.userID);
 
-    const url = `http://localhost:3000/user/${this.userID}/decks`;
+    const url = `user/${this.userID}/decks`;
 
     console.log(url);
 

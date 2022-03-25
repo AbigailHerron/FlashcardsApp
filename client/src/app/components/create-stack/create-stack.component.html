@@ -8,30 +8,50 @@
     <!------------------->
 </div>
 
- <!-- Buttons -->
+<!-- Buttons -->
 
-    <button type="button" class="material-icons md-36 btn btn-lg add-stack-btn hvr-grow-shadow" (click)="addNewCard()">add</button>
+<button
+  type="button"
+  class="material-icons md-36 btn btn-lg add-stack-btn hvr-grow-shadow"
+  (click)="addNewCard()"
+>
+  add
+</button>
 
-    <button class="material-icons md-36 btn btn-lg save-button hvr-grow-shadow" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSettings" aria-controls="offcanvasSettings" style="background-color: #BB86FC;">
-        save
-    </button>
+<button
+  class="material-icons md-36 btn btn-lg save-button hvr-grow-shadow"
+  type="button"
+  data-bs-toggle="offcanvas"
+  data-bs-target="#offcanvasSettings"
+  aria-controls="offcanvasSettings"
+  style="background-color: #bb86fc"
+>
+  save
+</button>
 
-<div class="container" style="display: flex; justify-content: center;">
+<div class="container" style="display: flex; justify-content: center">
+  <!----------------------------------------------------->
 
+  <div
+    class="offcanvas offcanvas-start bg-dark"
+    tabindex="-1"
+    id="offcanvasSettings"
+    aria-labelledby="offcanvasSettingsLabel"
+    style="border-right: 1px solid black"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Stack Details</h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
 
-    <!----------------------------------------------------->
-
-    <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasSettings" aria-labelledby="offcanvasSettingsLabel" style="border-right: 1px solid black;">
-
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasSettingsLabel">Stack Details</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-
-        <!--------------------------- OFFCANVAS START ---------------------------->
-        <div class="offcanvas-body" style="margin: 1em;">
-
-            <!-- Name
+    <!--------------------------- OFFCANVAS START ---------------------------->
+    <div class="offcanvas-body" style="margin: 1em">
+      <!-- Name
             Description
             Image
             public/private status-->
@@ -58,7 +78,16 @@
                     <label class="form-check-label" for="publicDeck">Public</label>
                 </div>
 
-                <br />
+        <div class="form-group">
+          <label for="about">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="about"
+            formControlName="about"
+            placeholder="A really good description of this stack."
+          />
+        </div>
 
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Select colour</label>
@@ -73,11 +102,32 @@
                     </select>
                 </div>
 
-                <br />
+        <div class="custom-control custom-switch">
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="publicDeck"
+            formControlName="publicDeck"
+          />
+          <label class="custom-control-label" for="publicDeck">Public</label>
+        </div>
 
                 <button type="submit" style="text-align: center;" class="btn btn-light">Save</button>
                 
             </form>
         </div>
+
+        <br />
+
+        <button
+          type="submit"
+          style="text-align: center"
+          class="btn btn-primary"
+          style="background-color: #03dac5"
+        >
+          Save
+        </button>
+      </form>
     </div>
+  </div>
 </div>

@@ -17,34 +17,40 @@
       <div class="col-xs-1 center-block text-center" style="padding-top: 2em;">
         <h1>{{ currentCardStack.DeckName }}</h1>
         <div *ngIf="countdown != null">
-          <span class="material-icons md-36" style="color: white; display: inline">timer</span>
+          <span
+            class="material-icons md-36"
+            style="color: white; display: inline"
+            >timer</span
+          >
           <h1 style="display: inline">{{ countdown }}</h1>
         </div>
       </div>
     </div>
 
 
-
     <div class="row">
-
       <div class="col d-flex justify-content-center">
+        <div class="flip-card">
+          <!-- Card container -->
+          <div
+            class="flip-card-inner"
+            [ngClass]="{ 'do-flip': isFlipped == true }"
+          >
+            <div
+              class="flip-card-front"
+              style="border-radius: 15px"
+              [ngStyle]="{ 'background-color': currentCardStack.Colour }"
+            >
+              <!-- Front of card -->
 
-        <div class="flip-card" > <!-- Card container -->
-          <div class="flip-card-inner" [ngClass]="{'do-flip': isFlipped == true}">
-
-            <div class="flip-card-front" style="border-radius: 15px" [ngStyle]="{'background-color':currentCardStack.Colour}"> <!-- Front of card -->
-      
-              <div class="row" style="padding: 1em;">
+              <div class="row" style="padding: 1em">
                 <div class="col">
                   <h5 class="card-title">
                     Card {{ indexCounter + 1 }} of {{ cardsArray.length }}
                   </h5>
                 </div>
-                <div class="col">
-                  <h5>Front</h5>
-                </div>
               </div>
-    
+
               <div *ngIf="cardsArray[indexCounter]?.ImageURL" class="row">
                 <div class="col">
                   <div class="image-container">
@@ -55,7 +61,7 @@
                   </div>
                 </div>
               </div>
-    
+
               <div class="row" style="padding: 1em">
                 <div class="col">
                   <h2>{{ cardsArray[indexCounter]?.Front }}</h2>
@@ -75,27 +81,42 @@
             <div class="flip-card-back" style="border-radius: 15px;" [ngStyle]="{'background-color': isCorrect == true == true ? 'green' : 'red'}">
               <!-- Back of card -->
               <!-- Back of card -->
-    
+
               <div class="row" style="padding: 1em">
                 <div class="col">
                   <h5 class="card-title">
                     Card {{ indexCounter + 1 }} of {{ cardsArray.length }}
                   </h5>
                 </div>
-    
-                <div class="col">
-                  <h5>Back</h5>
-                </div>
               </div>
-    
+
               <div class="row" style="padding: 1em">
                 <div class="col">
                   <h2>{{ cardsArray[indexCounter]?.Back }}</h2>
                 </div>
               </div>
+
+              <div class="col-xs-1" *ngIf="stackSettings.inputs == false">
+                <button
+                  type="button"
+                  class="btn btn-light"
+                  (click)="setToEasy()"
+                  style="margin: 1em; align-items: end"
+                >
+                  Easy
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-light"
+                  (click)="setToHard()"
+                  style="margin: 1em; align-items: end"
+                >
+                  Hard
+                </button>
+              </div>
             </div>
           </div>
-        </div>    
+        </div>
       </div>
     </div>
 
@@ -133,6 +154,7 @@
             </button>
           </div>
         </div>
-      </form>
+      </div>
+    </form>
   </div>
 </body>

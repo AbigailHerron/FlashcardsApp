@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Login } from '../interfaces/login';
 
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../interfaces/user';
@@ -9,7 +13,7 @@ import { Signup } from '../interfaces/signup';
 import { SessionStore } from '../store/session.store';
 import { SessionQuery } from '../store/session.query';
 
-@Injectable({ providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class BackendService {
 
   userID!: Number;

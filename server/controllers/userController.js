@@ -1,5 +1,5 @@
 const sqlcon = require('../dbconnection');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const secret = process.env.ACCESS_TOKEN_SECRET;
@@ -7,7 +7,6 @@ const secret = process.env.ACCESS_TOKEN_SECRET;
 class userController {
   // For Testing Only
   async getUsers(req, res) {
-    console.log('welcome to getUsers controller');
     try {
       const conn = await sqlcon.getConnection();
       const users = await conn.query('select * from UsersTBL');
@@ -17,7 +16,7 @@ class userController {
     }
   }
 
-    //__________________________________________________ Register function
+  //__________________________________________________ Register function
 
   async register(req, res) {
     console.log('welcom to addUser controller');
@@ -109,7 +108,7 @@ class userController {
         accessToken: token,
         UserName: user.recordset[0].UserName,
         UserEmail: user.recordset[0].UserEmail,
-        UserID: user.recordset[0].UserID
+        UserID: user.recordset[0].UserID,
       });
       console.log('login success');
     } catch (err) {
@@ -120,21 +119,21 @@ class userController {
   //__________________________________________________ Profile function
 
   async profile(req, res) {
-
-    console.log('Welcome to profile function')
+    console.log('Welcome to profile function');
 
     try {
-
       console.log(req.params.userID);
 
       const conn = await sqlcon.getConnection();
       const userDetails = await conn
-      .request()
-      .input('user_id', req.params.userID)
-      .execute('getUserDetails')
+        .request()
+        .input('user_id', req.params.userID)
+        .execute('getUserDetails');
 
       if (userDetails.rowsAffected[0] == 0)
-      return res.status(400).json({ msg: 'No profile match with those credentials' });
+        return res
+          .status(400)
+          .json({ msg: 'No profile match with those credentials' });
 
       console.log(userDetails.recordset[0]);
 
@@ -142,7 +141,6 @@ class userController {
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }
-
   }
 
   //__________________________________________________ Update username function

@@ -11,14 +11,14 @@ import { CardStackQuery } from 'src/app/store/card-stack.query';
 @Component({
   selector: 'app-view-stack',
   templateUrl: './view-stack.component.html',
-  styleUrls: ['./view-stack.component.css']
+  styleUrls: ['./view-stack.component.css'],
 })
 export class ViewStackComponent implements OnInit {
   currentCardStack!: IcardStack;
-  cardsArray : Icard[] = [];
-  message : string = '';
+  cardsArray: Icard[] = [];
+  message: string = '';
   indexCounter: number = 0;
-  isFlipped: boolean = false; // Needed if stackOptions.inputs == true 
+  isFlipped: boolean = false; // Needed if stackOptions.inputs == true
   countdown!: number;
   stackSettings!: Istacksettings;
   interval: any;
@@ -44,7 +44,6 @@ export class ViewStackComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
     this.cardForm = new FormGroup({
       answer: new FormControl('', [Validators.required])
     })
@@ -108,39 +107,34 @@ export class ViewStackComponent implements OnInit {
   }
 
   nextCard() {
-
-    if (this.isFlipped == true) // Returning card side to front
-    {
-    this.isFlipped = false;
+    if (this.isFlipped == true) {
+      // Returning card side to front
+      this.isFlipped = false;
     }
 
-    if (this.indexCounter != this.cardsArray.length - 1)
-    {
+    if (this.indexCounter != this.cardsArray.length - 1) {
       this.indexCounter++;
 
-      this.progress = (this.indexCounter / this.cardsArray.length)
+      this.progress = this.indexCounter / this.cardsArray.length;
 
       console.log(this.progress);
-
     }
 
-    sessionStorage.setItem("index", this.indexCounter.toString())
+    sessionStorage.setItem('index', this.indexCounter.toString());
   }
 
   previousCard() {
-
-    if (this.indexCounter != 0)
-    {
+    if (this.indexCounter != 0) {
       this.indexCounter--;
 
-      this.progress = (this.indexCounter / this.cardsArray.length)
+      this.progress = this.indexCounter / this.cardsArray.length;
     }
 
-    sessionStorage.setItem("index", this.indexCounter.toString())
+    sessionStorage.setItem('index', this.indexCounter.toString());
 
-    if (this.isFlipped == true) // Returning card side to front
-    {
-    this.isFlipped = false;
+    if (this.isFlipped == true) {
+      // Returning card side to front
+      this.isFlipped = false;
     }
   }
 
@@ -155,17 +149,16 @@ export class ViewStackComponent implements OnInit {
       }
 
       this.countdown--;
-    }, 1000)
+    }, 1000);
   }
 
   onSubmit() {
-
     clearInterval(this.interval);
 
-    var button = (document.getElementById("submitButton") as HTMLButtonElement); // Useful
+    var button = document.getElementById('submitButton') as HTMLButtonElement; // Useful
     button.disabled = true;
 
-    var input = (document.getElementById("answer") as HTMLInputElement);
+    var input = document.getElementById('answer') as HTMLInputElement;
     input.disabled = true;
 
     this.isFlipped = true;
@@ -176,17 +169,14 @@ export class ViewStackComponent implements OnInit {
     setTimeout(() => {
       // After 5 seconds we move onto the next card in the array
 
-      if (this.indexCounter == this.cardsArray.length - 1)
-      {
+      if (this.indexCounter == this.cardsArray.length - 1) {
         this.finish();
-      }
-      else
-      {
+      } else {
         this.nextCard();
 
         button.disabled = false;
         input.disabled = false;
-  
+
         input.value = '';
 
         this.timer();
@@ -194,10 +184,10 @@ export class ViewStackComponent implements OnInit {
     }, 1000);
   }
 
-  compareAnswers(answer: any) : boolean {
-
+  compareAnswers(answer: any): boolean {
     console.log(answer);
 
+<<<<<<< HEAD
     this.stackSettings = JSON.parse(sessionStorage.getItem('stackOptions') || '{}');
 
     console.log('In compareAnswers() | view-stack-component.ts');
@@ -242,6 +232,27 @@ export class ViewStackComponent implements OnInit {
     {
       this.router.navigate(['/userhub']);
     }
+=======
+    if (answer.toString() == this.cardsArray[this.indexCounter].Back) {
+      this.answeredCorrectly.push('Correct');
+      this.setToEasy();
+      return true;
+    } else {
+      this.answeredCorrectly.push('Incorrect');
+      this.setToHard();
+      return false;
+    }
+  }
+
+  finish() {
+    // This function should be able to be called also when user views stacks without inputs
+
+    sessionStorage.setItem(
+      'answeredCorrectly',
+      JSON.stringify(this.answeredCorrectly)
+    );
+    this.router.navigate(['/viewresults']);
+>>>>>>> 959747cac47ad6be47501b96c42ce62c50e86665
   }
 
   // this.srvCardStacks.getCardsFromStack().subscribe({
@@ -251,6 +262,7 @@ export class ViewStackComponent implements OnInit {
   // })
 
   setToEasy() {
+<<<<<<< HEAD
     
     this.srvCardStacks.setCardToEasy(this.cardsArray[this.indexCounter]);
 
@@ -262,5 +274,28 @@ export class ViewStackComponent implements OnInit {
     this.srvCardStacks.setCardToHard(this.cardsArray[this.indexCounter]);
 
     console.log('Card set to hard');
+=======
+    this.srvCardStacks
+      .setCardToEasy(this.cardsArray[this.indexCounter])
+      .subscribe((res) => console.log(res));
+    this.answeredCorrectly.push('Correct');
+    if (this.indexCounter == this.cardsArray.length - 1) {
+      this.finish();
+    } else {
+      this.nextCard();
+    }
+  }
+
+  setToHard() {
+    this.srvCardStacks
+      .setCardToHard(this.cardsArray[this.indexCounter])
+      .subscribe((res) => console.log(res));
+    this.answeredCorrectly.push('Incorrect');
+    if (this.indexCounter == this.cardsArray.length - 1) {
+      this.finish();
+    } else {
+      this.nextCard();
+    }
+>>>>>>> 959747cac47ad6be47501b96c42ce62c50e86665
   }
 }
