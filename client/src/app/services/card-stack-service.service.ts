@@ -20,7 +20,7 @@ export class CardStackServiceService {
   currentCardStack$!: IcardStack;
   currentStackID$!: number;
 
-  private localUrl = 'http://localhost:3000/'; // change to '' for Heroku deployment - applications will be deployed on the same domain
+  private localUrl = ''; // 'http://localhost:3000/'; change to '' for Heroku deployment - applications will be deployed on the same domain
 
   selectedCardStackOptions!: Istacksettings;
   public cardStackOptionsSource = new BehaviorSubject<Istacksettings>(this.selectedCardStackOptions);

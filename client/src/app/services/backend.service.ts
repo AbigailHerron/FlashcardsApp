@@ -12,7 +12,7 @@ export class BackendService {
 
   userID!: Number;
 
-  private dataUri = 'http://localhost:3000/'; // change to '' for Heroku deployment - applications will be deployed on the same domain
+  private dataUri = ''; // 'http://localhost:3000/'; change to '' for Heroku deployment - applications will be deployed on the same domain
 
   constructor(private http: HttpClient, private sessionStore: SessionStore, private session: SessionQuery) {
 

@@ -11,7 +11,7 @@ import { SessionQuery } from '../store/session.query';
 @Injectable({ providedIn: 'root' })
 export class SessionService {
 
-  private url = 'http://localhost:3000/'; // change to '' for Heroku deployment - applications will be deployed on the same domain
+  private url = ''; // 'http://localhost:3000/'; change to '' for Heroku deployment - applications will be deployed on the same domain
 
   constructor(private sessionStore: SessionStore, private http: HttpClient, private sessionQuery: SessionQuery) { }
 
