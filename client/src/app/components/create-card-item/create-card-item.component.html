@@ -1,17 +1,10 @@
-<div
-  class="card bg-dark"
-  style="width: 80vw; margin: 2em; border: 4px solid"
-  [ngStyle]="{ 'border-color': currentStack.Colour }"
->
+<div class="card bg-dark" style="width: 80vw; margin: 2em; border: 4px solid" [ngStyle]="{ 'border-color': currentStack.Colour }">
+
   <form [formGroup]="cardForm" class="row" style="padding: 1em">
-    <!-- (ngSubmit) = "onSubmit()" -->
 
-    
       <div class="col">
-
         <a class="material-icons md-36 md-light icon-btn" (click)="updateCardFromStack()" style="color: white">save</a>
         <a class="material-icons md-36 md-light icon-btn" (click)="deleteCardFromStack()" style="color: white">delete</a>
-
       </div>
 
       <div class="row">
@@ -30,43 +23,19 @@
           <label for="hint" class="form-label">Hint</label>
           <input type="textarea"class="form-control" class="form-control" id="hint" formControlName="hint" placeholder="Hint Text"/>
         </div>
-      </div>
-
-    <div class="col-sm-4">
-      <div class="upload">
-        <label for="formFile" class="form-label">Image Source</label>
-        <input type="file" name="file" id="file_up" (change)="handleUpload($event)">
-        <div id="file_img" [ngStyle]="styleUpload()">
-          <img src="{{ this.card?.ImageURL }}" alt="" />
-          <span (click)="handleDelete()">X</span>
-        </div>
-      </div>
-    </div>
-
-  </form>
-</div>
-
-    <!--
-      <div class="row" style="padding: 1em;">
-      <div class="col-md-6">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile" (change)="onFileSelected($event)">
-          <label class="custom-file-label" for="customFile">Choose file</label>
-        </div>
-      </div>
 
       </div>
-      <div class="col">
+
+      <div class="col-6" style="padding-top: 2em;">
         <div class="upload">
           <label for="formFile" class="form-label">Image Source</label>
-          <input
-            type="file"
-            name="file"
-            id="file_up"
-            (change)="handleUpload($event)"
-          />
+          <input type="file" name="file" id="file_up" (change)="handleUpload($event)">
           <div id="file_img" [ngStyle]="styleUpload()">
             <img src="{{ this.card?.ImageURL }}" alt="" />
             <span (click)="handleDelete()">X</span>
           </div>
-    </div> -->
+        </div>
+      </div>
+
+  </form>
+</div>

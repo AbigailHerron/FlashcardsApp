@@ -12,8 +12,8 @@ export class DashboardLinksComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log("dashboard-links.component.ts")
+    console.log("Welcome to the dashboard");
 
-    console.log(this.session.userDetails$)
+    console.log(this.session.userDetails$);
   }
 }

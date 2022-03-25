@@ -1,15 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Login } from '../interfaces/login';
-
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../interfaces/user';
-import { Signup } from '../interfaces/signup';
 import { SessionStore } from '../store/session.store';
 import { SessionQuery } from '../store/session.query';
 
@@ -18,7 +12,7 @@ export class BackendService {
 
   userID!: Number;
 
-  private dataUri = 'http://localhost:3000/user';
+  private dataUri = 'http://localhost:3000/'; // change to '' for Heroku deployment - applications will be deployed on the same domain
 
   constructor(private http: HttpClient, private sessionStore: SessionStore, private session: SessionQuery) {
 
@@ -33,7 +27,7 @@ export class BackendService {
 
     console.log(this.userID);
 
-    return this.http.get<User>(`${this.dataUri}/profile/${this.userID}`)
+    return this.http.get<User>(`${this.dataUri}user/profile/${this.userID}`)
     .pipe(map(user => {
       // localStorage.setItem('currentUser', JSON.stringify(user))
       // this.userSubject.next(user);
@@ -59,13 +53,13 @@ export class BackendService {
 
     console.log('In updateUserName()');
 
-    console.log(`${this.dataUri}/profile/${this.userID}/username`);
+    console.log(`${this.dataUri}user/profile/${this.userID}/username`);
 
     const data = { 'userName' : userName }
 
     console.log(data);
 
-    return this.http.patch<User>(`${this.dataUri}/profile/${this.userID}/username`, data)
+    return this.http.patch<User>(`${this.dataUri}user/profile/${this.userID}/username`, data)
       .pipe(tap(user => {
         // Updating session state
         this.sessionStore.update(() => ({
@@ -86,7 +80,7 @@ export class BackendService {
     console.log(data);
 
     return this.http
-      .patch<User>(`${this.dataUri}/profile/${this.userID}/email`, data)
+      .patch<User>(`${this.dataUri}user/profile/${this.userID}/email`, data)
       .pipe(tap(user => {
 
         // Updating session state
@@ -104,10 +98,10 @@ export class BackendService {
 
     console.log('In deleteAccount()');
 
-    console.log(`${this.dataUri}/profile/${this.userID}`);
+    console.log(`${this.dataUri}user/profile/${this.userID}`);
 
     return this.http
-      .delete<any>(`${this.dataUri}/profile/${this.userID}`)
+      .delete<any>(`${this.dataUri}user/profile/${this.userID}`)
       .subscribe((res) => console.log(res));
   }
 
