@@ -53,8 +53,10 @@ class cardController {
   }
   // Returrns All Cards
   async getAllCards(req, res) {
-    // console.log('welcome to getCards Controller');
-    // console.log(req.params);
+
+    console.log('welcome to getAllCards Controller');
+    console.log(req.params);
+
     try {
       const conn = await sqlcon.getConnection();
       const cards = await conn
@@ -63,6 +65,7 @@ class cardController {
         .input('user_id', req.params.userID)
         .execute('getAllCards');
       res.json(cards.recordset);
+      
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

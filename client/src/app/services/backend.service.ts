@@ -6,32 +6,30 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../interfaces/user';
 import { Signup } from '../interfaces/signup';
+import { SessionStore } from '../store/session.store';
+import { SessionQuery } from '../store/session.query';
 
 @Injectable({ providedIn: 'root'})
 export class BackendService {
 
+  userID!: Number;
+
   private dataUri = 'http://localhost:3000/user';
-  private userSubject: BehaviorSubject<User|null>;
-  public user: Observable<User|null>;
 
+  constructor(private http: HttpClient, private sessionStore: SessionStore, private session: SessionQuery) {
 
-  constructor(private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User|null>
-    (JSON.parse(localStorage.getItem('currentUser') || '{}')) ;
-    this.user = this.userSubject.asObservable();
+    this.userID = this.session.userId$;
+
   }
 
-  public get userValue(): User|null {
-    return this.userSubject.value;
-  }
 
   // Get profile details
 
   getProfileDetails() : Observable<User> {
 
-    console.log(this.userValue?.UserID);
+    console.log(this.userID);
 
-    return this.http.get<User>(`http://localhost:3000/user/profile/${this.userValue?.UserID}`)
+    return this.http.get<User>(`${this.dataUri}/profile/${this.userID}`)
     .pipe(map(user => {
       // localStorage.setItem('currentUser', JSON.stringify(user))
       // this.userSubject.next(user);
@@ -43,6 +41,7 @@ export class BackendService {
   // Get all users
 
   getUsers(): Observable<Login[]> {
+
     console.log('Get user called');
 
     return this.http
@@ -50,34 +49,65 @@ export class BackendService {
       .pipe(catchError(this.handleError));
   }
 
-  // Register (post) a user
+  // Update username
 
-  public signup(user: Signup): Observable<any> {
+  updateUserName(userName: string): Observable<User> {
 
-    return this.http.post<any>('http://localhost:3000/user/signup', user)
-    .pipe(map(user => {
-      // localStorage.setItem('currentUser', JSON.stringify(user))
-      // this.userSubject.next(user);
-      return user;
-    }
-    ))
+    console.log('In updateUserName()');
+
+    console.log(`${this.dataUri}/profile/${this.userID}/username`);
+
+    const data = { 'userName' : userName }
+
+    console.log(data);
+
+    return this.http.patch<User>(`${this.dataUri}/profile/${this.userID}/username`, data)
+      .pipe(tap(user => {
+        // Updating session state
+        this.sessionStore.update(() => ({
+          UserName: user.UserName
+        }));    
+    }),
+    catchError(this.handleError));
   }
 
-  // Login (get) a user
+  // Update email
 
-  public login(user: Login): Observable<any> {
+  updateEmail(email: string) {
 
-    return this.http.post<any>('http://localhost:3000/user/login', user)
-    .pipe(map(user => {
-      // localStorage.setItem('currentUser', JSON.stringify(user))
-      // this.userSubject.next(user);
-      return user;
-    }
-    ))
+    console.log('In updateEmail()');
+
+    const data = { 'email' : email}
+
+    console.log(data);
+
+    return this.http
+      .patch<User>(`${this.dataUri}/profile/${this.userID}/email`, data)
+      .pipe(tap(user => {
+
+        // Updating session state
+        this.sessionStore.update(() => ({
+          UserEmail: user.UserEmail
+        }));
+    }),
+    catchError(this.handleError));
+
   }
 
-  
-  // ERROR HANDLING
+  // Delete account
+
+  deleteAccount() {
+
+    console.log('In deleteAccount()');
+
+    console.log(`${this.dataUri}/profile/${this.userID}`);
+
+    return this.http
+      .delete<any>(`${this.dataUri}/profile/${this.userID}`)
+      .subscribe((res) => console.log(res));
+  }
+
+  // Error handling
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

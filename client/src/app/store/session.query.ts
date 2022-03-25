@@ -16,7 +16,17 @@ export class SessionQuery extends Query<SessionState> {
     // userDetails$ = this.select(['UserID','UserName','UserEmail','accessToken']);
     userDetails$ = this.getValue();
 
+    userDetailsState$ = this.select();
+
+
+
   constructor(protected store: SessionStore) {
     super(store);
+  }
+
+  get isLoggedIn() {
+
+    return !!this.getValue().accessToken;
+    
   }
 }

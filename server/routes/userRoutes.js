@@ -9,6 +9,12 @@ router.get('/profile/:userID', userController.profile);
 router.post('/signup', userController.register);
 router.post('/login', userController.login);
 
+// Edit details / delete account
+
+router.patch('/profile/:userID/username', userController.updateUserName)
+router.patch('/profile/:userID/email', userController.updateEmail)
+router.delete('/profile/:userID', userController.deleteAccount)
+
 // Decks
 router.get('/:userID/decks', deckController.getDecks);
 router.post('/:userID/decks', deckController.addDeck);

@@ -6,56 +6,84 @@
         </div>
     </div>
 
-    <div class="profileComp" style="background-color: lightgray;
-    padding: 2em; margin-top: 2em; border-radius: 15px;">
+    <div class="profileComp" style="background-color: lightgray; padding: 2em; margin-top: 2em; border-radius: 15px;">
 
-    <br/>
+        <br/>
 
-    <div class="row">
-        <div class="col-sm-4">
-            <h3>{{user!.UserName}}</h3>
-        </div>
-
-        <div class="col-sm-4">
-            <h3>{{user!.UserEmail}}</h3>
-        </div>
-
-        <div class="col-sm-2">
-            <button tyep="button" class="btn btn-light" (click)="showEditDetailsForm()">Edit Details</button>
-        </div>
-
-    </div> 
-
-    <br/>
-
-    <!-- <h2>Your decks</h2>
-
-    <div class="col-sm-4">
-        <h3>{{user!.UserName}}</h3>
-    </div> -->
-
-    <br/>
-
-    <div id="editDetails">
-        <form>
-            <div class="row">
-                <div class="col">
-                    <input type="text" class="form-control" placeholder="Username">
-                  </div>
-                <div class="col">
-                <input type="text" class="form-control" placeholder="Email">
-              </div>
-              <div class="col">
-              <button type="button" class="btn btn-light">Update</button>
-              </div>
+        <div class="row">
+            <div class="col">
+                <h3>{{user!.UserName}}</h3>
             </div>
+            <div class="col">
+                <h3>{{user!.UserEmail}}</h3>
+            </div>
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Edit Details
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" (click)="showEditUserNameForm()">Username</a>
+                    <a class="dropdown-item" (click)="showEditEmailForm()">Email</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" style="color: red;" data-toggle="modal" data-target="#exampleModalCenter">Delete Account</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <br/>
+
+        <form [formGroup]="userForm">
+
+            <div id="editUserName">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Username" id="userName" formControlName="userName">
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-light" (click)="updateUserName()">Update</button>
+                    </div>
+                </div>
+            </div>
+        
+            <br/>
+        
+            <div id="editEmail">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Email" id="email" formControlName="email">
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-light" (click)="updateEmail()">Update</button>
+                    </div>
+                </div>
+            </div>
+
         </form>
-    </div>
+
     </div>
 
-
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Delete Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-outline-danger" (click)="deleteAccount()">Delete Account</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
 </div>
-
-<!-- <span class="material-icons md-36 back-btn" (click)="backClicked()">arrow_back</span> -->
 

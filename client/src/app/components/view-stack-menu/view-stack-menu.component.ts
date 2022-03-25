@@ -15,7 +15,7 @@ import { SessionService } from 'src/app/services/session.service';
 export class ViewStackMenuComponent implements OnInit {
 
   currentCardStack!: IcardStack;
-  numberOfCardsDue!: number;
+  // numberOfCardsDue!: number;
   // viewCardsDue!: boolean
 
   currentUserID!: number;
@@ -31,21 +31,20 @@ export class ViewStackMenuComponent implements OnInit {
   constructor(private router: Router, private cardStackQuery: CardStackQuery, private sessionService: SessionService) {
 
     this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack = res);
-    this.cardStackQuery.cardsDue$.subscribe(res => this.numberOfCardsDue = res)
+
+    // this.cardStackQuery.cardsDue$.subscribe(res => this.numberOfCardsDue = res)
 
     this.currentUserID = this.sessionService.UserID;
    }
 
   ngOnInit(): void {
 
-
-
     console.log('In view-stack-menu.component.ts')
     console.log('Current card stack : ' + this.currentCardStack.DeckName);
 
     var button = (document.getElementById("viewDueCardsButton") as HTMLButtonElement); // Useful
 
-    if (this.numberOfCardsDue == 0)
+    if (button != null && this.currentCardStack.CardsDue == 0)
     {
       button.disabled = true;
     }

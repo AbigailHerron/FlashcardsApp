@@ -117,6 +117,8 @@ class userController {
     }
   }
 
+  //__________________________________________________ Profile function
+
   async profile(req, res) {
 
     console.log('Welcome to profile function')
@@ -141,6 +143,85 @@ class userController {
       res.status(500).json({ msg: err.message });
     }
 
+  }
+
+  //__________________________________________________ Update username function
+
+  async updateUserName(req, res) {
+
+    console.log('Welcome to updateUserName function');
+
+    try {
+
+      console.log(req.params.userID);
+
+      const { userName } = req.body;
+
+      const conn = await sqlcon.getConnection();
+
+      const user = await conn
+      .request()
+      .input('user_id', req.params.userID)
+      .input('userName', userName)
+      .execute('updateUserName');
+
+      res.json(user.recordset[0]);
+
+    } catch (err) {
+
+      res.status(500).json({ msg: err.message });
+
+    }
+  }
+
+  //__________________________________________________ Update email function
+
+  async updateEmail(req, res) {
+
+    console.log('Welcome to updateEmail function');
+
+    try {
+
+      console.log(req.params.userID);
+
+      const { email } = req.body;
+
+      const conn = await sqlcon.getConnection();
+
+      const user = await conn
+      .request()
+      .input('user_id', req.params.userID)
+      .input('email', email)
+      .execute('updateEmail');
+
+      res.json(user.recordset[0]);
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
+  }
+
+  //__________________________________________________ Delete profile function
+
+  async deleteAccount(req, res) {
+
+    console.log('Welcome to deleteAccount function');
+
+    try {
+
+      console.log(req.params.userID);
+
+      const conn = await sqlcon.getConnection();
+
+      await conn
+      .request()
+      .input('user_id', req.params.userID)
+      .execute('deleteAccount');
+
+      res.json('Delete Account');
+
+    } catch (err) {
+      res.status(500).json({ msg: err.message });
+    }
   }
 }
 module.exports = new userController();

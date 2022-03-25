@@ -14,7 +14,6 @@ import {
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { retry, catchError, map, tap, mapTo } from 'rxjs/operators';
-import { BackendService } from './backend.service';
 import { Icard } from '../interfaces/icard';
 import { SessionQuery } from '../store/session.query';
 import { CardStackQuery } from '../store/card-stack.query';
@@ -50,7 +49,7 @@ export class CardStackServiceService {
 
     this.cardStackQuery.currentStack$.subscribe(res => this.currentCardStack$ = res)
 
-    this.cardStackQuery.cardStackID$.subscribe(res => this.currentStackID$ = res);
+    // this.cardStackQuery.cardStackID$.subscribe(res => this.currentStackID$ = res);
 
     this.httpSkipInterceptor = new HttpClient(handler);
   }
@@ -118,7 +117,7 @@ export class CardStackServiceService {
 
     console.log('addBlankCardToStack function called | card-stack-service.service.ts');
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/cards`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/cards`;
 
     const data = { Front: '', Back: '' };
 
@@ -134,7 +133,9 @@ export class CardStackServiceService {
 
   getAllCardsFromStack(): Observable<Icard[]> {
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/all`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/all`;
+
+    console.log('In getAllCardsFromStack()');
 
     return this.http
       .get<Icard[]>(url)
@@ -147,7 +148,7 @@ export class CardStackServiceService {
 
     console.log('Curent card stack is ' + this.currentStackID$);
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/cards`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/cards`;
 
     console.log(url);
 
@@ -158,7 +159,7 @@ export class CardStackServiceService {
 
   updateCardFromStack(cardID: number, card: Icard) {
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${cardID}`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/card/${cardID}`;
 
     console.log(url);
 
@@ -179,8 +180,6 @@ export class CardStackServiceService {
     return this.httpSkipInterceptor
       .post<any>(url, formData)
       .subscribe((res) => this.updateCardImage(res, cardID));
-
-
   }
 
   // Delete image from card
@@ -193,7 +192,7 @@ export class CardStackServiceService {
 
     console.log('Image URL : ' + imageURL);
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${cardID}/image/testing/${imageURL}`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/card/${cardID}/image/testing/${imageURL}`;
 
     console.log(url);
 
@@ -214,7 +213,7 @@ export class CardStackServiceService {
 
     // console.log(`${this.userID},${this.currentStackID$},${cardID}`);
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${cardID}/update-image`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/card/${cardID}/update-image`;
 
     this.http.patch<any>(url, imageDetails).subscribe((res) => console.log(res));
   }
@@ -222,7 +221,7 @@ export class CardStackServiceService {
   // Setting card difficulty to easy
 
   setCardToEasy(card: Icard) {
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${card.CardID}/easy`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/card/${card.CardID}/easy`;
 
     return this.http.patch<any>(url, card).subscribe((res) => console.log(res));
   }
@@ -230,7 +229,7 @@ export class CardStackServiceService {
   // Setting card difficulty to hard
 
   setCardToHard(card: Icard) {
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${card.CardID}/hard`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/card/${card.CardID}/hard`;
 
     return this.http
       .patch<any>(url, card)
@@ -247,7 +246,7 @@ export class CardStackServiceService {
     //   this.imageID = 'testing/null';
     // }
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}/card/${card.CardID}`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}/card/${card.CardID}`;
 
     this.http.delete<any>(url).subscribe(() => console.log('Card deleted'));
   }
@@ -262,7 +261,7 @@ export class CardStackServiceService {
 
     console.table(cardStackDetails);
 
-    const url = `http://localhost:3000/user/${this.userID}/decks`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/decks`;
 
     this.http.post<IcardStack>(url, cardStackDetails).subscribe(
       {
@@ -282,6 +281,7 @@ export class CardStackServiceService {
   // Get cardstacks
 
   getCardStacks(): Observable<IcardStack[]> {
+
     console.log('Get card service called');
 
     console.log(this.userID);
@@ -296,30 +296,32 @@ export class CardStackServiceService {
   // Get public cardstacks
 
   getPublicCardStacks(): Observable<IcardStack[]> {
-    console.log('Get card service called');
 
-    return this.http
-      .get<IcardStack[]>('http://localhost:3000/publicDecks')
-      .pipe(catchError(this.handleError));
+    console.log('In getPublicCardStacks()');
+
+    return this.http.get<IcardStack[]>('http://localhost:3000/publicDecks').pipe(catchError(this.handleError));
   }
 
   // Update cardstack
 
-  updateCardStack(cardStackDetails: IcardStack, cardStackID: number) {
-    const url = `http://localhost:3000/user/${this.userID}/deck/${cardStackID}`;
+  updateCardStack(cardStackDetails: IcardStack) {
+
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}`;
 
     console.log('card-stack-service method: updateCardStack called');
+
     console.log(cardStackDetails);
-    return this.http.put<IcardStack>(url, cardStackDetails).subscribe(() => console.log('Updated'));
+
+    return this.http.patch<IcardStack>(url, cardStackDetails).subscribe((res) => console.log(res));
   }
 
   // Delete cardstack
 
-  deleteCardStack(cardStackDetails: IcardStack) {
+  deleteCardStack() {
 
     console.log('deleteCardStack() | card-stack-service.service.ts');
 
-    const url = `http://localhost:3000/user/${this.userID}/deck/${this.currentStackID$}`;
+    const url = `http://localhost:3000/user/${this.currentCardStack$.UserID}/deck/${this.currentCardStack$.DeckID}`;
 
     console.log('Current url : ' + url);
 

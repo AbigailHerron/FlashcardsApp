@@ -78,8 +78,7 @@ export class CreateStackComponent implements OnInit {
     console.log(this.currentCardStack$);
 
     this.srvCardStacks.updateCardStack(
-      this.stackDetailsForm.value,
-      this.currentCardStack$.DeckID
+      this.stackDetailsForm.value
     );
 
     this.router.navigate(['/userhub']);

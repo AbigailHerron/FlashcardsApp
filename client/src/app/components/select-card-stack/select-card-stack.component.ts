@@ -91,7 +91,7 @@ export class SelectCardStackComponent implements OnInit {
     this.router.navigate(['/createstack']);
   }
 
-  // Open menu for currentCardStack
+  // Open menu for selected card stack
 
   goToViewCardStackMenu(stack: IcardStack) {
 
@@ -111,11 +111,13 @@ export class SelectCardStackComponent implements OnInit {
 
   // Deleting a card stack
 
-  deleteCard() {
+  deleteCard(stack: IcardStack) {
+
+    this.srvCardStacks.changeStack(stack);
     
     console.log('deleteCard()');
 
-    this.srvCardStacks.deleteCardStack(this.currentCardStack);
+    this.srvCardStacks.deleteCardStack();
 
     this.getCardStacks();
   }

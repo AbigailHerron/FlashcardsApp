@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
-import { BackendService } from 'src/app/services/backend.service';
 
 import { Location } from '@angular/common';
 import { SessionQuery } from 'src/app/store/session.query';
-import { Observable } from 'rxjs';
-import { ConstantPool } from '@angular/compiler';
+import { BackendService } from 'src/app/services/backend.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -14,35 +13,84 @@ import { ConstantPool } from '@angular/compiler';
 })
 export class ProfileComponent implements OnInit {
 
-  user!: User | null; // = (JSON.parse(localStorage.getItem('currentUser') || '{}'));
+  user!: User | null;
 
-  constructor(private _location: Location, private session: SessionQuery) { }
+  userForm!: FormGroup;
+
+  constructor(private _location: Location, private session: SessionQuery, private backendService: BackendService) { 
+
+    this.session.userDetailsState$.subscribe(res => this.user = res);
+  }
 
   ngOnInit(): void {
 
-    var x = document.getElementById("editDetails")!;
+    this.userDataInitialiser();
+
+    var x = document.getElementById("editUserName")!;
     x.style.display = "none";
 
-    this.user = this.session.userDetails$;
+    var x = document.getElementById("editEmail")!;
+    x.style.display = "none";
+    
+
 
     console.log(this.user);
+  }
+
+  userDataInitialiser() {
+
+    this.userForm = new FormGroup({
+      userName: new FormControl(this.user?.UserName, Validators.required),
+      email: new FormControl(this.user?.UserEmail, [Validators.required, Validators.email])
+    })
   }
 
   backClicked() {
     this._location.back();
   }
 
-  showEditDetailsForm() {
+  showEditUserNameForm() {
 
-    var x = document.getElementById("editDetails")!;
+    var x = document.getElementById("editUserName")!;
 
     if (x.style.display === "none") {
       x.style.display = "block";
     } else {
       x.style.display = "none";
     }
-
   }
 
-   
+  showEditEmailForm() {
+
+    var x = document.getElementById("editEmail")!;
+
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+  updateUserName() {
+
+    console.log('In updateUserName()');
+
+    console.log(this.userForm.value.userName);
+
+    this.backendService.updateUserName(this.userForm.value.userName).subscribe(res => console.log(res));
+  }
+
+  updateEmail() {
+
+    console.log('In updateEmail()');
+
+    this.backendService.updateEmail(this.userForm.value.email);
+  }
+
+  deleteAccount() {
+
+    console.log('In deleteAccount()');
+
+    this.backendService.deleteAccount();
+  }
 }

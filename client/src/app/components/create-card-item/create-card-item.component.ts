@@ -70,6 +70,7 @@ export class CreateCardItemComponent implements OnInit {
   }
 
   cardDataInitialiser(): void {
+
     this.cardForm = new FormGroup({
       front: new FormControl([this.card?.Front]),
       hint: new FormControl([this.card?.Hint]),
@@ -77,6 +78,7 @@ export class CreateCardItemComponent implements OnInit {
       imageID: new FormControl([this.card?.ImageID]),
       imageURL: new FormControl([this.card?.ImageURL]),
     });
+    
   }
 
   styleUpload(): object {

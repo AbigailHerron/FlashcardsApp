@@ -6,8 +6,18 @@
 
 }
 
-.dashboard-cards{
+.col-md-4{
     margin-bottom: 2em;
+}
+
+.card {
+
+    border-radius: 15px;
+    padding: 1em;
+    width: 18rem;
+    color: black;
+
+    background-color: lightgray;
 }
 
 .card-body{
@@ -24,18 +34,6 @@
 a{
     text-decoration: none;
     color: black;
-}
-
-.card {
-
-    border-radius: 15px;
-    padding: 1em;
-    width: 18rem;
-    color: black;
-
-    background-color: lightgray;
-
-    /* position: relative; */
 }
 
 /* Grow Shadow */

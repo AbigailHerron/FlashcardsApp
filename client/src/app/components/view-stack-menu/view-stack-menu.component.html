@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <div class="row" style="padding: 1em;">
+            <div class="row" style="padding: 1em;" *ngIf="currentCardStack.CardsDue != null">
                 <div class="col">
                     <h3>Cards Due {{ currentCardStack?.CardsDue }}</h3>
                 </div>
@@ -73,7 +73,7 @@
             </form>
 
             <div class="row" style="padding: 1em;">
-                <div class="col" *ngIf="currentCardStack.UserID == currentUserID">
+                <div class="col" *ngIf="currentCardStack.UserID == currentUserID && currentCardStack.CardsDue != null">
                     <button type="submit" (click)="viewDueCards()" class="btn btn-light" id="viewDueCardsButton">View due cards</button>
                 </div>
                 <div class="col">

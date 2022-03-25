@@ -1,73 +1,74 @@
-<body>
-  <div
-    class="card bg-dark"
-    style="
-      width: 24em;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      padding: 10px;
-      border-radius: 15px;
-    "
-  >
-    <div class="card-body">
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            class="form-control"
-            formControlName="username"
-          />
+<div class="card bg-dark">
+  <div class="card-body">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <!-- Username -->
+      
+      <div class="form-group">
+        <label for="username">Username</label>
+
+        <!-- Validation -->
+
+        <div *ngIf="signupForm.get('username')!.invalid && signupForm.get('username')!.errors && (signupForm.get('username')!.dirty || signupForm.get('username')!.touched)">
+          <small id="username-error-msg" class="text-danger" *ngIf="signupForm.get('username')!.errors?.required">Username is required</small>
         </div>
 
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            class="form-control"
-            formControlName="email"
-            required
-          />
+        <input id="username" type="text" class="form-control" formControlName="username" required/>
+      </div>
+
+      <!-- Email -->
+
+      <div class="form-group">
+        <label for="email">Email</label>
+
+        <!-- Validation -->
+
+        <div *ngIf="signupForm.get('email')!.invalid && signupForm.get('email')!.errors && (signupForm.get('email')!.dirty || signupForm.get('email')!.touched)">
+          <small id="email-error-msg" class="text-danger" *ngIf="signupForm.get('email')!.errors?.required">Email is required</small>
         </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            class="form-control"
-            formControlName="password"
-          />
+        <input id="email" type="email" class="form-control" formControlName="email" required/>
+      </div>
+
+      <!-- Password -->
+
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <!-- Validation -->
+
+        <div *ngIf="signupForm.get('password')!.invalid && signupForm.get('password')!.errors && (signupForm.get('password')!.dirty || signupForm.get('password')!.touched)">
+          <small id="password-error-msg" class="text-danger" *ngIf="signupForm.get('password')!.errors?.required">Password is required</small>
         </div>
 
-        <div class="form-group">
-          <label for="password">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            type="password"
-            class="form-control"
-            formControlName="confirmPassword"
-          />
+        <input id="password" type="password" class="form-control" formControlName="password" required/>
+      </div>
+
+      <!-- Confirm password -->
+
+      <div class="form-group">
+        <label for="password">Confirm Password</label>
+
+        <!-- Validation -->
+
+        <div *ngIf="signupForm.get('confirmPassword')!.invalid && signupForm.get('confirmPassword')!.errors && (signupForm.get('confirmPassword')!.dirty || signupForm.get('confirmPassword')!.touched)">
+          <small id="confirmPassword-error-msg" class="text-danger" *ngIf="signupForm.get('confirmPassword')!.errors?.required">Please confirm your password</small>
         </div>
 
-        <button
-          id="button"
-          type="submit"
-          class="btn"
-          [disabled]="signupForm.invalid"
-          style="margin: 10%"
-        >
-          Create account
-        </button>
-        <br />
-        <a href="/login">Have an account? Log in here</a>
-      </form>
-    </div>
-    <div class="card" *ngIf="authErrorMsg" style="width: auto; padding: 10px; border-radius: 5px;">{{ authErrorMsg }}</div>
+        <div *ngIf="signupForm.get('confirmPassword')!.touched && signupForm.get('confirmPassword')! != signupForm.get('password')!">
+          <small id="confirmPassword-error-msg" class="text-danger" *ngIf="signupForm.get('confirmPassword')!.errors?.required">Password does not match</small>
+        </div>
+
+        <input id="confirmPassword" type="password" class="form-control" formControlName="confirmPassword" required/>
+      </div>
+
+      <button id="button" type="submit" class="btn btn-light" [disabled]="signupForm.invalid" style="margin: 1em">Create account</button>
+
+    </form>
+
+    <a routerLink="/login">Have an account? Log in here</a>
+
   </div>
-</body>
+
+  <div class="card" *ngIf="authErrorMsg" style="width: auto; padding: 10px; border-radius: 5px;">{{ authErrorMsg }}</div>
+</div>

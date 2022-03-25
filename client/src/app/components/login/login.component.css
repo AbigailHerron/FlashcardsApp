@@ -1,19 +1,13 @@
-input:invalid {
-  border: 2px solid red;
+.card {
+  width: 24em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 15px;
 }
 
-.card-body{
+.card-body {
   color: white;
-}
-
-/* input[type="email"] {
-  background-color: #d1d1d1;
-}
-
-input[type="password"] {
-  background-color: #d1d1d1;
-} */
-
-.btn{
-  background-color: #03DAC5;
 }

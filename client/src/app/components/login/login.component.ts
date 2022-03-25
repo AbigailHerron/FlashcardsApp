@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BackendService } from 'src/app/services/backend.service';
 import { SessionService } from 'src/app/services/session.service';
 
 @Component({
@@ -17,13 +16,13 @@ export class LoginComponent implements OnInit {
   authErrorMsg!: string;
 
   loginForm = new FormGroup({
-    email: new FormControl([''], Validators.required),
-    password: new FormControl([''], Validators.required),
+    email: new FormControl(null, Validators.required),
+    password: new FormControl(null, Validators.required),
   });
 
   constructor(private router: Router, private session: SessionService) {}
 
-  ngOnInit() {}
+  ngOnInit() { }
   
   onSubmit() {
     this.submitted = true;
@@ -35,8 +34,8 @@ export class LoginComponent implements OnInit {
     this.session.login(this.loginForm.value)
       .subscribe((res) => {
           // Successful login
-          console.log(res);
-          this.router.navigate(['/dashboard']);
+          console.log(res),
+          this.router.navigate(['/dashboard'])
         },
         (error) => {
           // Failed login

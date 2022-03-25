@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row banner d-flex align-items-center">
         <div class="col-2 d-flex justify-content-center">
-            <span class="material-icons md-36 back-btn" (click)="backClicked()" *ngIf="router.url != '/' && router.url != '/dashboard'">arrow_back</span>
+            <span class="material-icons md-36 back-btn" (click)="backClicked()" *ngIf="router.url != '/' && router.url != '/signup' && router.url != '/dashboard'">arrow_back</span>
         </div>
     
         <div class="col-8 d-flex justify-content-center">
@@ -12,7 +12,7 @@
     
         <div class="col-2 d-flex justify-content-center">
             <a *ngIf="(userID$ | async) != 0" id="logout" (click)="logOut()">
-                <h3>Log out</h3>
+                <h3>Logout</h3>
             </a>
         </div>
     </div>

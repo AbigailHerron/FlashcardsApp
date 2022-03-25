@@ -23,6 +23,7 @@ import { ViewResultsComponent } from './components/view-results/view-results.com
 
 import {CloudinaryModule} from '@cloudinary/ng';
 import { SelectPublicStackComponent } from './components/select-public-stack/select-public-stack.component';
+import { AuthGuard } from './security/auth.guard';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { SelectPublicStackComponent } from './components/select-public-stack/sel
   providers: [
     {
     provide: HTTP_INTERCEPTORS, useClass: JwtinterceptorService, multi: true
-    }
+    },
+    AuthGuard
 ],
   bootstrap: [AppComponent]
 })

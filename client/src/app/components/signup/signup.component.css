@@ -1,7 +1,13 @@
-.card-body{
-    color: white;
-  }
+.card {
+  width: 24em;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  border-radius: 15px;
+}
 
-  .btn{
-    background-color: #03DAC5;
+.card-body {
+    color: white;
   }

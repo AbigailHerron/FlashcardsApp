@@ -7,6 +7,7 @@ class deckController {
     console.log('welcome to addDeck controller');
 
 
+
     try {
       const conn = await sqlcon.getConnection();
 
@@ -92,7 +93,7 @@ class deckController {
         .input('publicDeck', publicBit)
         .input('colour', colour)
         .execute('updateDeck');
-      res.send('Updated Deck');
+      res.json('Updated Deck');
     } catch (err) {
       res.status(500).json({ msg: err.message });
     }

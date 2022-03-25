@@ -14,7 +14,7 @@
                     </button>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" (click)="goToEditCardStack()">Edit</a>
-                      <a class="dropdown-item" style="color: tomato;" (click)="deleteCard()">Delete</a>
+                      <a class="dropdown-item" style="color: tomato;" (click)="deleteCard(stack)">Delete</a>
                     </div>
                   </div>
                 </div>
@@ -30,11 +30,11 @@
           </div>
       </div> -->
 
-      <button #btnShow style="display: none;" id="btnShow" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" ></button>
+      <button #btnShow style="display: none;" id="btnShow" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
 
-      <div id="exampleModal" #myModal class="modal" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content" style="background-color: #121212">
+      <div id="exampleModal" #myModal class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Add new deck</h5>
               <button #btnClose id="btnClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -42,20 +42,20 @@
       
             <div class="modal-body">
               <form [formGroup]="cardStackDetails">
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Deck Name</label>
-                <input type="text" formControlName="DeckName" class="form-control" id="exampleFormControlInput1" placeholder="Enter title">
+              <div class="form-group">
+                <label for="DeckName" class="col-form-label">Deck Name</label>
+                <input type="text" formControlName="DeckName" class="form-control" id="DeckName" placeholder="Enter title">
               </div>
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">About</label>
-                <textarea class="form-control" formControlName="About" placeholder="Enter some text" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <div class="form-group">
+                <label for="About" class="col-form-label">About</label>
+                <textarea class="form-control" formControlName="About" placeholder="Enter some text" id="About" rows="3"></textarea>
               </div>
               </form>
             </div>
       
             <div class="modal-footer">
               <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" (click)="addNewStack()" class="btn btn-light">Save changes</button>
+              <button type="button" (click)="addNewStack()" class="btn btn-outline-success">Save changes</button>
             </div>
           </div>
         </div>

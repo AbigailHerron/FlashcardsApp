@@ -21,22 +21,25 @@ export class SelectPublicStackComponent implements OnInit {
   constructor(private srvCardStacks: CardStackServiceService, private router: Router, private _location: Location) { }
 
   ngOnInit(): void {
+
     this.getCardStacks();
+
   }
 
-  // currentCardStack is set when a card stack is clicked/selected
+  // Setting deckValue as cardstack that is clicked
 
   clicked (cardStack: IcardStack): void {
-    this.currentCardStack = cardStack;
-    console.table(this.currentCardStack);
 
-    this.srvCardStacks.deckValue(this.currentCardStack)
+    console.table(cardStack);
 
-    sessionStorage.setItem('stack', JSON.stringify(cardStack)); // Option 2 
+    this.srvCardStacks.deckValue(cardStack);
+
   }
 
   backClicked() {
+
     this._location.back();
+
   }
 
   // Retrieving cardstacks
@@ -45,16 +48,15 @@ export class SelectPublicStackComponent implements OnInit {
 
     this.srvCardStacks.getPublicCardStacks().subscribe({
       next: (value: IcardStack[])=> {this.Stack = value, console.log(value)},
-      complete: () => console.log(),
       error: (mess) => this.message = mess
     })
   }
 
+  // Open menu for selected card stack
+
   goToViewCardStackMenu(stack: IcardStack) {
 
-    // this.clicked(stack); // Option 1
-
-    sessionStorage.setItem('stack', JSON.stringify(stack)); // Option 2 
+    this.srvCardStacks.changeStack(stack);
 
     this.router.navigate(['/viewstackmenu']);
   }
@@ -67,5 +69,4 @@ export class SelectPublicStackComponent implements OnInit {
       return cardStack.DeckID === this.currentCardStack.DeckID;
     }
   }
-
 }
